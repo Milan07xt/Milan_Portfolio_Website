@@ -9,6 +9,7 @@
 
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
@@ -20,8 +21,9 @@
 
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="about.html">About</a></li>
             <li><a href="#skills">Skills</a></li>
+            <li><a href="#education">Education</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -33,6 +35,7 @@
 </header>
 
 <section id="home" class="hero">
+    <canvas id="canvas3d"></canvas>
 
     <div class="hero-content">
 
@@ -100,8 +103,8 @@
         <div class="info-box">
             <p><strong>Email:</strong> rathodmilan216@gmail.com</p>
             <p><strong>Phone:</strong> +91 9327599254</p>
-            <p><strong>GitHub:</strong> Milan07xt</p>
-            <p><strong>LinkedIn:</strong> Milan07</p>
+            <p><strong>GitHub:</strong> <a href="https://github.com/Milan07xt" target="_blank">Milan07xt</a></p>
+            <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/milan-rathod07/?isSelfProfile=true" target="_blank">Milan07</a></p>
         </div>
 
     </div>
@@ -136,7 +139,7 @@
     <div class="project-grid">
 
         <div class="project-card">
-            <img src="images/face-attendance.png">
+            <img src="images/face-attendance.png" width="300" height="220">
             <h3>Face Recognition Attendance System</h3>
             <p>
                 Attendance system using Python,
@@ -145,7 +148,7 @@
 
             <div class="project-links">
                 <a href="https://face-detection-attendance-woad.vercel.app/home/">Live Demo</a>
-                <a href="#">GitHub</a>
+                <a href="https://github.com/Milan07xt/SEM-06">GitHub</a>
             </div>
         </div>
 
@@ -158,13 +161,13 @@
             </p>
 
             <div class="project-links">
-                <a href="#">Live Demo</a>
-                <a href="#">GitHub</a>
+                <a href="https://django-gym-management-system-websit-one.vercel.app/">Live Demo</a>
+                <a href="https://github.com/Milan07xt/Django-Gym-Management-System-Website">GitHub</a>
             </div>
         </div>
 
         <div class="project-card">
-            <img src="images/hotel.png">
+            <img src="images/hotel.jpeg">
             <h3>Hotel Management Website</h3>
             <p>
                 Responsive hotel website using
@@ -175,6 +178,128 @@
                 <a href="#">Live Demo</a>
                 <a href="#">GitHub</a>
             </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section id="education" class="education">
+
+    <h2 class="section-title">
+        <span>🎓</span> Education
+    </h2>
+
+    <div class="education-container">
+
+        <!-- SSC -->
+        <div class="education-card">
+            <div class="edu-icon">
+                <i class="fas fa-school"></i>
+            </div>
+
+            <div class="edu-content">
+                <h3>Secondary School (SSC)</h3>
+
+                <h4>GSEB Board</h4>
+
+                <p>Year : 2021</p>
+
+                <div class="result">
+                    <span>Percentage :</span>
+                    <strong>67.49 PR</strong>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- HSC -->
+        <div class="education-card">
+            <div class="edu-icon">
+                <i class="fas fa-book"></i>
+            </div>
+
+            <div class="edu-content">
+                <h3>Higher Secondary (HSC)</h3>
+
+                <h4>Commerce Stream - GSEB</h4>
+
+                <p>Year : 2023</p>
+
+                <div class="result">
+                    <span>Percentage :</span>
+                    <strong>78.41 PR</strong>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BSc IT -->
+        <div class="education-card big-card">
+
+            <div class="edu-icon">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+
+            <div class="edu-content">
+
+                <h3>Bachelor of Science in Information Technology</h3>
+
+                <h4>Noble University, Junagadh</h4>
+
+                <p>2023 - 2026</p>
+
+                <table class="semester-table">
+
+                    <thead>
+                        <tr>
+                            <th>Semester</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>Semester 1</td>
+                            <td>CGPA : 6.83<td>
+                        </tr>
+
+                        <tr>
+                            <td>Semester 2</td>
+                            <td>CGPA : 5.67</td>
+                        </tr>
+
+                        <tr>
+                            <td>Semester 3</td>
+                            <td>CGPA : 6.09</td>
+                        </tr>
+
+                        <tr>
+                            <td>Semester 4</td>
+                            <td>CGPA : 6.36</td>
+                        </tr>
+
+                        <tr>
+                            <td>Semester 5</td>
+                            <td>CGPA : 6.45</td>
+                        </tr>
+
+                        <tr>
+                            <td>Semester 6</td>
+                            <td>CGPA :6.67</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+                <div class="overall">
+                    <h3>Overall CGPA : 6.35 / 10</h3>
+                </div>
+
+            </div>
+
         </div>
 
     </div>
