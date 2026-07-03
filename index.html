@@ -15,15 +15,17 @@
 </head>
 <body>
 
+<div class="scroll-progress"></div>
+
 <header>
     <nav>
         <a href="#home" class="logo">
-            <span class="logo-prompt"></span><span class="accent">Milan Rathod</span></span>
+            <span class="logo-prompt">~/</span><span class="accent">Milan Rathod</span>
         </a>
 
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
-            <li><a href="about.html">About</a></li>
+            <li><a href="about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#certificates">Certificates</a></li>
             <li><a href="#education">Education</a></li>
@@ -41,9 +43,11 @@
 
 <section id="home" class="hero">
 
+    <div class="hero-aurora"></div>
+
     <div class="hero-content">
         <h1>
-            Milan <span class="accent">Rathod</span>
+            Milan <span class="accent gradient-text">Rathod</span>
         </h1>
 
         <h2>
@@ -107,7 +111,8 @@
 
 <section id="about">
 
-    <p class="eyebrow">About Me</p>
+    <p class="eyebrow">About</p>
+    <h2 class="section-title">About Me</h2>
     <div class="about-grid">
 
         <div class="about-text">
@@ -142,11 +147,31 @@
 
     </div>
 
+    <div class="stats-strip">
+        <div class="stat-item">
+            <span class="stat-num" data-count="4">0</span>
+            <span class="stat-label">Projects Built</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num" data-count="3">0</span>
+            <span class="stat-label">Certifications</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num" data-count="6.35" data-decimal="true">0</span>
+            <span class="stat-label">CGPA</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num" data-count="2026">0</span>
+            <span class="stat-label">Graduating</span>
+        </div>
+    </div>
+
 </section>
 
 <section id="skills">
 
     <p class="eyebrow">Skills</p>
+    <h2 class="section-title">Technical Skills</h2>
     <div class="skills-groups">
 
         <div class="skill-group">
@@ -187,6 +212,7 @@
 <section id="certificates" class="certificates">
 
     <p class="eyebrow">Certificates</p>
+    <h2 class="section-title">Certifications</h2>
     <div class="certificate-grid">
 
         <!-- Certificate 1 -->
@@ -329,16 +355,6 @@
         </div>
 
         <div class="project-card">
-            <img src="images/gym.jpeg" width="300" height="220">
-            <h3>Gym Management System</h3>
-            <p>
-                Django-based gym management system
-                with membership and payment tracking.
-            </p>
-
-            <div class="project-links">
-                <a href="https://django-gym-management-system-websit-one.vercel.app/">Live Demo</a>
-                <a href="https://github.com/Milan07xt/Django-Gym-Management-System-Website">GitHub</a>
             <div class="project-media">
                 <img src="images/gym.jpeg" alt="Gym Management System" width="300" height="220">
                 <span class="badge badge-live"><span class="pulse-dot small"></span> LIVE</span>
@@ -362,18 +378,25 @@
         </div>
 
         <div class="project-card">
-=========
->>>>>>>>> Temporary merge branch 2
-            <img src="images/hotel.jpeg">
-            <h3>Hotel Management Website</h3>
-            <p>
-                Responsive hotel website using
-                HTML, CSS and JavaScript.
-            </p>
-
-            <div class="project-links">
-                <a href="#">Live Demo</a>
-                <a href="#">GitHub</a>
+            <div class="project-media">
+                <img src="images/hotel.jpeg" alt="Hotel Management System" width="300" height="220">
+                <span class="badge badge-wip">IN PROGRESS</span>
+            </div>
+            <div class="project-body">
+                <h3>Hotel Management Website</h3>
+                <p>
+                    Responsive hotel booking website built with HTML, CSS and
+                    JavaScript.
+                </p>
+                <div class="chip-row small">
+                    <span class="chip">HTML5</span>
+                    <span class="chip">CSS3</span>
+                    <span class="chip">JavaScript</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://hotel-website-project-kappa.vercel.app/index.html" class="btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>
+                    <a href="https://github.com/Milan07xt/Hotel-Website-Project" class="btn-link"><i class="fab fa-github"></i> Code</a>
+                </div>
             </div>
         </div>
 
@@ -543,6 +566,33 @@
 <footer>
     <p>© 2026 Milan Rathod. All Rights Reserved.</p>
 </footer>
+
+<!-- Custom cursor -->
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<!-- Back to top -->
+<button class="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-rocket"></i>
+</button>
+
+<!-- Theme switcher -->
+<div class="theme-switcher">
+    <div class="theme-panel" id="themePanel">
+        <p class="theme-panel-label">Accent Color</p>
+        <div class="swatch-row">
+            <span class="swatch swatch-gold active" data-theme="" title="Gold"></span>
+            <span class="swatch swatch-ocean" data-theme="ocean" title="Ocean"></span>
+            <span class="swatch swatch-emerald" data-theme="emerald" title="Emerald"></span>
+            <span class="swatch swatch-purple" data-theme="purple" title="Purple"></span>
+            <span class="swatch swatch-crimson" data-theme="crimson" title="Crimson"></span>
+            <span class="swatch swatch-pink" data-theme="pink" title="Pink"></span>
+        </div>
+    </div>
+    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Change accent color">
+        <i class="fa-solid fa-palette"></i>
+    </button>
+</div>
 
 <script src="script.js"></script>
 
