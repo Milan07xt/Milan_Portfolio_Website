@@ -1,95 +1,11 @@
-// 3D Animation with Three.js
-function init3D(){
-const canvas = document.getElementById('canvas3d');
-if(!canvas) return;
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x000000, 0);
-
-camera.position.z = 50;
-
-// Create floating cubes
-const cubes = [];
-const geometry = new THREE.BoxGeometry(5, 5, 5);
-
-for(let i = 0; i < 10; i++){
-const material = new THREE.MeshPhongMaterial({
-color: Math.random() * 0xffffff,
-emissive: 0x3b82f6,
-wireframe: false
-});
-const cube = new THREE.Mesh(geometry, material);
-cube.position.set(
-(Math.random() - 0.5) * 100,
-(Math.random() - 0.5) * 100,
-(Math.random() - 0.5) * 100
-);
-cube.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
-cube.velocity = {
-x: (Math.random() - 0.5) * 2,
-y: (Math.random() - 0.5) * 2,
-z: (Math.random() - 0.5) * 2,
-rotX: (Math.random() - 0.5) * 0.05,
-rotY: (Math.random() - 0.5) * 0.05
-};
-scene.add(cube);
-cubes.push(cube);
-}
-
-// Add lighting
-const light1 = new THREE.PointLight(0x3b82f6, 1, 100);
-light1.position.set(50, 50, 50);
-scene.add(light1);
-
-const light2 = new THREE.PointLight(0xff006e, 0.5, 100);
-light2.position.set(-50, -50, 50);
-scene.add(light2);
-
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
-scene.add(ambientLight);
-
-function animate(){
-requestAnimationFrame(animate);
-
-cubes.forEach(cube => {
-cube.position.x += cube.velocity.x;
-cube.position.y += cube.velocity.y;
-cube.position.z += cube.velocity.z;
-
-cube.rotation.x += cube.velocity.rotX;
-cube.rotation.y += cube.velocity.rotY;
-
-// Bounce at boundaries
-if(Math.abs(cube.position.x) > 60) cube.velocity.x *= -1;
-if(Math.abs(cube.position.y) > 60) cube.velocity.y *= -1;
-if(Math.abs(cube.position.z) > 60) cube.velocity.z *= -1;
-});
-
-renderer.render(scene, camera);
-}
-
-animate();
-
-// Handle window resize
-window.addEventListener('resize', () => {
-camera.aspect = window.innerWidth / window.innerHeight;
-camera.updateProjectionMatrix();
-renderer.setSize(window.innerWidth, window.innerHeight);
-});
-}
-
-// Initialize 3D animation on page load
-window.addEventListener('load', init3D);
-
+// ---------------------------------------------------------------
+// Typing effect for hero role text
+// ---------------------------------------------------------------
 const roles = [
-"Python Developer",
-"Django Developer",
-"Backend Developer",
-"Software Developer"
+    "Python Developer",
+    "Django Developer",
+    "Backend Developer",
+    "REST API Developer"
 ];
 
 let roleIndex = 0;
@@ -97,41 +13,142 @@ let charIndex = 0;
 
 function typeText(){
 
-const typing = document.getElementById("typing");
+    const typing = document.getElementById("typing");
+    if(!typing) return;
 
-let current = roles[roleIndex];
+    let current = roles[roleIndex];
 
-typing.textContent =
-current.substring(0,charIndex);
+    typing.textContent = current.substring(0, charIndex);
 
-charIndex++;
+    charIndex++;
 
-if(charIndex > current.length){
+    if(charIndex > current.length){
+        setTimeout(()=>{
+            charIndex = 0;
+            roleIndex++;
+            if(roleIndex >= roles.length){
+                roleIndex = 0;
+            }
+        }, 1500);
+    }
 
-setTimeout(()=>{
-
-charIndex = 0;
-
-roleIndex++;
-
-if(roleIndex >= roles.length){
-roleIndex = 0;
-}
-
-},1500);
-
-}
-
-setTimeout(typeText,120);
+    setTimeout(typeText, 120);
 }
 
 typeText();
 
-const themeBtn =
-document.getElementById("theme-toggle");
+// ---------------------------------------------------------------
+// Theme toggle
+// ---------------------------------------------------------------
+const themeBtn = document.getElementById("theme-toggle");
 
-themeBtn.addEventListener("click",()=>{
+if(themeBtn){
+    themeBtn.addEventListener("click", ()=>{
+        document.body.classList.toggle("light");
+        const icon = themeBtn.querySelector("i");
+        if(icon){
+            icon.classList.toggle("fa-moon");
+            icon.classList.toggle("fa-sun");
+        }
+    });
+}
 
-document.body.classList.toggle("light");
+// ---------------------------------------------------------------
+// EDUCATION SECTION — Scroll reveal + mouse-light spotlight
+// ---------------------------------------------------------------
+(function initEducationEffects(){
+
+    const eduSection = document.querySelector(".education-section");
+    if(!eduSection) return;
+
+    // Scroll reveal using IntersectionObserver
+    const revealTargets = eduSection.querySelectorAll(".reveal-up");
+
+    const revealObserver = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+            if(entry.isIntersecting){
+                entry.target.classList.add("in-view");
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.2,
+        rootMargin: "0px 0px -60px 0px"
+    });
+
+    revealTargets.forEach(target => revealObserver.observe(target));
+
+    // Mouse-follow spotlight effect
+    eduSection.addEventListener("mousemove", (e)=>{
+        const rect = eduSection.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        eduSection.style.setProperty("--mx", x + "%");
+        eduSection.style.setProperty("--my", y + "%");
+    });
+
+    eduSection.addEventListener("mouseleave", ()=>{
+        eduSection.style.setProperty("--mx", "50%");
+        eduSection.style.setProperty("--my", "30%");
+    });
+
+})();
+
+// ---------------------------------------------------------------
+// Generic scroll reveal for other sections (fade-up on first view)
+// ---------------------------------------------------------------
+(function initGeneralReveal(){
+    const targets = document.querySelectorAll(
+        "#about .about-grid, #skills .skill-group, #projects .project-card, #contact .contact-card"
+    );
+    if(!targets.length) return;
+
+    targets.forEach(el=>{
+        el.style.opacity = "0";
+        el.style.transform = "translateY(24px)";
+        el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+    });
+
+    const observer = new IntersectionObserver((entries)=>{
+        entries.forEach((entry, i)=>{
+            if(entry.isIntersecting){
+                entry.target.style.transitionDelay = (i % 3) * 0.08 + "s";
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+
+    targets.forEach(el => observer.observe(el));
+})();
+document.querySelectorAll(".project-card").forEach(card=>{
+
+card.addEventListener("mousemove",e=>{
+
+const rect=card.getBoundingClientRect();
+
+const x=e.clientX-rect.left;
+
+const y=e.clientY-rect.top;
+
+const rotateY=((x/rect.width)-0.5)*18;
+
+const rotateX=((y/rect.height)-0.5)*-18;
+
+card.style.transform=`
+perspective(1200px)
+rotateX(${rotateX}deg)
+rotateY(${rotateY}deg)
+translateY(-10px)
+`;
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+card.style.transform="";
+
+});
 
 });

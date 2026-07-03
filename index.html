@@ -3,108 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milan Rathod Portfolio</title>
+    <title>Milan Rathod — Python / Django Developer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
 <header>
     <nav>
-        <div class="logo">
-            Milan Rathod <span>&lt;/&gt;</span>
-        </div>
+        <a href="#home" class="logo">
+            <span class="logo-prompt"></span><span class="accent">Milan Rathod</span></span>
+        </a>
 
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="#skills">Skills</a></li>
+            <li><a href="#certificates">Certificates</a></li>
             <li><a href="#education">Education</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
 
-        <button id="theme-toggle">
-            <i class="fa-solid fa-sun"></i>
-        </button>
+        <div class="nav-actions">
+            <button id="theme-toggle" aria-label="Toggle theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
     </nav>
 </header>
 
 <section id="home" class="hero">
-    <canvas id="canvas3d"></canvas>
 
     <div class="hero-content">
-
-        <h3>Hi, I'm</h3>
-
         <h1>
-            Milan <span>Rathod</span>
+            Milan <span class="accent">Rathod</span>
         </h1>
 
         <h2>
-            I'm a <span id="typing"></span>
+            <span id="typing"></span><span class="type-cursor">|</span>
         </h2>
 
-        <p>
-            B.Sc IT Graduate passionate about Python, Django,
-            Backend Development, REST APIs, OpenCV and
-            building real-world applications.
+        <p class="hero-desc">
+            B.Sc IT graduate who builds backend systems with Python and Django —
+            REST APIs, database-driven applications, and computer-vision tools
+            using OpenCV. Currently looking for a fresher developer role.
         </p>
+
+        <div class="status-row">
+            <span class="status-pill">
+                <span class="pulse-dot"></span> Available for opportunities
+            </span>
+            <span class="status-pill muted">
+                <i class="fa-solid fa-location-dot"></i> Gujarat, India
+            </span>
+        </div>
 
         <div class="hero-buttons">
             <a href="#projects" class="btn primary">
                 View Projects
             </a>
 
-            <a href="C:\Users\ABC\Downloads\Milan_Portfolio_Website\resume\Milankumar_Rathod_Resume 03 (1).pdf" class="btn secondary">
-                Download Resume
+            <a href="resume/Milankumar_Rathod_Resume.pdf" class="btn secondary" download>
+                <i class="fa-solid fa-download"></i> Resume
             </a>
         </div>
 
         <div class="social-icons">
-            <a href="https://github.com/Milan07xt"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com/in/milan-rathod07/?isSelfProfile=true"><i class="fab fa-linkedin"></i></a>
-            <a href="mailto:rathodmilan216@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://github.com/Milan07xt" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/milan-rathod07/?isSelfProfile=true" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:rathodmilan216@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
         </div>
 
     </div>
 
-    <div class="hero-image">
-        <img src="images/profile.png" alt="Profile">
+    <div class="hero-visual">
+        <div class="hero-terminal">
+            <div class="terminal-head">
+                <span class="dot red"></span><span class="dot amber"></span><span class="dot green"></span>
+                <span class="terminal-title">profile.json</span>
+            </div>
+            <pre class="terminal-body"><span class="tk-comment">GET</span> /api/v1/developer
+
+<span class="tk-status">200 OK</span>
+<span class="tk-brace">{</span>
+  <span class="tk-key">"name"</span>: <span class="tk-string">"Milan Rathod"</span>,
+  <span class="tk-key">"role"</span>: <span class="tk-string">"Python / Django Developer"</span>,
+  <span class="tk-key">"stack"</span>: [<span class="tk-string">"Python"</span>, <span class="tk-string">"Django"</span>, <span class="tk-string">"DRF"</span>, <span class="tk-string">"OpenCV"</span>],
+  <span class="tk-key">"education"</span>: <span class="tk-string">"B.Sc IT, 2026"</span>,
+  <span class="tk-key">"location"</span>: <span class="tk-string">"Gujarat, IN"</span>,
+  <span class="tk-key">"status"</span>: <span class="tk-string">"open_to_work"</span>
+<span class="tk-brace">}</span><span class="term-cursor">▌</span></pre>
+        </div>
     </div>
 
 </section>
 
 <section id="about">
 
-    <h2 class="section-title">About Me</h2>
-
+    <p class="eyebrow">About Me</p>
     <div class="about-grid">
 
-        <div>
+        <div class="about-text">
             <p>
-                I'm a B.Sc IT Graduate from Noble University.
-                I have strong knowledge of Python, Django,
-                JavaScript, SQL and Backend Development.
+                I'm a B.Sc IT graduate from Noble University with a focus on
+                backend development. I work mainly with Python and Django,
+                building REST APIs and full applications backed by PostgreSQL —
+                and I like pairing that with OpenCV for computer-vision features
+                like face recognition.
+            </p>
+            <p>
+                I've shipped four end-to-end projects on my own — an attendance
+                system, a gym management platform, a hotel management site, and
+                an organic farming website — and I'm now looking for a fresher
+                role where I can keep building production backend systems.
             </p>
         </div>
 
-        <div class="info-box">
-            <p><strong>Name:</strong> Milan Rathod</p>
-            <p><strong>Degree:</strong> B.Sc IT</p>
-            <p><strong>CGPA:</strong> 6.35</p>
-            <p><strong>Location:</strong> Gujarat, India</p>
-        </div>
-
-        <div class="info-box">
-            <p><strong>Email:</strong> rathodmilan216@gmail.com</p>
-            <p><strong>Phone:</strong> +91 9327599254</p>
-            <p><strong>GitHub:</strong> <a href="https://github.com/Milan07xt" target="_blank">Milan07xt</a></p>
-            <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/milan-rathod07/?isSelfProfile=true" target="_blank">Milan07</a></p>
+        <div class="info-panel">
+            <div class="info-panel-head"><span class="accent"> Profile Info</span></div>
+            <ul class="kv-list">
+                <li><span class="kv-key">name</span><span class="kv-val">Milan Rathod</span></li>
+                <li><span class="kv-key">degree</span><span class="kv-val">B.Sc IT</span></li>
+                <li><span class="kv-key">cgpa</span><span class="kv-val">6.35</span></li>
+                <li><span class="kv-key">location</span><span class="kv-val">Gujarat, India</span></li>
+                <li><span class="kv-key">email</span><span class="kv-val"><a href="mailto:rathodmilan216@gmail.com">rathodmilan216@gmail.com</a></span></li>
+                <li><span class="kv-key">phone</span><span class="kv-val">+91 9327599254</span></li>
+                <li><span class="kv-key">github</span><span class="kv-val"><a href="https://github.com/Milan07xt" target="_blank">Milan07xt</a></span></li>
+                <li><span class="kv-key">linkedin</span><span class="kv-val"><a href="https://linkedin.com/in/milan-rathod07/?isSelfProfile=true" target="_blank">milan-rathod07</a></span></li>
+            </ul>
         </div>
 
     </div>
@@ -113,20 +146,154 @@
 
 <section id="skills">
 
-    <h2 class="section-title">Skills</h2>
+    <p class="eyebrow">Skills</p>
+    <div class="skills-groups">
 
-    <div class="skills-grid">
+        <div class="skill-group">
+            <h3 class="skill-group-title"><i class="fa-solid fa-code"></i> Languages &amp; Frameworks</h3>
+            <div class="chip-row">
+                <span class="chip">Python</span>
+                <span class="chip">Django</span>
+                <span class="chip">Django REST Framework</span>
+                <span class="chip">JavaScript</span>
+                <span class="chip">HTML5</span>
+                <span class="chip">CSS3</span>
+            </div>
+        </div>
 
-        <div class="skill">Python</div>
-        <div class="skill">Django</div>
-        <div class="skill">JavaScript</div>
-        <div class="skill">HTML5</div>
-        <div class="skill">CSS3</div>
-        <div class="skill">SQL</div>
-        <div class="skill">SQLite</div>
-        <div class="skill">REST API</div>
-        <div class="skill">OpenCV</div>
-        <div class="skill">GitHub</div>
+        <div class="skill-group">
+            <h3 class="skill-group-title"><i class="fa-solid fa-database"></i> Data &amp; APIs</h3>
+            <div class="chip-row">
+                <span class="chip">SQL</span>
+                <span class="chip">SQLite</span>
+                <span class="chip">REST API</span>
+                <span class="chip">OpenCV</span>
+            </div>
+        </div>
+
+        <div class="skill-group">
+            <h3 class="skill-group-title"><i class="fa-solid fa-wrench"></i> Tools</h3>
+            <div class="chip-row">
+                <span class="chip">Git</span>
+                <span class="chip">GitHub</span>
+                <span class="chip">VS Code</span>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section id="certificates" class="certificates">
+
+    <p class="eyebrow">Certificates</p>
+    <div class="certificate-grid">
+
+        <!-- Certificate 1 -->
+        <div class="certificate-card">
+            <div class="certificate-image">
+                <img src="images/certificates/udemy-chatgpt.jpg" alt="AI For Brand Storytelling">
+            </div>
+
+            <div class="certificate-content">
+                <h3>AI For Brand Storytelling Using ChatGPT</h3>
+
+                <p>
+                    Udemy • ExpertEase Global
+                </p>
+
+                <div class="certificate-tags">
+                    <span>ChatGPT</span>
+                    <span>AI</span>
+                    <span>Branding</span>
+                </div>
+
+                <a href="images/certificates/udemy-chatgpt.jpg"
+                   target="_blank"
+                   class="certificate-btn">
+                    View Certificate
+                </a>
+
+            </div>
+        </div>
+
+        <!-- Certificate 2 -->
+
+        <div class="certificate-card">
+
+            <div class="certificate-image">
+
+                <img src="images/certificates/copilot.jpg"
+                     alt="Microsoft Copilot">
+
+            </div>
+
+            <div class="certificate-content">
+
+                <h3>Microsoft Copilot and 10+ AI Assistants</h3>
+
+                <p>Udemy</p>
+
+                <div class="certificate-tags">
+
+                    <span>Copilot</span>
+
+                    <span>AI</span>
+
+                    <span>Productivity</span>
+
+                </div>
+
+                <a href="images/certificates/copilot.jpg"
+                   target="_blank"
+                   class="certificate-btn">
+
+                    View Certificate
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- Certificate 3 -->
+
+        <div class="certificate-card">
+
+            <div class="certificate-image">
+
+                <img src="images/certificates/tata-cybersecurity.jpg"
+                     alt="Cyber Security">
+
+            </div>
+
+            <div class="certificate-content">
+
+                <h3>Tata Cybersecurity Analyst Job Simulation</h3>
+
+                <p>Forage × Tata</p>
+
+                <div class="certificate-tags">
+
+                    <span>Cyber Security</span>
+
+                    <span>IAM</span>
+
+                    <span>Tata</span>
+
+                </div>
+
+                <a href="images/certificates/tata-cybersecurity.jpg"
+                   target="_blank"
+                   class="certificate-btn">
+
+                    View Certificate
+
+                </a>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -134,35 +301,76 @@
 
 <section id="projects">
 
-    <h2 class="section-title">Projects</h2>
-
+    <p class="eyebrow">Projects</p>
+    <h2 class="section-title">Recent Work</h2>
     <div class="project-grid">
-
         <div class="project-card">
-            <img src="images/face-attendance.png" width="300" height="220">
-            <h3>Face Recognition Attendance System</h3>
-            <p>
-                Attendance system using Python,
-                Django, OpenCV and REST APIs.
-            </p>
-
-            <div class="project-links">
-                <a href="https://face-detection-attendance-woad.vercel.app/home/">Live Demo</a>
-                <a href="https://github.com/Milan07xt/SEM-06">GitHub</a>
+            <div class="project-media">
+                <img src="images/face-attendance.png" alt="Face Recognition Attendance System" width="300" height="220">
+                <span class="badge badge-live"><span class="pulse-dot small"></span> LIVE</span>
+            </div>
+            <div class="project-body">
+                <h3>Face Recognition Attendance System</h3>
+                <p>
+                    Attendance system that recognizes faces in real time and logs
+                    records through a Django REST API.
+                </p>
+                <div class="chip-row small">
+                    <span class="chip">Python</span>
+                    <span class="chip">Django</span>
+                    <span class="chip">OpenCV</span>
+                    <span class="chip">REST API</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://face-detection-attendance-woad.vercel.app/home/" class="btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>
+                    <a href="https://github.com/Milan07xt/SEM-06" class="btn-link"><i class="fab fa-github"></i> Code</a>
+                </div>
             </div>
         </div>
 
         <div class="project-card">
-            <img src="images/hotel.jpeg">
-            <h3>Hotel Management Website</h3>
-            <p>
-                Responsive hotel website using
-                HTML, CSS and JavaScript.
-            </p>
+            <div class="project-media">
+                <img src="images/gym.jpeg" alt="Gym Management System" width="300" height="220">
+                <span class="badge badge-live"><span class="pulse-dot small"></span> LIVE</span>
+            </div>
+            <div class="project-body">
+                <h3>Gym Management System</h3>
+                <p>
+                    Django-based system for managing gym memberships, plans and
+                    payment tracking.
+                </p>
+                <div class="chip-row small">
+                    <span class="chip">Python</span>
+                    <span class="chip">Django</span>
+                    <span class="chip">SQLite3</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://django-gym-management-system-websit-one.vercel.app/" class="btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>
+                    <a href="https://github.com/Milan07xt/Django-Gym-Management-System-Website" class="btn-link"><i class="fab fa-github"></i> Code</a>
+                </div>
+            </div>
+        </div>
 
-            <div class="project-links">
-                <a href="#">Live Demo</a>
-                <a href="#">GitHub</a>
+        <div class="project-card">
+            <div class="project-media">
+                <img src="images/hotel.jpeg" alt="Hotel Management Website">
+                <span class="badge badge-wip">IN PROGRESS</span>
+            </div>
+            <div class="project-body">
+                <h3>Hotel Management Website</h3>
+                <p>
+                    Responsive hotel booking website built with HTML, CSS and
+                    JavaScript.
+                </p>
+                <div class="chip-row small">
+                    <span class="chip">HTML5</span>
+                    <span class="chip">CSS3</span>
+                    <span class="chip">JavaScript</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>
+                    <a href="#" class="btn-link"><i class="fab fa-github"></i> Code</a>
+                </div>
             </div>
         </div>
 
@@ -170,149 +378,158 @@
 
 </section>
 
-<section id="education" class="education">
+<section id="education" class="education-section">
 
-    <h2 class="section-title">
-        <span>🎓</span> Education
-    </h2>
+  <div class="edu-bg">
+    <span class="blob blob1"></span>
+    <span class="blob blob2"></span>
+    <span class="blob blob3"></span>
+    <div class="wave-light"></div>
+  </div>
+  <div class="edu-spotlight"></div>
 
-    <div class="education-container">
+  <p class="eyebrow reveal-up" style="--delay:0s">Education</p>
+  <div class="section-header reveal-up" style="--delay:0.05s">
+    <i class="fas fa-graduation-cap edu-float-icon"></i>
+    <h2 class="section-title">Academic Timeline</h2>  </div>
 
-        <!-- SSC -->
-        <div class="education-card">
-            <div class="edu-icon">
-                <i class="fas fa-school"></i>
-            </div>
-
-            <div class="edu-content">
-                <h3>Secondary School (SSC)</h3>
-
-                <h4>GSEB Board</h4>
-
-                <p>Year : 2021</p>
-
-                <div class="result">
-                    <span>Percentage :</span>
-                    <strong>67.49 PR</strong>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- HSC -->
-        <div class="education-card">
-            <div class="edu-icon">
-                <i class="fas fa-book"></i>
-            </div>
-
-            <div class="edu-content">
-                <h3>Higher Secondary (HSC)</h3>
-
-                <h4>Commerce Stream - GSEB</h4>
-
-                <p>Year : 2023</p>
-
-                <div class="result">
-                    <span>Percentage :</span>
-                    <strong>78.41 PR</strong>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- BSc IT -->
-        <div class="education-card big-card">
-
-            <div class="edu-icon">
-                <i class="fas fa-user-graduate"></i>
-            </div>
-
-            <div class="edu-content">
-
-                <h3>Bachelor of Science in Information Technology</h3>
-
-                <h4>Noble University, Junagadh</h4>
-
-                <p>2023 - 2026</p>
-
-                <table class="semester-table">
-
-                    <thead>
-                        <tr>
-                            <th>Semester</th>
-                            <th>Result</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        <tr>
-                            <td>Semester 1</td>
-                            <td>CGPA : 6.83<td>
-                        </tr>
-
-                        <tr>
-                            <td>Semester 2</td>
-                            <td>CGPA : 5.67</td>
-                        </tr>
-
-                        <tr>
-                            <td>Semester 3</td>
-                            <td>CGPA : 6.09</td>
-                        </tr>
-
-                        <tr>
-                            <td>Semester 4</td>
-                            <td>CGPA : 6.36</td>
-                        </tr>
-
-                        <tr>
-                            <td>Semester 5</td>
-                            <td>CGPA : 6.45</td>
-                        </tr>
-
-                        <tr>
-                            <td>Semester 6</td>
-                            <td>CGPA :6.67</td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-                <div class="overall">
-                    <h3>Overall CGPA : 6.35 / 10</h3>
-                </div>
-
-            </div>
-
-        </div>
-
+  <div class="education-timeline">
+    <div class="timeline-track">
+      <span class="timeline-pulse"></span>
     </div>
 
+    <div class="education-card reveal-up" style="--delay:0.1s">
+      <span class="timeline-dot"></span>
+      <div class="card-glass">
+        <span class="border-glow"></span>
+        <span class="card-shine"></span>
+        <span class="card-reflection"></span>
+        <div class="card-icon"><i class="fas fa-school"></i></div>
+        <div class="card-content">
+          <h3>Secondary School (SSC)</h3>
+          <p class="institution">GSEB Board</p>
+          <div class="card-meta">
+            <span class="year"><i class="fa-solid fa-calendar-days"></i> 2021</span>
+            <span class="score">67.49 <small>PR</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="education-card reveal-up" style="--delay:0.2s">
+      <span class="timeline-dot"></span>
+      <div class="card-glass">
+        <span class="border-glow"></span>
+        <span class="card-shine"></span>
+        <span class="card-reflection"></span>
+        <div class="card-icon"><i class="fas fa-book"></i></div>
+        <div class="card-content">
+          <h3>Higher Secondary (HSC)</h3>
+          <p class="institution">Commerce Stream - GSEB</p>
+          <div class="card-meta">
+            <span class="year"><i class="fa-solid fa-calendar-days"></i> 2023</span>
+            <span class="score">78.41 <small>PR</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="education-card wide reveal-up" style="--delay:0.3s">
+      <span class="timeline-dot"></span>
+      <div class="card-glass">
+        <span class="border-glow"></span>
+        <span class="card-shine"></span>
+        <span class="card-reflection"></span>
+
+        <div class="degree-top">
+          <div class="card-icon"><i class="fas fa-university"></i></div>
+
+          <div class="cgpa-ring-wrap">
+            <svg class="cgpa-ring" viewBox="0 0 120 120">
+              <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="ring-fill" cx="60" cy="60" r="52" data-value="6.35" data-max="10"></circle>
+            </svg>
+            <div class="cgpa-text">
+              <span class="cgpa-num">6.35</span>
+              <span class="cgpa-label">CGPA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <h3>Bachelor of Science in Information Technology</h3>
+          <p class="institution">Noble University, Junagadh</p>
+          <p class="year"><i class="fa-solid fa-calendar-days"></i> 2023 - 2026</p>
+
+          <div class="semester-grid">
+            <p class="sem-title">Semester-wise CGPA</p>
+            <div class="sem-cards">
+              <div class="sem-card" style="--val:68.3%; --d:0s">
+                <span class="sem-shine"></span>
+                <span class="sem-label">Sem 1</span>
+                <span class="sem-value">6.83</span>
+                <span class="sem-bar"></span>
+              </div>
+              <div class="sem-card" style="--val:56.7%; --d:0.08s">
+                <span class="sem-shine"></span>
+                <span class="sem-label">Sem 2</span>
+                <span class="sem-value">5.67</span>
+                <span class="sem-bar"></span>
+              </div>
+              <div class="sem-card" style="--val:60.9%; --d:0.16s">
+                <span class="sem-shine"></span>
+                <span class="sem-label">Sem 3</span>
+                <span class="sem-value">6.09</span>
+                <span class="sem-bar"></span>
+              </div>
+              <div class="sem-card" style="--val:63.6%; --d:0.24s">
+                <span class="sem-shine"></span>
+                <span class="sem-label">Sem 4</span>
+                <span class="sem-value">6.36</span>
+                <span class="sem-bar"></span>
+              </div>
+              <div class="sem-card" style="--val:64.5%; --d:0.32s">
+                <span class="sem-shine"></span>
+                <span class="sem-label">Sem 5</span>
+                <span class="sem-value">6.45</span>
+                <span class="sem-bar"></span>
+              </div>
+              <div class="sem-card" style="--val:66.7%; --d:0.4s">
+                <span class="sem-shine"></span>
+                <span class="sem-label">Sem 6</span>
+                <span class="sem-value">6.67</span>
+                <span class="sem-bar"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="contact">
 
-    <h2 class="section-title">Contact Me</h2>
+    <p class="eyebrow">Contact</p>
+    <h2 class="section-title">Get In Touch</h2>
 
     <div class="contact-grid">
 
-        <div class="contact-card">
+        <a href="mailto:rathodmilan216@gmail.com" class="contact-card">
             <i class="fa-solid fa-envelope"></i>
-            <h3>Email</h3>
+            <h3>email</h3>
             <p>rathodmilan216@gmail.com</p>
-        </div>
+        </a>
 
-        <div class="contact-card">
+        <a href="tel:+919327599254" class="contact-card">
             <i class="fa-solid fa-phone"></i>
-            <h3>Phone</h3>
+            <h3>phone</h3>
             <p>+91 9327599254</p>
-        </div>
+        </a>
 
         <div class="contact-card">
             <i class="fa-solid fa-location-dot"></i>
-            <h3>Location</h3>
+            <h3>location</h3>
             <p>Junagadh, Gujarat</p>
         </div>
 
@@ -321,7 +538,7 @@
 </section>
 
 <footer>
-    © 2026 Milan Rathod. All Rights Reserved.
+    <p>© 2026 Milan Rathod. All Rights Reserved.</p>
 </footer>
 
 <script src="script.js"></script>
