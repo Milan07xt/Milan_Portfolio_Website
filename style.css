@@ -801,9 +801,11 @@ nav{
     background: linear-gradient(45deg, var(--amber), var(--green), var(--amber-dim), var(--amber));
     background-size: 300%;
     animation: borderMove 8s linear infinite;
+    /* cross-browser mask for the animated border (keeps inner content visible) */
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    -webkit-mask-composite: xor; /* Safari */
+    mask-composite: exclude; /* standard */
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
@@ -949,6 +951,83 @@ nav{
 }
 
 .contact-card p{ font-size: 0.95rem; }
+
+.contact-form-wrap{
+    margin-top: 36px;
+    max-width: 900px;
+    width: 520px; /* slightly wider card for desktop */
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease;
+    will-change: transform;
+    transform-style: preserve-3d;
+    perspective: 1200px;
+}
+.contact-form{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));
+    border: 1px solid var(--line);
+    padding: 22px;
+    border-radius: 12px;
+    display: grid;
+    gap: 12px;
+    animation: formRise 0.7s cubic-bezier(0.16,1,0.3,1) both;
+}
+.contact-form .form-row{
+    display: flex;
+    flex-direction: column;
+}
+.contact-form label{
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form textarea{
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    height: 36px;
+}
+.contact-form input:focus,
+.contact-form textarea:focus{
+    border-color: var(--amber);
+    box-shadow: 0 6px 18px rgba(var(--amber-rgb),0.08);
+    transform: translateY(-2px);
+}
+.contact-form textarea{ resize: vertical; min-height: 120px; height: auto; }
+.contact-form input::placeholder, .contact-form textarea::placeholder{ color: var(--text-faint); }
+.contact-form .form-actions{
+    display: flex; align-items: center; gap: 16px; margin-top: 8px;
+}
+.contact-form .form-actions #formStatus{ color: var(--text-dim); font-family: var(--font-mono); }
+
+/* Button appearance to match site */
+.contact-form .btn.primary{ padding: 12px 22px; border-radius: 10px; transform-origin: left center; transition: transform 0.18s ease; }
+.contact-form .btn.primary:hover{ transform: translateY(-2px) scale(1.02); }
+
+@keyframes formRise{
+    from{ opacity: 0; transform: translateY(18px); }
+    to{ opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 880px){
+    .contact-form{ padding: 16px; }
+    .contact-form-wrap{ padding: 0 8px; width: 100%; }
+}
+
+/* Staggered reveal for contact cards */
+.contact-grid .contact-card:nth-child(1){ transition-delay: 0s; }
+.contact-grid .contact-card:nth-child(2){ transition-delay: 0.08s; }
+.contact-grid .contact-card:nth-child(3){ transition-delay: 0.16s; }
+
+/* Inner elements should have smooth transform transitions for parallax */
+.contact-form input, .contact-form textarea, .contact-form label, .contact-form .btn{ transition: transform 0.18s ease, box-shadow 0.18s ease; }
 
 /* ================================================================
    FOOTER
@@ -1177,6 +1256,8 @@ footer{
     background: linear-gradient(135deg, var(--amber), transparent 40%, transparent 60%, var(--green));
     opacity: 0;
     transition: opacity 0.4s ease;
+    /* cross-browser mask for the border glow */
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;

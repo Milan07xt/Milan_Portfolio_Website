@@ -354,3 +354,85 @@ if(themeBtn){
 
     stats.forEach(el => observer.observe(el));
 })();
+
+// ---------------------------------------------------------------
+// Contact form submission
+// ---------------------------------------------------------------
+(function initContactForm(){
+    const form = document.getElementById('contactForm');
+    const statusEl = document.getElementById('formStatus');
+    if(!form) return;
+
+    form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const data = {
+            name: form.name.value.trim(),
+            email: form.email.value.trim(),
+            number: form.number.value.trim(),
+            subject: form.subject.value.trim(),
+            message: form.message.value.trim()
+        };
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        statusEl.textContent = 'Sending...';
+
+        try{
+            const res = await fetch('http://localhost:3000/submit-contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if(res.ok){
+                statusEl.textContent = 'Message sent — thank you!';
+                form.reset();
+            }else{
+                const txt = await res.text();
+                statusEl.textContent = 'Error: ' + (txt || res.statusText);
+            }
+        }catch(err){
+            statusEl.textContent = 'Network error — is the server running?';
+            console.error(err);
+        }finally{
+            submitBtn.disabled = false;
+            setTimeout(()=> statusEl.textContent = '', 5000);
+        }
+    });
+})();
+
+// ---------------------------------------------------------------
+// 3D tilt for contact form card specifically
+// ---------------------------------------------------------------
+(function initContactTilt(){
+    if(prefersReducedMotion) return;
+    if(window.matchMedia('(hover: none)').matches) return;
+
+    const formWrap = document.querySelector('.contact-form-wrap');
+    if(!formWrap) return;
+
+    // stronger tilt for the contact card
+    const maxTilt = 12;
+    formWrap.addEventListener('mousemove', e=>{
+        const rect = formWrap.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rotateY = ((x / rect.width) - 0.5) * maxTilt;
+        const rotateX = ((y / rect.height) - 0.5) * -maxTilt;
+        formWrap.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+        formWrap.style.boxShadow = `0 30px 80px rgba(0,0,0,0.45), 0 0 40px rgba(${getComputedStyle(document.documentElement).getPropertyValue('--amber-rgb')},0.06)`;
+        // subtle parallax for inner inputs
+        const inputs = formWrap.querySelectorAll('input, textarea, label, .btn');
+        inputs.forEach((el, i)=>{
+            const depth = (i % 4) * 0.6; // slight depth variation
+            const moveX = ((x / rect.width) - 0.5) * (maxTilt * 0.6) * (depth / 2);
+            const moveY = ((y / rect.height) - 0.5) * (maxTilt * 0.3) * (depth / 2);
+            el.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+        });
+    });
+    formWrap.addEventListener('mouseleave', ()=>{
+        formWrap.style.transform = '';
+        formWrap.style.boxShadow = '';
+        const inputs = formWrap.querySelectorAll('input, textarea, label, .btn');
+        inputs.forEach(el=> el.style.transform = '');
+    });
+})();

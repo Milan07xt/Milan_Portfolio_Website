@@ -1,0 +1,15 @@
+{
+  "name": "milan-portfolio-contact-server",
+  "version": "1.0.0",
+  "description": "Local server to accept contact form submissions and append to contact.csv",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Milan",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
