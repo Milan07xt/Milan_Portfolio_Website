@@ -97,6 +97,47 @@ if(themeBtn){
 })();
 
 // ---------------------------------------------------------------
+// RESUME SECTION — Scroll reveal + mouse-light spotlight
+// ---------------------------------------------------------------
+(function initResumeEffects(){
+
+    const resumeSection = document.querySelector(".resume-section");
+    if(!resumeSection) return;
+
+    const revealTargets = resumeSection.querySelectorAll(".reveal-up");
+
+    const revealObserver = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+            if(entry.isIntersecting){
+                entry.target.classList.add("in-view");
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: "0px 0px -80px 0px"
+    });
+
+    revealTargets.forEach(target => revealObserver.observe(target));
+
+    if(prefersReducedMotion) return;
+
+    resumeSection.addEventListener("mousemove", (e)=>{
+        const rect = resumeSection.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        resumeSection.style.setProperty("--mx", x + "%");
+        resumeSection.style.setProperty("--my", y + "%");
+    });
+
+    resumeSection.addEventListener("mouseleave", ()=>{
+        resumeSection.style.setProperty("--mx", "50%");
+        resumeSection.style.setProperty("--my", "40%");
+    });
+
+})();
+
+// ---------------------------------------------------------------
 // Generic scroll reveal for other sections (fade-up on first view)
 // ---------------------------------------------------------------
 (function initGeneralReveal(){

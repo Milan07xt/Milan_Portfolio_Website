@@ -955,7 +955,7 @@ nav{
 .contact-form-wrap{
     margin-top: 36px;
     max-width: 900px;
-    width: 520px; /* slightly wider card for desktop */
+ 
     transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease;
     will-change: transform;
     transform-style: preserve-3d;
@@ -1513,6 +1513,172 @@ footer{
 }
 
 .sem-card:hover .sem-shine{ left: 130%; }
+
+/* ================================================================
+   RESUME SECTION — Lighting & Parallax Effects
+   ================================================================ */
+
+.resume-section {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.resume-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.resume-light-1 {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(var(--amber-rgb), 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    top: -150px;
+    right: -100px;
+    filter: blur(80px);
+    animation: lightFloat1 16s ease-in-out infinite;
+}
+
+.resume-light-2 {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(61, 220, 132, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    bottom: -80px;
+    left: -120px;
+    filter: blur(80px);
+    animation: lightFloat2 14s ease-in-out infinite;
+    animation-delay: -3s;
+}
+
+@keyframes lightFloat1 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-40px, 30px); }
+}
+
+@keyframes lightFloat2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(50px, -40px); }
+}
+
+.resume-spotlight {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(
+        600px circle at var(--mx, 50%) var(--my, 40%),
+        rgba(var(--amber-rgb), 0.12),
+        transparent 60%
+    );
+    transition: background 0.1s ease-out;
+}
+
+.resume-container {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.resume-image-wrapper {
+    perspective: 1200px;
+}
+
+.resume-frame {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--line);
+    background: var(--panel);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.4s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.resume-frame:hover {
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5),
+                0 0 50px rgba(var(--amber-rgb), 0.2);
+    border-color: var(--amber-dim);
+}
+
+.resume-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.resume-frame:hover .resume-image {
+    transform: scale(1.03);
+}
+
+.resume-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, 
+        rgba(var(--amber-rgb), 0.1) 0%,
+        transparent 50%,
+        rgba(61, 220, 132, 0.05) 100%);
+    pointer-events: none;
+    border-radius: 16px;
+}
+
+.resume-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent,
+        rgba(255, 255, 255, 0.15),
+        transparent);
+    transform: skewX(-20deg);
+    transition: left 0.8s ease;
+    pointer-events: none;
+}
+
+.resume-frame:hover .resume-shine {
+    left: 120%;
+}
+
+.resume-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.resume-actions .btn {
+    justify-content: center;
+    font-size: 1rem;
+    padding: 14px 28px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 1000px) {
+    .resume-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .resume-actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
 
 /* ================================================================
    RESPONSIVE
