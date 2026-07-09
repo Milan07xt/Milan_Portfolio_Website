@@ -7,8 +7,8 @@ const roles = [
     "Python Developer",
     "Django Developer",
     "Backend Developer",
-    "REST API Developer",
     "AI Engineer",
+    "REST API Developer"
 ];
 
 let roleIndex = 0;
