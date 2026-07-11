@@ -478,3 +478,111 @@ if(themeBtn){
         inputs.forEach(el=> el.style.transform = '');
     });
 })();
+
+// ---------------------------------------------------------------
+// ScrollSpy Navigation
+// ---------------------------------------------------------------
+(function initScrollSpy() {
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-links a");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute("id");
+                navLinks.forEach(link => {
+                    link.classList.remove("active");
+                    if (link.getAttribute("href") === `#${id}`) {
+                        link.classList.add("active");
+                    }
+                });
+            }
+        });
+    }, {
+        threshold: 0.3,
+        rootMargin: "-20% 0px -60% 0px"
+    });
+
+    sections.forEach(section => observer.observe(section));
+})();
+
+// ---------------------------------------------------------------
+// Canvas Particle Network Background
+// ---------------------------------------------------------------
+(function initParticleNetwork() {
+    const canvas = document.getElementById("hero-canvas");
+    if (!canvas || prefersReducedMotion) return;
+
+    const ctx = canvas.getContext("2d");
+    let width, height;
+    let particles = [];
+    
+    // Config
+    const PARTICLE_COUNT = 50;
+    const CONNECT_DISTANCE = 120;
+
+    function resize() {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+    }
+    
+    window.addEventListener("resize", resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 1.5;
+            this.vy = (Math.random() - 0.5) * 1.5;
+            this.size = Math.random() * 2 + 1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--amber').trim() || "#e3a83b";
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push(new Particle());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+        
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < CONNECT_DISTANCE) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    const alpha = 1 - (dist / CONNECT_DISTANCE);
+                    const colorStr = getComputedStyle(document.documentElement).getPropertyValue('--amber-rgb').trim() || "227,168,59";
+                    ctx.strokeStyle = `rgba(${colorStr}, ${alpha * 0.4})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+})();
