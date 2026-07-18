@@ -1951,3 +1951,555 @@ footer{
 @media (max-width: 600px){
     .stats-strip{ grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ================================================================
+   INTERACTIVE UPGRADE STYLES (Tabs, CLI, Webcam Scan, Modals, Git)
+   ================================================================ */
+
+/* Terminal Tab System */
+.terminal-dots {
+    display: flex;
+    gap: 6px;
+    padding-left: 12px;
+}
+.terminal-tabs {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+    padding-right: 12px;
+}
+.term-tab {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.term-tab:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+}
+.term-tab.active {
+    background: var(--panel-2);
+    color: var(--amber);
+    border: 1px solid var(--line-soft);
+}
+.terminal-tab-content {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+.terminal-tab-content.active {
+    display: block;
+}
+
+/* CLI console terminal styling */
+.cli-body {
+    padding: 20px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    background: #06090f;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    color: #3ddc84;
+}
+#cli-output {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 12px;
+    scrollbar-width: thin;
+    text-align: left;
+}
+.cli-row {
+    margin-bottom: 8px;
+    line-height: 1.4;
+    word-break: break-all;
+}
+.cli-prompt {
+    color: var(--amber);
+    font-weight: 600;
+}
+.cli-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-top: 1px solid rgba(61, 220, 132, 0.15);
+    padding-top: 10px;
+}
+#terminal-cli-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    outline: none;
+}
+.cli-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 15px;
+    margin: 8px 0;
+    align-items: center;
+}
+.cli-ascii {
+    color: var(--amber);
+    line-height: 1.2;
+    white-space: pre;
+    font-size: 0.72rem;
+}
+.cli-info-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--text-dim);
+    text-align: left;
+}
+
+/* Retro Green Cybersecurity Hack mode */
+body.hack-theme {
+    --amber: #3ddc84 !important;
+    --amber-rgb: 61, 220, 132 !important;
+    filter: hue-rotate(90deg) contrast(1.1) brightness(0.95);
+}
+
+/* Webcam Scanner HUD overlay styling */
+.vision-body {
+    padding: 10px;
+    background: #06090f;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.scanner-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid var(--line-soft);
+}
+#scanner-canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.scanner-controls {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+.btn-scan, .primary-scan {
+    background: var(--amber);
+    color: #17130a;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(var(--amber-rgb), 0.3);
+    transition: var(--transition);
+}
+.btn-scan:hover, .primary-scan:hover {
+    transform: translateY(-2px);
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(var(--amber-rgb), 0.4);
+}
+
+/* GitHub Dashboard styling */
+.github-dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 30px;
+}
+.github-profile-card {
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+}
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.github-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid var(--amber);
+    object-fit: cover;
+}
+.profile-meta h3 {
+    font-size: 1.4rem;
+    font-family: var(--font-display);
+    color: var(--text);
+    margin: 0;
+}
+.profile-meta p {
+    margin: 4px 0 0 0;
+}
+.profile-meta a {
+    color: var(--amber);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+.profile-meta a:hover {
+    color: #fff;
+}
+.github-bio {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+.profile-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    background: var(--panel-2);
+    padding: 15px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line-soft);
+    text-align: center;
+}
+.p-stat-num {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+}
+.p-stat-label {
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+    display: block;
+}
+.github-languages-card {
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    text-align: left;
+}
+.github-languages-card h3 {
+    font-size: 1.2rem;
+    margin: 0 0 20px 0;
+    font-family: var(--font-display);
+}
+.languages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.lang-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.9rem;
+}
+.lang-name {
+    width: 90px;
+    color: var(--text-dim);
+}
+.lang-bar-wrap {
+    flex: 1;
+    height: 8px;
+    background: var(--panel-2);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+.lang-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease-out;
+}
+.lang-pct {
+    width: 40px;
+    text-align: right;
+    font-family: var(--font-mono);
+    color: var(--text);
+}
+.github-repos-section {
+    margin-top: 40px;
+    text-align: left;
+}
+.github-repos-section h3 {
+    font-size: 1.2rem;
+    margin: 0 0 20px 0;
+    font-family: var(--font-display);
+}
+.github-repos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+.repo-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--text-faint);
+    padding: 40px 0;
+}
+.repo-card {
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    padding: 22px;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 160px;
+    text-align: left;
+}
+.repo-card:hover {
+    border-color: var(--amber-dim);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+.repo-card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+.repo-card-head h4 {
+    font-size: 1.05rem;
+    color: var(--text);
+    margin: 0;
+}
+.repo-card-head h4 a {
+    color: inherit;
+    text-decoration: none;
+}
+.repo-card-head h4 a:hover {
+    color: var(--amber);
+}
+.repo-icon-git {
+    color: var(--amber);
+    font-size: 1.1rem;
+}
+.repo-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.4;
+    margin: 12px 0;
+    flex-grow: 1;
+}
+.repo-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    margin-top: 10px;
+}
+.repo-lang {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-dim);
+}
+.repo-lang-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+.repo-stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-faint);
+}
+.repo-stats span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Case Study Modals styling */
+.project-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2500;
+    background: rgba(10, 13, 19, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 20px;
+}
+.project-modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+.project-modal-container {
+    width: 100%;
+    max-width: 900px;
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    box-shadow: 0 30px 100px rgba(0,0,0,0.6);
+    transform: translateY(30px) scale(0.96);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    text-align: left;
+}
+.project-modal-overlay.open .project-modal-container {
+    transform: translateY(0) scale(1);
+}
+.modal-close-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background: var(--panel-2);
+    border: 1px solid var(--line-soft);
+    color: var(--text);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: var(--transition);
+    z-index: 10;
+}
+.modal-close-btn:hover {
+    background: #ff5e57;
+    color: #fff;
+    border-color: #ff5e57;
+    transform: rotate(90deg);
+}
+.modal-header {
+    margin-bottom: 30px;
+    padding-right: 40px;
+    text-align: left;
+}
+.modal-category {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+.modal-header h2 {
+    font-size: 2.2rem;
+    font-family: var(--font-display);
+    margin: 8px 0 20px 0;
+}
+.modal-links {
+    display: flex;
+    gap: 15px;
+}
+.modal-links .btn {
+    font-size: 0.88rem;
+    padding: 10px 20px;
+}
+.modal-content-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+    text-align: left;
+}
+.modal-body-left h3, .modal-body-right h4 {
+    font-size: 1.15rem;
+    font-family: var(--font-display);
+    color: var(--text);
+    margin-bottom: 12px;
+}
+.modal-body-left h3 {
+    margin-top: 25px;
+}
+.modal-body-left h3:first-of-type {
+    margin-top: 0;
+}
+.modal-body-left p {
+    color: var(--text-dim);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+.modal-list {
+    list-style: none;
+    margin: 12px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+}
+.modal-list li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 0.92rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    text-align: left;
+}
+.modal-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--amber);
+    font-weight: bold;
+}
+.architecture-card {
+    padding: 20px;
+    border-radius: var(--radius-md);
+    margin-bottom: 25px;
+    text-align: left;
+}
+.architecture-card h4 i {
+    color: var(--amber);
+    margin-right: 6px;
+}
+.architecture-card p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    font-family: var(--font-mono);
+}
+.tech-tags-container .chip-row {
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .github-dashboard {
+        grid-template-columns: 1fr;
+    }
+    .modal-content-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}

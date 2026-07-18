@@ -89,15 +89,21 @@
             <a href="mailto:rathodmilan216@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
         </div>
 
-    </div>
-
-    <div class="hero-visual">
+    </div>    <div class="hero-visual">
         <div class="hero-terminal">
             <div class="terminal-head">
-                <span class="dot red"></span><span class="dot amber"></span><span class="dot green"></span>
-                <span class="terminal-title">Profile.json</span>
+                <div class="terminal-dots">
+                    <span class="dot red"></span><span class="dot amber"></span><span class="dot green"></span>
+                </div>
+                <div class="terminal-tabs">
+                    <button class="term-tab active" data-tab="json"><i class="fa-solid fa-code"></i> Profile.json</button>
+                    <button class="term-tab" data-tab="cli"><i class="fa-solid fa-terminal"></i> Terminal CLI</button>
+                    <button class="term-tab" data-tab="vision"><i class="fa-solid fa-camera"></i> OpenCV Scan</button>
+                </div>
             </div>
-            <pre class="terminal-body"><span class="tk-comment">GET</span> /api/v1/developer
+            
+            <div class="terminal-tab-content active" id="tab-json">
+                <pre class="terminal-body"><span class="tk-comment">GET</span> /api/v1/developer
 
 <span class="tk-status">200 OK</span>
 <span class="tk-brace">{</span>
@@ -108,8 +114,51 @@
   <span class="tk-key">"Location"</span>: <span class="tk-string">"Gujarat, IN"</span>,
   <span class="tk-key">"Status"</span>: <span class="tk-string">"open_to_work"</span>
 <span class="tk-brace">}</span><span class="term-cursor">▌</span></pre>
+            </div>
+
+            <div class="terminal-tab-content" id="tab-cli">
+                <div class="terminal-body cli-body">
+                    <div id="cli-output">
+                        <div class="cli-row text-dim">Milan Personal Shell [Version 1.0.0]</div>
+                        <div class="cli-row text-dim">Type 'help' to view available commands.</div>
+                        <br>
+                        <div class="cli-row"><span class="cli-prompt">milan@portfolio:~$</span> neofetch</div>
+                        <div class="cli-info-grid">
+                            <pre class="cli-ascii">
+   /\_/\
+  ( o.o )
+   > ^ <
+  MILAN-OS
+                            </pre>
+                            <div class="cli-info-details">
+                                <div><span class="accent">Milan Rathod</span></div>
+                                <div>OS: Ubuntu 22.04 LTS (Local)</div>
+                                <div>Shell: bash / zsh</div>
+                                <div>Stack: Python, Django, DRF, SQL</div>
+                                <div>Role: Backend / CV Fresher</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cli-input-row">
+                        <span class="cli-prompt">milan@portfolio:~$</span>
+                        <input type="text" id="terminal-cli-input" autocomplete="off" spellcheck="false" placeholder="type a command...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="terminal-tab-content" id="tab-vision">
+                <div class="terminal-body vision-body">
+                    <div class="scanner-container">
+                        <video id="webcam-feed" autoplay playsinline muted style="display:none;"></video>
+                        <canvas id="scanner-canvas"></canvas>
+                        <div class="scanner-controls">
+                            <button id="toggle-camera-btn" class="btn primary-scan"><i class="fa-solid fa-video"></i> Start Camera</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </div></div>
 
 </section>
 
@@ -493,10 +542,65 @@
 
 <section id="github">
     <p class="eyebrow reveal-up">Open Source</p>
-    <h2 class="section-title reveal-up">GitHub Stats</h2>
-    <div class="github-container reveal-up">
-        <img src="https://github-readme-stats.vercel.app/api?username=Milan07xt&show_icons=true&theme=transparent&hide_border=true&title_color=e3a83b&text_color=eef1f6&icon_color=3ddc84&bg_color=0a0d13" alt="Milan's GitHub Stats" class="github-stat-card">
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Milan07xt&layout=compact&theme=transparent&hide_border=true&title_color=e3a83b&text_color=eef1f6&bg_color=0a0d13" alt="Milan's Top Languages" class="github-stat-card">
+    <h2 class="section-title reveal-up">GitHub Profile & Repositories</h2>
+    
+    <div class="github-dashboard reveal-up">
+        <!-- Profile summary card -->
+        <div class="github-profile-card glass">
+            <div class="profile-header">
+                <img id="github-avatar" src="images/gym.jpeg" alt="Milan's Avatar" class="github-avatar">
+                <div class="profile-meta">
+                    <h3 id="github-name">Milan Rathod</h3>
+                    <p><a id="github-username" href="https://github.com/Milan07xt" target="_blank">@Milan07xt</a></p>
+                </div>
+            </div>
+            <p id="github-bio" class="github-bio">Python / Django Developer. Building backend systems & computer-vision applications.</p>
+            <div class="profile-stats-grid">
+                <div class="p-stat">
+                    <span id="github-repos-count" class="p-stat-num">3+</span>
+                    <span class="p-stat-label">Repositories</span>
+                </div>
+                <div class="p-stat">
+                    <span id="github-followers" class="p-stat-num">1</span>
+                    <span class="p-stat-label">Followers</span>
+                </div>
+                <div class="p-stat">
+                    <span id="github-stars" class="p-stat-num">5</span>
+                    <span class="p-stat-label">Stars Received</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Languages & stats visual card -->
+        <div class="github-languages-card glass">
+            <h3>Top Languages</h3>
+            <div id="github-languages-list" class="languages-list">
+                <div class="lang-item">
+                    <span class="lang-name">Python</span>
+                    <div class="lang-bar-wrap"><div class="lang-bar" style="width: 72%; background: #3572A5;"></div></div>
+                    <span class="lang-pct">72%</span>
+                </div>
+                <div class="lang-item">
+                    <span class="lang-name">JavaScript</span>
+                    <div class="lang-bar-wrap"><div class="lang-bar" style="width: 16%; background: #f1e05a;"></div></div>
+                    <span class="lang-pct">16%</span>
+                </div>
+                <div class="lang-item">
+                    <span class="lang-name">HTML / CSS</span>
+                    <div class="lang-bar-wrap"><div class="lang-bar" style="width: 12%; background: #e34c26;"></div></div>
+                    <span class="lang-pct">12%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dynamic Repositories Grid -->
+    <div class="github-repos-section reveal-up">
+        <h3>Featured Repositories</h3>
+        <div id="github-repos-grid" class="github-repos-grid">
+            <!-- Loaded dynamically in script.js, with offline fallbacks -->
+            <div class="repo-loading">Loading live repositories...</div>
+        </div>
     </div>
 </section>
 
@@ -840,6 +944,46 @@
     <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Change accent color">
         <i class="fa-solid fa-palette"></i>
     </button>
+</div>
+
+<!-- Project Case Study Modal -->
+<div id="projectModal" class="project-modal-overlay">
+    <div class="project-modal-container glass">
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="modal-header">
+            <span class="modal-category" id="modalCategory">Python / Django / OpenCV</span>
+            <h2 id="modalTitle" class="gradient-text">Project Title</h2>
+            <div class="modal-links">
+                <a href="#" id="modalLiveLink" target="_blank" class="btn primary"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>
+                <a href="#" id="modalCodeLink" target="_blank" class="btn secondary"><i class="fab fa-github"></i> View Code</a>
+            </div>
+        </div>
+        <div class="modal-content-grid">
+            <div class="modal-body-left">
+                <h3>Overview</h3>
+                <p id="modalDesc">Detailed description of project goes here...</p>
+                
+                <h3>Key Features & Details</h3>
+                <ul id="modalFeatures" class="modal-list">
+                    <!-- Dynamic -->
+                </ul>
+            </div>
+            <div class="modal-body-right">
+                <div class="architecture-card glass">
+                    <h4><i class="fa-solid fa-network-wired"></i> System & Data Architecture</h4>
+                    <p id="modalArchitecture">Details of SQLite database schema, REST endpoints, backend handling...</p>
+                </div>
+                <div class="tech-tags-container">
+                    <h4>Tech Stack</h4>
+                    <div id="modalTags" class="chip-row">
+                        <!-- Dynamic -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="script.js"></script>
