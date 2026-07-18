@@ -586,3 +586,684 @@ if(themeBtn){
     }
     animate();
 })();
+
+// ===============================================================
+// INTERACTIVE PORTFOLIO FEATURES
+// ===============================================================
+
+// 1. Terminal Tab Switching
+(function initTerminalTabs() {
+    const tabs = document.querySelectorAll(".term-tab");
+    const contents = document.querySelectorAll(".terminal-tab-content");
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            const target = tab.getAttribute("data-tab");
+            
+            tabs.forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+
+            contents.forEach(c => {
+                c.classList.remove("active");
+                if (c.getAttribute("id") === `tab-${target}`) {
+                    c.classList.add("active");
+                }
+            });
+
+            if (target === "cli") {
+                const input = document.getElementById("terminal-cli-input");
+                if (input) input.focus();
+            }
+        });
+    });
+})();
+
+// 2. CLI Command Prompt
+(function initTerminalCLI() {
+    const input = document.getElementById("terminal-cli-input");
+    const output = document.getElementById("cli-output");
+    if (!input || !output) return;
+
+    const commandHistory = [];
+    let historyIndex = -1;
+
+    const commands = {
+        help: () => `
+Available commands:
+  <span class="accent">help</span>             - Show list of available commands
+  <span class="accent">about</span>            - Info about Milan Rathod
+  <span class="accent">skills</span>           - List developer technical skills
+  <span class="accent">projects</span>         - Brief listing of Milan's projects
+  <span class="accent">certificates</span>     - View certifications
+  <span class="accent">contact</span>          - Contact email and phone number
+  <span class="accent">download-resume</span>  - Trigger resume file download
+  <span class="accent">clear</span>            - Clear screen
+  <span class="accent">hack-mode</span>        - Toggle retro cybersecurity green theme
+`,
+        about: () => `
+Milan Rathod is a B.ScIT graduate (Class of 2026) specializing in backend systems (Python/Django) and computer-vision toolings (OpenCV).
+Currently looking for a fresher developer role.
+`,
+        skills: () => `
+Technical Skills:
+  - Languages  : Python, JavaScript, SQL, HTML5, CSS3
+  - Frameworks : Django, Django REST Framework (DRF)
+  - Databases  : SQLite3, MySQL
+  - Vision/ML  : OpenCV (Face recognition, image processing)
+  - Tools      : Git, GitHub, VS Code
+`,
+        projects: () => `
+Featured Projects:
+  1. <span class="accent">Face Attendance System</span> - OpenCV + Django REST API face logging.
+  2. <span class="accent">Gym Management System</span> - Membership tracking with Django & SQL.
+  3. <span class="accent">Hotel Website</span> - Modern responsive booking site.
+Type "projects [number]" or click on cards below for full case-studies!
+`,
+        certificates: () => `
+Certifications:
+  - NASSCOM: Information Security Analyst, Network Security Engineer, IoT Security Analyst
+  - Forage: Tata Cybersecurity Analyst Job Simulation
+  - Udemy: AI DevOps Analyst, Windows Command Mastery, Microsoft Copilot
+`,
+        contact: () => `
+Contact Details:
+  - Email : <a href="mailto:rathodmilan216@gmail.com" class="accent">rathodmilan216@gmail.com</a>
+  - Phone : +91 9327599254
+  - Place : Junagadh, Gujarat, India
+`,
+        "download-resume": () => {
+            const link = document.createElement('a');
+            link.href = 'resume/Milankumar_Rathod_Resume 03 (1).pdf';
+            link.download = 'Milankumar_Rathod_Resume.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            return "Downloading resume PDF...";
+        },
+        clear: () => {
+            output.innerHTML = '';
+            return '';
+        },
+        "hack-mode": () => {
+            document.body.classList.toggle("hack-theme");
+            const isHack = document.body.classList.contains("hack-theme");
+            return isHack 
+                ? "<span style='color:#3ddc84;'>CYBERSECURITY HACK MODE INITIATED. Theme accent colors overridden.</span>" 
+                : "Cybersecurity theme disabled. Standard accent colors restored.";
+        }
+    };
+
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            const value = input.value.trim();
+            input.value = "";
+            if (!value) return;
+
+            const cmdRow = document.createElement("div");
+            cmdRow.className = "cli-row";
+            cmdRow.innerHTML = `<span class="cli-prompt">milan@portfolio:~$</span> ${escapeHTML(value)}`;
+            output.appendChild(cmdRow);
+
+            commandHistory.push(value);
+            historyIndex = commandHistory.length;
+
+            const cmdParts = value.split(" ");
+            const mainCmd = cmdParts[0].toLowerCase();
+            
+            let response = "";
+            if (commands[mainCmd]) {
+                response = commands[mainCmd]();
+            } else if (mainCmd === "neofetch") {
+                response = `
+   /\\_/\\
+  ( o.o )
+   > ^ <
+  MILAN-OS
+--------------------
+OS: Ubuntu 22.04 LTS (Local)
+Shell: zsh / bash
+Stack: Python, Django, DRF, SQL
+Role: Backend / CV Fresher
+`;
+            } else {
+                response = `Command not found: '${escapeHTML(mainCmd)}'. Type 'help' to see list of valid commands.`;
+            }
+
+            if (response) {
+                const respRow = document.createElement("div");
+                respRow.className = "cli-row";
+                respRow.innerHTML = response.trim().replace(/\n/g, "<br>");
+                output.appendChild(respRow);
+            }
+
+            output.scrollTop = output.scrollHeight;
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (historyIndex > 0) {
+                historyIndex--;
+                input.value = commandHistory[historyIndex];
+            }
+        } else if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (historyIndex < commandHistory.length - 1) {
+                historyIndex++;
+                input.value = commandHistory[historyIndex];
+            } else {
+                historyIndex = commandHistory.length;
+                input.value = "";
+            }
+        }
+    });
+
+    function escapeHTML(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+})();
+
+// 3. OpenCV webcam scanning HUD simulator
+(function initOpenCVSimulator() {
+    const canvas = document.getElementById("scanner-canvas");
+    const video = document.getElementById("webcam-feed");
+    const toggleBtn = document.getElementById("toggle-camera-btn");
+    if (!canvas || !toggleBtn || !video) return;
+
+    const ctx = canvas.getContext("2d");
+    let isStreaming = false;
+    let localStream = null;
+    let scanY = 0;
+    let scanDirection = 1;
+    let detectedBoxes = [];
+    let animationId = null;
+
+    function resizeCanvas() {
+        canvas.width = canvas.offsetWidth || 300;
+        canvas.height = canvas.offsetHeight || 250;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    drawStaticHUD();
+
+    toggleBtn.addEventListener("click", async () => {
+        if (isStreaming) {
+            stopCamera();
+        } else {
+            await startCamera();
+        }
+    });
+
+    function stopCamera() {
+        isStreaming = false;
+        if (localStream) {
+            localStream.getTracks().forEach(track => track.stop());
+            localStream = null;
+        }
+        video.srcObject = null;
+        cancelAnimationFrame(animationId);
+        toggleBtn.innerHTML = `<i class="fa-solid fa-video"></i> Start Camera`;
+        drawStaticHUD();
+    }
+
+    async function startCamera() {
+        toggleBtn.innerHTML = `Connecting...`;
+        try {
+            const constraints = { video: { width: 640, height: 480 }, audio: false };
+            localStream = await navigator.mediaDevices.getUserMedia(constraints);
+            video.srcObject = localStream;
+            video.onloadedmetadata = () => {
+                video.play();
+                isStreaming = true;
+                toggleBtn.innerHTML = `<i class="fa-solid fa-video-slash"></i> Stop Camera`;
+                
+                detectedBoxes = [
+                    { x: 0.3, y: 0.2, w: 0.4, h: 0.55, label: "FACE: GUEST", confidence: 99.1 }
+                ];
+                
+                animateScanner();
+            };
+        } catch (err) {
+            console.warn("Webcam access failed. Falling back to synthetic simulation mode.", err);
+            isStreaming = true;
+            toggleBtn.innerHTML = `<i class="fa-solid fa-video-slash"></i> Stop Scanner`;
+            detectedBoxes = [
+                { x: 0.35, y: 0.2, w: 0.3, h: 0.45, label: "FACE: SCANNING", confidence: 94.2 }
+            ];
+            animateScanner();
+        }
+    }
+
+    function drawStaticHUD() {
+        ctx.fillStyle = "#020408";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.strokeStyle = "rgba(227, 168, 59, 0.2)";
+        ctx.lineWidth = 1;
+        const grid = 20;
+        for(let i = 0; i < canvas.width; i += grid) {
+            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+        }
+        for(let i = 0; i < canvas.height; i += grid) {
+            ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+        }
+
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--amber').trim() || "#e3a83b";
+        ctx.font = "11px 'JetBrains Mono', monospace";
+        ctx.fillText("OPENCV SCAN ENGINE [OFFLINE]", 15, 25);
+        ctx.fillText("CLICK 'START CAMERA' TO ACTIVATE", 15, 45);
+        
+        drawCorners(0, 0, canvas.width, canvas.height, "rgba(227, 168, 59, 0.4)");
+    }
+
+    function drawCorners(x, y, w, h, color) {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        const len = 12;
+        
+        ctx.beginPath(); ctx.moveTo(x + len, y); ctx.lineTo(x, y); ctx.lineTo(x, y + len); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(x + w - len, y); ctx.lineTo(x + w, y); ctx.lineTo(x + w, y + len); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(x + len, y + h); ctx.lineTo(x, y + h); ctx.lineTo(x, y + h - len); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(x + w - len, y + h); ctx.lineTo(x + w, y + h); ctx.lineTo(x + w, y + h - len); ctx.stroke();
+    }
+
+    function animateScanner() {
+        if (!isStreaming) return;
+
+        if (localStream && video.readyState === video.HAVE_ENOUGH_DATA) {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        } else {
+            ctx.fillStyle = "#040810";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = "rgba(61, 220, 132, 0.1)";
+            ctx.lineWidth = 1;
+            const grid = 24;
+            for(let i = 0; i < canvas.width; i += grid) {
+                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+            }
+            for(let i = 0; i < canvas.height; i += grid) {
+                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+            }
+
+            ctx.fillStyle = "rgba(61, 220, 132, 0.12)";
+            ctx.beginPath();
+            ctx.arc(canvas.width * 0.5, canvas.height * 0.42, 40, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.ellipse(canvas.width * 0.5, canvas.height * 0.9, 70, 50, 0, Math.PI, 0);
+            ctx.fill();
+        }
+
+        const colorStr = getComputedStyle(document.documentElement).getPropertyValue('--amber').trim() || "#e3a83b";
+        const colorRGB = getComputedStyle(document.documentElement).getPropertyValue('--amber-rgb').trim() || "227,168,59";
+
+        detectedBoxes.forEach(box => {
+            const bx = box.x * canvas.width;
+            const by = box.y * canvas.height;
+            const bw = box.w * canvas.width;
+            const bh = box.h * canvas.height;
+
+            ctx.strokeStyle = `rgba(${colorRGB}, 0.8)`;
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(bx, by, bw, bh);
+
+            drawCorners(bx, by, bw, bh, `rgb(${colorRGB})`);
+
+            ctx.fillStyle = "#3ddc84";
+            const eyeY = by + bh * 0.35;
+            const noseY = by + bh * 0.55;
+            const mouthY = by + bh * 0.75;
+            
+            ctx.beginPath(); ctx.arc(bx + bw * 0.3, eyeY, 4, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(bx + bw * 0.7, eyeY, 4, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(bx + bw * 0.5, noseY, 4, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(bx + bw * 0.35, mouthY, 3, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(bx + bw * 0.65, mouthY, 3, 0, Math.PI*2); ctx.fill();
+
+            ctx.fillStyle = `rgba(${colorRGB}, 0.85)`;
+            ctx.fillRect(bx, by - 20, bw, 20);
+            ctx.fillStyle = "#17130a";
+            ctx.font = "bold 9px 'JetBrains Mono', monospace";
+            ctx.fillText(`${box.label} (${box.confidence}%)`, bx + 5, by - 6);
+        });
+
+        scanY += 2 * scanDirection;
+        if (scanY > canvas.height || scanY < 0) {
+            scanDirection *= -1;
+        }
+        
+        ctx.strokeStyle = `rgba(${colorRGB}, 0.6)`;
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(0, scanY);
+        ctx.lineTo(canvas.width, scanY);
+        ctx.stroke();
+        
+        const gradient = ctx.createLinearGradient(0, scanY - 8 * scanDirection, 0, scanY);
+        gradient.addColorStop(0, "transparent");
+        gradient.addColorStop(1, `rgba(${colorRGB}, 0.15)`);
+        ctx.fillStyle = gradient;
+        if (scanDirection > 0) {
+            ctx.fillRect(0, scanY - 30, canvas.width, 30);
+        } else {
+            ctx.fillRect(0, scanY, canvas.width, 30);
+        }
+
+        ctx.fillStyle = `rgb(${colorRGB})`;
+        ctx.font = "9px 'JetBrains Mono', monospace";
+        ctx.fillText(`FPS: 30`, 12, 20);
+        ctx.fillText(`API: DRF / OPEN-CV ACTIVE`, 12, 34);
+        ctx.fillText(`STREAM: RAW_RGB`, 12, 48);
+
+        const rx = canvas.width - 35;
+        const ry = 35;
+        const rr = 20;
+        ctx.strokeStyle = `rgba(${colorRGB}, 0.3)`;
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(rx, ry, rr, 0, Math.PI*2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(rx, ry, rr*0.5, 0, Math.PI*2); ctx.stroke();
+        
+        const angle = (Date.now() / 450) % (Math.PI * 2);
+        ctx.beginPath();
+        ctx.moveTo(rx, ry);
+        ctx.lineTo(rx + Math.cos(angle) * rr, ry + Math.sin(angle) * rr);
+        ctx.stroke();
+
+        animationId = requestAnimationFrame(animateScanner);
+    }
+})();
+
+// 4. Project Case Studies details modal controller
+(function initProjectModals() {
+    const modal = document.getElementById("projectModal");
+    const closeBtn = document.getElementById("modalCloseBtn");
+    if (!modal || !closeBtn) return;
+
+    const projectData = {
+        "face recognition attendance system": {
+            title: "Face Recognition Attendance System",
+            category: "Python / Django / OpenCV / SQLite",
+            desc: `An automated attendance management system featuring real-time face recognition. The platform detects faces in video streams, extracts embeddings, matches them against registered profiles, and logs student/employee attendance securely. A robust backend handles database operations, profile updates, and attendance audits.`,
+            features: [
+                "Real-time face detection and recognition using Haar Cascades and deep learning-based embeddings.",
+                "Custom Django REST framework APIs to receive attendance records from edge device scanners.",
+                "Admin panel with analytics for logs, exports to CSV, and student registration.",
+                "SQLite3 backend configured with optimal indexes for speedy lookup queries."
+            ],
+            architecture: `
+SQLite Database:
+  - Table: Students (ID, Name, FaceDataBlob, CreatedAt)
+  - Table: AttendanceLog (LogID, StudentID, Timestamp, DeviceID)
+
+API Routes:
+  - POST /api/attendance/check-in/ (registers live face match)
+  - GET  /api/attendance/report/ (returns attendance statistics)
+`,
+            tags: ["Python", "Django", "DRF", "OpenCV", "SQLite3", "REST API"],
+            live: "https://face-detection-attendance-woad.vercel.app/home/",
+            code: "https://github.com/Milan07xt/SEM-06"
+        },
+        "gym management system": {
+            title: "Gym Management System",
+            category: "Python / Django / SQLite",
+            desc: `A responsive web platform built to automate member check-ins, subscription plan management, and payment audits. Designed specifically to reduce manual paperwork in local gyms.`,
+            features: [
+                "Member registration and dynamic subscription tier tracking.",
+                "Visual charts mapping active members, monthly billing, and renewals.",
+                "Flexible member portal displaying attendance records and profile status.",
+                "Secure Django administrative tools with tiered user permissions."
+            ],
+            architecture: `
+Relational Schema:
+  - Table: Member (MemberID, Name, PlanID, ExpiryDate)
+  - Table: Payment (PaymentID, MemberID, Amount, Date, Status)
+  - Table: Plans (PlanID, PlanName, Duration, Price)
+`,
+            tags: ["Python", "Django", "SQLite3", "CSS3", "Membership API"],
+            live: "https://django-gym-management-system-websit-one.vercel.app/",
+            code: "https://github.com/Milan07xt/Django-Gym-Management-System-Website"
+        },
+        "hotel management website": {
+            title: "Hotel Management Website",
+            category: "HTML5 / CSS3 / JavaScript",
+            desc: `A premium booking and reservation homepage featuring glassmorphic designs, responsive grids, and parallax scroll effects. Serves as a frontend showcase for booking workflows.`,
+            features: [
+                "Dynamic booking form that computes price differences by room selection.",
+                "Polished interactive layouts, hover micro-animations, and full mobile responsiveness.",
+                "Integrated room gallery with filtering options by amenities and ratings."
+            ],
+            architecture: `
+Client Side Model:
+  - LocalStorage booking logs caching.
+  - Form validation validating check-in/check-out dates.
+`,
+            tags: ["HTML5", "CSS3", "JavaScript", "Responsive Design", "UI/UX"],
+            live: "https://hotel-website-project-kappa.vercel.app/index.html",
+            code: "https://github.com/Milan07xt/Hotel-Website-Project"
+        }
+    };
+
+    const cards = document.querySelectorAll(".project-card");
+    cards.forEach(card => {
+        const titleEl = card.querySelector("h3");
+        if (!titleEl) return;
+        
+        const viewLink = card.querySelector(".project-links a:first-child");
+        if (!viewLink) return;
+
+        const linksDiv = card.querySelector(".project-links");
+        if (linksDiv) {
+            const caseBtn = document.createElement("a");
+            caseBtn.className = "btn-link";
+            caseBtn.style.cursor = "pointer";
+            caseBtn.innerHTML = `<i class="fa-solid fa-circle-info"></i> Case Study`;
+            
+            caseBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                const key = titleEl.textContent.trim().toLowerCase();
+                let data = null;
+                for (let k in projectData) {
+                    if (key.includes(k) || k.includes(key)) {
+                        data = projectData[k];
+                        break;
+                    }
+                }
+                if (data) {
+                    openModal(data);
+                } else {
+                    window.open(viewLink.getAttribute("href"), "_blank");
+                }
+            });
+            
+            linksDiv.appendChild(caseBtn);
+        }
+    });
+
+    closeBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    function openModal(data) {
+        document.getElementById("modalCategory").textContent = data.category;
+        document.getElementById("modalTitle").textContent = data.title;
+        document.getElementById("modalDesc").textContent = data.desc;
+        
+        const featuresEl = document.getElementById("modalFeatures");
+        featuresEl.innerHTML = "";
+        data.features.forEach(f => {
+            const li = document.createElement("li");
+            li.textContent = f;
+            featuresEl.appendChild(li);
+        });
+
+        document.getElementById("modalArchitecture").innerHTML = data.architecture.trim().replace(/\n/g, "<br>");
+
+        const tagsEl = document.getElementById("modalTags");
+        tagsEl.innerHTML = "";
+        data.tags.forEach(t => {
+            const span = document.createElement("span");
+            span.className = "chip";
+            span.textContent = t;
+            tagsEl.appendChild(span);
+        });
+
+        document.getElementById("modalLiveLink").setAttribute("href", data.live);
+        document.getElementById("modalCodeLink").setAttribute("href", data.code);
+
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+        modal.classList.remove("open");
+        document.body.style.overflow = "";
+    }
+})();
+
+// 5. GitHub API stats fetcher
+(function initGitHubFetcher() {
+    const avatarImg = document.getElementById("github-avatar");
+    const nameEl = document.getElementById("github-name");
+    const usernameLink = document.getElementById("github-username");
+    const bioEl = document.getElementById("github-bio");
+    const reposCountEl = document.getElementById("github-repos-count");
+    const followersEl = document.getElementById("github-followers");
+    const starsEl = document.getElementById("github-stars");
+    const reposGrid = document.getElementById("github-repos-grid");
+
+    if (!reposGrid) return;
+
+    const fallbackProfile = {
+        name: "Milan Rathod",
+        bio: "Python / Django Developer. Building backend systems & computer-vision applications.",
+        public_repos: 4,
+        followers: 1,
+        stars: 4
+    };
+
+    const fallbackRepos = [
+        {
+            name: "SEM-06",
+            html_url: "https://github.com/Milan07xt/SEM-06",
+            description: "Face Recognition Attendance System using OpenCV and Django REST Framework API logging.",
+            language: "Python",
+            stargazers_count: 2,
+            forks_count: 0
+        },
+        {
+            name: "Django-Gym-Management-System-Website",
+            html_url: "https://github.com/Milan07xt/Django-Gym-Management-System-Website",
+            description: "A comprehensive membership and payment management dashboard for gyms built with Django and SQLite.",
+            language: "Python",
+            stargazers_count: 1,
+            forks_count: 1
+        },
+        {
+            name: "Hotel-Website-Project",
+            html_url: "https://github.com/Milan07xt/Hotel-Website-Project",
+            description: "Responsive hotel booking reservation homepage built using HTML5, CSS3, and native JavaScript.",
+            language: "HTML",
+            stargazers_count: 1,
+            forks_count: 0
+        }
+    ];
+
+    const langColors = {
+        "Python": "#3572A5",
+        "JavaScript": "#f1e05a",
+        "HTML": "#e34c26",
+        "CSS": "#563d7c"
+    };
+
+    fetchProfile();
+    fetchRepos();
+
+    async function fetchProfile() {
+        try {
+            const res = await fetch("https://api.github.com/users/Milan07xt");
+            if (res.ok) {
+                const data = await res.json();
+                if (avatarImg) avatarImg.src = data.avatar_url;
+                if (nameEl) nameEl.textContent = data.name || "Milan Rathod";
+                if (bioEl) bioEl.textContent = data.bio || fallbackProfile.bio;
+                if (reposCountEl) reposCountEl.textContent = data.public_repos;
+                if (followersEl) followersEl.textContent = data.followers;
+            } else {
+                useProfileFallback();
+            }
+        } catch (err) {
+            console.warn("GitHub Profile Fetch failed, utilizing fallbacks", err);
+            useProfileFallback();
+        }
+    }
+
+    async function fetchRepos() {
+        try {
+            const res = await fetch("https://api.github.com/users/Milan07xt/repos?sort=updated");
+            if (res.ok) {
+                const repos = await res.json();
+                const filtered = repos.filter(r => !r.fork).slice(0, 6);
+                
+                if (filtered.length > 0) {
+                    renderRepos(filtered);
+                    calculateStars(repos);
+                } else {
+                    renderRepos(fallbackRepos);
+                }
+            } else {
+                renderRepos(fallbackRepos);
+            }
+        } catch (err) {
+            console.warn("GitHub Repos Fetch failed, utilizing offline cache list", err);
+            renderRepos(fallbackRepos);
+        }
+    }
+
+    function useProfileFallback() {
+        if (avatarImg) avatarImg.src = "images/gym.jpeg"; 
+        if (nameEl) nameEl.textContent = fallbackProfile.name;
+        if (bioEl) bioEl.textContent = fallbackProfile.bio;
+        if (reposCountEl) reposCountEl.textContent = fallbackProfile.public_repos;
+        if (followersEl) followersEl.textContent = fallbackProfile.followers;
+        if (starsEl) starsEl.textContent = fallbackProfile.stars;
+    }
+
+    function calculateStars(repos) {
+        if (!starsEl) return;
+        const total = repos.reduce((sum, r) => sum + r.stargazers_count, 0);
+        starsEl.textContent = total || fallbackProfile.stars;
+    }
+
+    function renderRepos(repos) {
+        reposGrid.innerHTML = "";
+        
+        repos.forEach(repo => {
+            const card = document.createElement("div");
+            card.className = "repo-card";
+            
+            const color = langColors[repo.language] || "#8e8e8e";
+            
+            card.innerHTML = `
+                <div>
+                    <div class="repo-card-head">
+                        <h4><a href="${repo.html_url}" target="_blank">${repo.name}</a></h4>
+                        <i class="fab fa-github repo-icon-git"></i>
+                    </div>
+                    <p class="repo-desc">${repo.description || 'No description available for this project.'}</p>
+                </div>
+                <div class="repo-footer">
+                    <div class="repo-lang">
+                        <span class="repo-lang-dot" style="background: ${color};"></span>
+                        <span>${repo.language || 'Code'}</span>
+                    </div>
+                    <div class="repo-stats">
+                        <span><i class="fa-regular fa-star"></i> ${repo.stargazers_count}</span>
+                        <span><i class="fa-solid fa-code-fork"></i> ${repo.forks_count || 0}</span>
+                    </div>
+                </div>
+            `;
+            reposGrid.appendChild(card);
+        });
+    }
+})();
