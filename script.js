@@ -5,10 +5,9 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 // ---------------------------------------------------------------
 const roles = [
     "Python Developer",
-    "Django Developer",
-    "Backend Developer",
-    "REST API Developer",
-     "AI Engineer",
+    "Django Backend Developer",
+    "REST API Engineer",
+    "AI/ML Enthusiast",
 ];
 
 let roleIndex = 0;
@@ -392,7 +391,7 @@ if(themeBtn){
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.4 });
+    }, { threshold: 0.1 });
 
     stats.forEach(el => observer.observe(el));
 })();
@@ -403,7 +402,31 @@ if(themeBtn){
 (function initContactForm(){
     const form = document.getElementById('contactForm');
     const statusEl = document.getElementById('formStatus');
+    const successModal = document.getElementById("contactSuccessModal");
+    const successCloseBtn = document.getElementById("successCloseBtn");
+    
     if(!form) return;
+
+    function showContactSuccessModal() {
+        if (!successModal) return;
+        successModal.classList.add("open");
+        document.body.style.overflow = "hidden";
+        setTimeout(closeSuccessModal, 4000);
+    }
+    
+    function closeSuccessModal() {
+        if (successModal) successModal.classList.remove("open");
+        document.body.style.overflow = "";
+    }
+
+    if (successCloseBtn) {
+        successCloseBtn.addEventListener("click", closeSuccessModal);
+    }
+    if (successModal) {
+        successModal.addEventListener("click", (e) => {
+            if (e.target === successModal) closeSuccessModal();
+        });
+    }
 
     form.addEventListener('submit', async (e)=>{
         e.preventDefault();
@@ -426,8 +449,9 @@ if(themeBtn){
                 body: JSON.stringify(data)
             });
             if(res.ok){
-                statusEl.textContent = 'Message sent — thank you!';
+                statusEl.textContent = '';
                 form.reset();
+                showContactSuccessModal();
             }else{
                 const txt = await res.text();
                 statusEl.textContent = 'Error: ' + (txt || res.statusText);
@@ -437,7 +461,11 @@ if(themeBtn){
             console.error(err);
         }finally{
             submitBtn.disabled = false;
-            setTimeout(()=> statusEl.textContent = '', 5000);
+            setTimeout(()=> {
+                if (statusEl.textContent.indexOf('Sending') === -1) {
+                    statusEl.textContent = '';
+                }
+            }, 5000);
         }
     });
 })();
@@ -983,7 +1011,12 @@ Role: Backend / CV Fresher
         "face recognition attendance system": {
             title: "Face Recognition Attendance System",
             category: "Python / Django / OpenCV / SQLite",
-            desc: `An automated attendance management system featuring real-time face recognition. The platform detects faces in video streams, extracts embeddings, matches them against registered profiles, and logs student/employee attendance securely. A robust backend handles database operations, profile updates, and attendance audits.`,
+            desc: `
+                <div class="case-study-block">
+                    <p style="margin-bottom: 12px;"><strong>Problem & Motivation:</strong> Traditional attendance tracking via paper rolls or ID card swipes is slow, error-prone, and prone to proxy attendance. For modern workplaces or academic institutions, a contactless, high-speed, and secure logging system is required.</p>
+                    <p><strong>Proposed Solution:</strong> Built an automated real-time biometric tracking solution. By combining computer vision pipelines (OpenCV Haar Cascades/deep embeddings) with a robust Django REST API backend, the system scans video feeds, recognizes student face templates instantly, and logs check-ins directly into a secure SQLite database.</p>
+                </div>
+            `,
             features: [
                 "Real-time face detection and recognition using Haar Cascades and deep learning-based embeddings.",
                 "Custom Django REST framework APIs to receive attendance records from edge device scanners.",
@@ -1006,7 +1039,12 @@ API Routes:
         "gym management system": {
             title: "Gym Management System",
             category: "Python / Django / SQLite",
-            desc: `A responsive web platform built to automate member check-ins, subscription plan management, and payment audits. Designed specifically to reduce manual paperwork in local gyms.`,
+            desc: `
+                <div class="case-study-block">
+                    <p style="margin-bottom: 12px;"><strong>Problem & Motivation:</strong> Local gyms struggle to monitor client subscription renewals, handle membership tier transitions, and log daily payments. Manual books lead to revenue leaks and administrative overhead.</p>
+                    <p><strong>Proposed Solution:</strong> Developed a responsive management portal built on Django. The solution allows staff to register users, track active plan timelines, and generate payment audits, while members log into a personalized profile page to inspect their billing history.</p>
+                </div>
+            `,
             features: [
                 "Member registration and dynamic subscription tier tracking.",
                 "Visual charts mapping active members, monthly billing, and renewals.",
@@ -1026,7 +1064,12 @@ Relational Schema:
         "hotel management website": {
             title: "Hotel Management Website",
             category: "HTML5 / CSS3 / JavaScript",
-            desc: `A premium booking and reservation homepage featuring glassmorphic designs, responsive grids, and parallax scroll effects. Serves as a frontend showcase for booking workflows.`,
+            desc: `
+                <div class="case-study-block">
+                    <p style="margin-bottom: 12px;"><strong>Problem & Motivation:</strong> Boutique hotels need a visually stunning and responsive landing page to drive room reservations directly. Simple static text lists fail to engage modern travel shoppers.</p>
+                    <p><strong>Proposed Solution:</strong> Engineered a premium booking frontend featuring glassmorphism cards, parallax background scrolling, dynamic room amenity search filters, and an interactive reservation calculator that updates pricing instantly in client-side state.</p>
+                </div>
+            `,
             features: [
                 "Dynamic booking form that computes price differences by room selection.",
                 "Polished interactive layouts, hover micro-animations, and full mobile responsiveness.",
@@ -1087,7 +1130,7 @@ Client Side Model:
     function openModal(data) {
         document.getElementById("modalCategory").textContent = data.category;
         document.getElementById("modalTitle").textContent = data.title;
-        document.getElementById("modalDesc").textContent = data.desc;
+        document.getElementById("modalDesc").innerHTML = data.desc;
         
         const featuresEl = document.getElementById("modalFeatures");
         featuresEl.innerHTML = "";
@@ -1266,4 +1309,296 @@ Client Side Model:
             reposGrid.appendChild(card);
         });
     }
+})();
+
+// ---------------------------------------------------------------
+// 6. Skills progress animation
+// ---------------------------------------------------------------
+(function initSkillsProgress() {
+    const fills = document.querySelectorAll(".skill-progress-fill");
+    if (!fills.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const fill = entry.target;
+                const progress = fill.getAttribute("data-progress");
+                fill.style.width = progress;
+                observer.unobserve(fill);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    fills.forEach(fill => observer.observe(fill));
+})();
+
+// ---------------------------------------------------------------
+// 7. Simulated GitHub contribution grid & tooltips
+// ---------------------------------------------------------------
+(async function initGitHubContributions() {
+    const grid = document.getElementById("contrib-grid");
+    if (!grid) return;
+
+    let tooltip = document.querySelector(".calendar-tooltip");
+    if (!tooltip) {
+        tooltip = document.createElement("div");
+        tooltip.className = "calendar-tooltip";
+        document.body.appendChild(tooltip);
+    }
+
+    try {
+        const username = "Milan07xt";
+        // Fetch the contribution JSON data from the unofficial API
+        const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`);
+        if (!res.ok) throw new Error("GitHub Contributions API returned an error");
+        
+        const data = await res.json();
+        if (!data || !data.contributions || !data.contributions.length) {
+            throw new Error("Invalid contributions data format");
+        }
+        
+        // Sort contributions chronologically
+        const sorted = data.contributions.sort((a, b) => new Date(a.date) - new Date(b.date));
+        
+        // Align ending date to the Saturday of the current week to keep a perfect 53x7 rectangular layout
+        const today = new Date();
+        const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
+        const saturday = new Date(today);
+        saturday.setDate(today.getDate() + (6 - dayOfWeek));
+        const saturdayStr = saturday.toISOString().split('T')[0];
+        
+        // Filter out any dates after the current week's Saturday
+        const pastContributions = sorted.filter(day => day.date <= saturdayStr);
+        
+        // Slice the last 371 days (53 weeks * 7 days)
+        const recent = pastContributions.slice(-371);
+        
+        grid.innerHTML = "";
+        recent.forEach(day => {
+            const cell = document.createElement("div");
+            cell.className = `contrib-cell lvl-${day.level}`;
+            
+            const cellDate = new Date(day.date);
+            const options = { month: 'short', day: 'numeric', year: 'numeric' };
+            const dateStr = cellDate.toLocaleDateString('en-US', options);
+            const commitsText = day.count === 0 ? "No contributions" : `${day.count} contribution${day.count > 1 ? 's' : ''}`;
+            
+            cell.addEventListener("mouseenter", (e) => {
+                tooltip.textContent = `${commitsText} on ${dateStr}`;
+                tooltip.classList.add("visible");
+                
+                const rect = cell.getBoundingClientRect();
+                tooltip.style.left = `${rect.left + window.scrollX - tooltip.offsetWidth / 2 + 5}px`;
+                tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 8}px`;
+            });
+
+            cell.addEventListener("mouseleave", () => {
+                tooltip.classList.remove("visible");
+            });
+
+            grid.appendChild(cell);
+        });
+        
+    } catch (err) {
+        console.warn("Failed to fetch real GitHub contribution graph. Utilizing fallback simulation.", err);
+        renderSimulatedContributions(grid, tooltip);
+    }
+    
+    function renderSimulatedContributions(grid, tooltip) {
+        const totalCells = 371; 
+        const now = new Date();
+        const startDate = new Date(now);
+        startDate.setDate(startDate.getDate() - totalCells + 1);
+
+        grid.innerHTML = "";
+        for (let i = 0; i < totalCells; i++) {
+            const cellDate = new Date(startDate);
+            cellDate.setDate(startDate.getDate() + i);
+
+            const rand = Math.random();
+            let level = 0;
+            let commits = 0;
+            
+            if (rand > 0.88) {
+                level = 4;
+                commits = Math.floor(Math.random() * 5) + 6;
+            } else if (rand > 0.74) {
+                level = 3;
+                commits = Math.floor(Math.random() * 3) + 3;
+            } else if (rand > 0.58) {
+                level = 2;
+                commits = Math.floor(Math.random() * 2) + 1;
+            } else if (rand > 0.38) {
+                level = 1;
+                commits = 1;
+            }
+
+            const cell = document.createElement("div");
+            cell.className = `contrib-cell lvl-${level}`;
+            
+            const options = { month: 'short', day: 'numeric', year: 'numeric' };
+            const dateStr = cellDate.toLocaleDateString('en-US', options);
+            const commitsText = commits === 0 ? "No contributions" : `${commits} contribution${commits > 1 ? 's' : ''}`;
+            
+            cell.addEventListener("mouseenter", (e) => {
+                tooltip.textContent = `${commitsText} on ${dateStr}`;
+                tooltip.classList.add("visible");
+                
+                const rect = cell.getBoundingClientRect();
+                tooltip.style.left = `${rect.left + window.scrollX - tooltip.offsetWidth / 2 + 5}px`;
+                tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 8}px`;
+            });
+
+            cell.addEventListener("mouseleave", () => {
+                tooltip.classList.remove("visible");
+            });
+
+            grid.appendChild(cell);
+        }
+    }
+})();
+
+// ---------------------------------------------------------------
+// 8. Projects filtering tabs
+// ---------------------------------------------------------------
+(function initProjectFilters() {
+    const filters = document.querySelectorAll(".project-filters .filter-btn");
+    const cards = document.querySelectorAll(".project-grid .project-card");
+    if (!filters.length || !cards.length) return;
+
+    filters.forEach(btn => {
+        btn.addEventListener("click", () => {
+            filters.forEach(f => f.classList.remove("active"));
+            btn.classList.add("active");
+
+            const filterVal = btn.getAttribute("data-filter").toLowerCase();
+
+            cards.forEach(card => {
+                const chips = Array.from(card.querySelectorAll(".chip")).map(c => c.textContent.toLowerCase());
+                const title = card.querySelector("h3").textContent.toLowerCase();
+                const desc = card.querySelector("p").textContent.toLowerCase();
+
+                let isMatch = false;
+                if (filterVal === "all") {
+                    isMatch = true;
+                } else if (filterVal === "python") {
+                    isMatch = chips.includes("python") || title.includes("python");
+                } else if (filterVal === "django") {
+                    isMatch = chips.includes("django") || chips.includes("django rest framework") || title.includes("django");
+                } else if (filterVal === "opencv") {
+                    isMatch = chips.includes("opencv") || title.includes("opencv") || title.includes("face");
+                } else if (filterVal === "frontend") {
+                    isMatch = chips.includes("html5") || chips.includes("css3") || chips.includes("javascript") || chips.includes("ui/ux") || title.includes("hotel") || title.includes("web");
+                }
+
+                if (isMatch) {
+                    card.classList.remove("hide");
+                    card.style.opacity = "0";
+                    setTimeout(() => {
+                        card.style.opacity = "1";
+                    }, 50);
+                } else {
+                    card.classList.add("hide");
+                }
+            });
+        });
+    });
+})();
+
+// ---------------------------------------------------------------
+// 9. Certificates filtering tabs
+// ---------------------------------------------------------------
+(function initCertificateFilters() {
+    const filters = document.querySelectorAll(".certificate-filters .cert-filter-btn");
+    const cards = document.querySelectorAll(".certificate-grid .certificate-card");
+    if (!filters.length || !cards.length) return;
+
+    filters.forEach(btn => {
+        btn.addEventListener("click", () => {
+            filters.forEach(f => f.classList.remove("active"));
+            btn.classList.add("active");
+
+            const filterVal = btn.getAttribute("data-filter").toLowerCase();
+
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+
+                let isMatch = false;
+                if (filterVal === "all") {
+                    isMatch = true;
+                } else if (filterVal === "nasscom") {
+                    isMatch = text.includes("nasscom");
+                } else if (filterVal === "forage") {
+                    isMatch = text.includes("forage");
+                } else if (filterVal === "udemy") {
+                    isMatch = text.includes("udemy");
+                }
+
+                if (isMatch) {
+                    card.classList.remove("hide");
+                    card.style.opacity = "0";
+                    setTimeout(() => {
+                        card.style.opacity = "1";
+                    }, 50);
+                } else {
+                    card.classList.add("hide");
+                }
+            });
+        });
+    });
+})();
+
+// ---------------------------------------------------------------
+// 10. Testimonials Slider Carousel
+// ---------------------------------------------------------------
+(function initTestimonialsCarousel() {
+    const slides = document.querySelectorAll(".testimonial-slide");
+    const dots = document.querySelectorAll(".testimonial-controls .dot");
+    const prevBtn = document.getElementById("prevTestimonial");
+    const nextBtn = document.getElementById("nextTestimonial");
+    if (!slides.length) return;
+
+    let currentIndex = 0;
+    let autoPlayTimer = null;
+
+    function showSlide(index) {
+        slides.forEach(s => s.classList.remove("active"));
+        dots.forEach(d => d.classList.remove("active"));
+
+        currentIndex = (index + slides.length) % slides.length;
+        slides[currentIndex].classList.add("active");
+        dots[currentIndex].classList.add("active");
+    }
+
+    if (prevBtn && nextBtn) {
+        prevBtn.addEventListener("click", () => {
+            showSlide(currentIndex - 1);
+            resetAutoplay();
+        });
+        nextBtn.addEventListener("click", () => {
+            showSlide(currentIndex + 1);
+            resetAutoplay();
+        });
+    }
+
+    dots.forEach(dot => {
+        dot.addEventListener("click", () => {
+            const idx = parseInt(dot.getAttribute("data-index"));
+            showSlide(idx);
+            resetAutoplay();
+        });
+    });
+
+    function startAutoplay() {
+        autoPlayTimer = setInterval(() => {
+            showSlide(currentIndex + 1);
+        }, 6000);
+    }
+
+    function resetAutoplay() {
+        clearInterval(autoPlayTimer);
+        startAutoplay();
+    }
+
+    startAutoplay();
 })();
