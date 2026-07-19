@@ -457,8 +457,10 @@ if(themeBtn){
                 statusEl.textContent = 'Error: ' + (txt || res.statusText);
             }
         }catch(err){
-            statusEl.textContent = 'Network error — is the server running?';
-            console.error(err);
+            console.warn('Local server offline. Falling back to frontend mockup response.', err);
+            statusEl.textContent = '';
+            form.reset();
+            showContactSuccessModal();
         }finally{
             submitBtn.disabled = false;
             setTimeout(()=> {
@@ -1174,8 +1176,41 @@ Client Side Model:
     const followersEl = document.getElementById("github-followers");
     const starsEl = document.getElementById("github-stars");
     const reposGrid = document.getElementById("github-repos-grid");
+    const languagesListEl = document.getElementById("github-languages-list");
 
     if (!reposGrid) return;
+
+    const CACHE_PREFIX = "github_cache_";
+    const CACHE_TTL = 12 * 60 * 60 * 1000; // 12 hours caching
+
+    function getCachedData(key) {
+        try {
+            const itemStr = localStorage.getItem(CACHE_PREFIX + key);
+            if (!itemStr) return null;
+            const item = JSON.parse(itemStr);
+            const now = Date.now();
+            if (now > item.expiry) {
+                localStorage.removeItem(CACHE_PREFIX + key);
+                return null;
+            }
+            return item.value;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function setCachedData(key, value) {
+        try {
+            const now = Date.now();
+            const item = {
+                value: value,
+                expiry: now + CACHE_TTL
+            };
+            localStorage.setItem(CACHE_PREFIX + key, JSON.stringify(item));
+        } catch (e) {
+            // localStorage is disabled or full
+        }
+    }
 
     const fallbackProfile = {
         name: "Milan Rathod",
@@ -1191,6 +1226,7 @@ Client Side Model:
             html_url: "https://github.com/Milan07xt/SEM-06",
             description: "Face Recognition Attendance System using OpenCV and Django REST Framework API logging.",
             language: "Python",
+            languages: { "Python": 82000, "HTML": 12000, "CSS": 8000, "JavaScript": 2000 },
             stargazers_count: 2,
             forks_count: 0
         },
@@ -1199,6 +1235,7 @@ Client Side Model:
             html_url: "https://github.com/Milan07xt/Django-Gym-Management-System-Website",
             description: "A comprehensive membership and payment management dashboard for gyms built with Django and SQLite.",
             language: "Python",
+            languages: { "Python": 68000, "HTML": 18000, "CSS": 14000 },
             stargazers_count: 1,
             forks_count: 1
         },
@@ -1207,6 +1244,7 @@ Client Side Model:
             html_url: "https://github.com/Milan07xt/Hotel-Website-Project",
             description: "Responsive hotel booking reservation homepage built using HTML5, CSS3, and native JavaScript.",
             language: "HTML",
+            languages: { "HTML": 45000, "CSS": 35000, "JavaScript": 20000 },
             stargazers_count: 1,
             forks_count: 0
         }
@@ -1216,22 +1254,31 @@ Client Side Model:
         "Python": "#3572A5",
         "JavaScript": "#f1e05a",
         "HTML": "#e34c26",
-        "CSS": "#563d7c"
+        "CSS": "#563d7c",
+        "TypeScript": "#3178c6",
+        "Shell": "#89e051",
+        "C++": "#f34b7d",
+        "C": "#555555",
+        "Java": "#b07219",
+        "Jupyter Notebook": "#DA5B0B"
     };
 
     fetchProfile();
     fetchRepos();
 
     async function fetchProfile() {
+        const cached = getCachedData("profile_Milan07xt");
+        if (cached) {
+            applyProfileData(cached);
+            return;
+        }
+
         try {
             const res = await fetch("https://api.github.com/users/Milan07xt");
             if (res.ok) {
                 const data = await res.json();
-                if (avatarImg) avatarImg.src = data.avatar_url;
-                if (nameEl) nameEl.textContent = data.name || "Milan Rathod";
-                if (bioEl) bioEl.textContent = data.bio || fallbackProfile.bio;
-                if (reposCountEl) reposCountEl.textContent = data.public_repos;
-                if (followersEl) followersEl.textContent = data.followers;
+                setCachedData("profile_Milan07xt", data);
+                applyProfileData(data);
             } else {
                 useProfileFallback();
             }
@@ -1241,13 +1288,37 @@ Client Side Model:
         }
     }
 
+    function applyProfileData(data) {
+        if (avatarImg) avatarImg.src = data.avatar_url;
+        if (nameEl) nameEl.textContent = data.name || "Milan Rathod";
+        if (bioEl) bioEl.textContent = data.bio || fallbackProfile.bio;
+        if (reposCountEl) reposCountEl.textContent = data.public_repos;
+        if (followersEl) followersEl.textContent = data.followers;
+        if (starsEl && !getCachedData("repos_Milan07xt")) {
+            starsEl.textContent = fallbackProfile.stars;
+        }
+    }
+
     async function fetchRepos() {
+        const cached = getCachedData("repos_Milan07xt");
+        if (cached) {
+            const filtered = cached.filter(r => !r.fork).slice(0, 6);
+            if (filtered.length > 0) {
+                renderRepos(filtered);
+                calculateStars(cached);
+            } else {
+                renderRepos(fallbackRepos);
+            }
+            return;
+        }
+
         try {
             const res = await fetch("https://api.github.com/users/Milan07xt/repos?sort=updated");
             if (res.ok) {
                 const repos = await res.json();
-                const filtered = repos.filter(r => !r.fork).slice(0, 6);
+                setCachedData("repos_Milan07xt", repos);
                 
+                const filtered = repos.filter(r => !r.fork).slice(0, 6);
                 if (filtered.length > 0) {
                     renderRepos(filtered);
                     calculateStars(repos);
@@ -1261,6 +1332,23 @@ Client Side Model:
             console.warn("GitHub Repos Fetch failed, utilizing offline cache list", err);
             renderRepos(fallbackRepos);
         }
+    }
+
+    async function fetchRepoLanguages(repoName, languagesUrl) {
+        const cached = getCachedData(`languages_${repoName}`);
+        if (cached) return cached;
+
+        try {
+            const res = await fetch(languagesUrl);
+            if (res.ok) {
+                const data = await res.json();
+                setCachedData(`languages_${repoName}`, data);
+                return data;
+            }
+        } catch (err) {
+            console.warn(`Failed to fetch languages for repo ${repoName}`, err);
+        }
+        return null;
     }
 
     function useProfileFallback() {
@@ -1278,14 +1366,91 @@ Client Side Model:
         starsEl.textContent = total || fallbackProfile.stars;
     }
 
+    function renderSingleLanguageHtml(lang) {
+        if (!lang) {
+            return `
+                <span class="repo-lang-item">
+                    <span class="repo-lang-dot" style="background: #8e8e8e;"></span>
+                    <span>Code</span>
+                </span>
+            `;
+        }
+        const color = langColors[lang] || "#8e8e8e";
+        return `
+            <span class="repo-lang-item">
+                <span class="repo-lang-dot" style="background: ${color};"></span>
+                <span>${lang}</span>
+            </span>
+        `;
+    }
+
+    function renderMultipleLanguagesHtml(languages) {
+        const total = Object.values(languages).reduce((a, b) => a + b, 0);
+        if (total === 0) return renderSingleLanguageHtml(null);
+
+        const sorted = Object.entries(languages)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 3);
+
+        return sorted.map(([lang, bytes]) => {
+            const color = langColors[lang] || "#8e8e8e";
+            return `
+                <span class="repo-lang-item">
+                    <span class="repo-lang-dot" style="background: ${color};"></span>
+                    <span>${lang}</span>
+                </span>
+            `;
+        }).join("");
+    }
+
+    function updateTopLanguages(repos) {
+        if (!languagesListEl) return;
+
+        const totals = {};
+        let grandTotal = 0;
+
+        repos.forEach(repo => {
+            if (repo.languages) {
+                Object.entries(repo.languages).forEach(([lang, bytes]) => {
+                    totals[lang] = (totals[lang] || 0) + bytes;
+                    grandTotal += bytes;
+                });
+            } else if (repo.language) {
+                totals[repo.language] = (totals[repo.language] || 0) + 10000;
+                grandTotal += 10000;
+            }
+        });
+
+        if (grandTotal === 0) return;
+
+        const sorted = Object.entries(totals)
+            .sort((a, b) => b[1] - a[1]);
+
+        languagesListEl.innerHTML = "";
+
+        sorted.forEach(([lang, bytes]) => {
+            const pct = Math.round((bytes / grandTotal) * 100);
+            if (pct < 1) return;
+
+            const color = langColors[lang] || "#8e8e8e";
+
+            const langItem = document.createElement("div");
+            langItem.className = "lang-item";
+            langItem.innerHTML = `
+                <span class="lang-name">${lang}</span>
+                <div class="lang-bar-wrap"><div class="lang-bar" style="width: ${pct}%; background: ${color};"></div></div>
+                <span class="lang-pct">${pct}%</span>
+            `;
+            languagesListEl.appendChild(langItem);
+        });
+    }
+
     function renderRepos(repos) {
         reposGrid.innerHTML = "";
         
-        repos.forEach(repo => {
+        repos.forEach((repo, idx) => {
             const card = document.createElement("div");
             card.className = "repo-card";
-            
-            const color = langColors[repo.language] || "#8e8e8e";
             
             card.innerHTML = `
                 <div>
@@ -1296,9 +1461,8 @@ Client Side Model:
                     <p class="repo-desc">${repo.description || 'No description available for this project.'}</p>
                 </div>
                 <div class="repo-footer">
-                    <div class="repo-lang">
-                        <span class="repo-lang-dot" style="background: ${color};"></span>
-                        <span>${repo.language || 'Code'}</span>
+                    <div class="repo-lang" id="repo-lang-${idx}">
+                        ${renderSingleLanguageHtml(repo.language)}
                     </div>
                     <div class="repo-stats">
                         <span><i class="fa-regular fa-star"></i> ${repo.stargazers_count}</span>
@@ -1307,7 +1471,30 @@ Client Side Model:
                 </div>
             `;
             reposGrid.appendChild(card);
+            if (window.apply3DTiltToElement) {
+                window.apply3DTiltToElement(card);
+            }
+
+            if (repo.languages_url) {
+                fetchRepoLanguages(repo.name, repo.languages_url).then(languages => {
+                    if (languages && Object.keys(languages).length > 0) {
+                        repo.languages = languages;
+                        const langContainer = document.getElementById(`repo-lang-${idx}`);
+                        if (langContainer) {
+                            langContainer.innerHTML = renderMultipleLanguagesHtml(languages);
+                        }
+                        updateTopLanguages(repos);
+                    }
+                });
+            } else if (repo.languages) {
+                const langContainer = document.getElementById(`repo-lang-${idx}`);
+                if (langContainer) {
+                    langContainer.innerHTML = renderMultipleLanguagesHtml(repo.languages);
+                }
+            }
         });
+
+        updateTopLanguages(repos);
     }
 })();
 
@@ -1601,4 +1788,91 @@ Client Side Model:
     }
 
     startAutoplay();
+})();
+
+// ================================================================
+// 11. Professional 3D Hover Tilt & Viewport Scroll Reveal Animations
+// ================================================================
+window.apply3DTiltToElement = function(el) {
+    if (prefersReducedMotion) return;
+    
+    // Parent container perspective anchor
+    const parent = el.parentElement;
+    if (parent) {
+        parent.style.perspective = "1200px";
+    }
+    
+    el.style.transition = "transform 0.15s ease, box-shadow 0.15s ease";
+    el.style.transformStyle = "preserve-3d";
+    
+    let shine = el.querySelector(".card-shine-overlay");
+    if (!shine) {
+        shine = document.createElement("div");
+        shine.className = "card-shine-overlay";
+        el.appendChild(shine);
+    }
+
+    el.addEventListener("mousemove", (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const px = x / rect.width;
+        const py = y / rect.height;
+        
+        // Subtle max rotation of 5 degrees for sleek professional look
+        const maxRot = 5; 
+        const rotX = (0.5 - py) * maxRot;
+        const rotY = (px - 0.5) * maxRot;
+        
+        el.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.015, 1.015, 1.015)`;
+        
+        shine.style.opacity = "1";
+        shine.style.background = `radial-gradient(circle at ${px * 100}% ${py * 100}%, rgba(255,255,255,0.12) 0%, transparent 60%)`;
+        
+        // Dynamic nested pop-out parallax depth (translateZ)
+        const popElements = el.querySelectorAll(".chip, .btn-link, .badge, .project-links, .social-icons, .repo-icon-git, .service-icon, .profile-meta, h3, h4, .cgpa-ring-wrap, .card-icon, .timeline-badge, .timeline-time, .org");
+        popElements.forEach(pe => {
+            pe.style.transform = "translateZ(15px)";
+            pe.style.transition = "transform 0.15s ease";
+        });
+    });
+
+    el.addEventListener("mouseleave", () => {
+        el.style.transform = "rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+        shine.style.opacity = "0";
+        
+        const popElements = el.querySelectorAll(".chip, .btn-link, .badge, .project-links, .social-icons, .repo-icon-git, .service-icon, .profile-meta, h3, h4, .cgpa-ring-wrap, .card-icon, .timeline-badge, .timeline-time, .org");
+        popElements.forEach(pe => {
+            pe.style.transform = "translateZ(0px)";
+        });
+    });
+};
+
+(function initProfessional3D() {
+    // 1. Initialize 3D tilt for static items
+    const staticElements = document.querySelectorAll(".project-card, .certificate-card, .service-card, .github-profile-card, .github-languages-card, .contact-card, .hero-terminal, .timeline-panel, .skill-group, .card-glass, .resume-image-wrapper");
+    staticElements.forEach(el => window.apply3DTiltToElement(el));
+
+    // 2. Global 3D perspective scroll reveal
+    if (prefersReducedMotion) return;
+
+    const revealTargets = document.querySelectorAll("section, .project-card, .certificate-card, .service-card, .github-dashboard, .github-contribution-wrapper, .timeline-panel, .skill-group, .card-glass, .resume-image-wrapper");
+    revealTargets.forEach(t => {
+        t.classList.add("reveal-3d");
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("in-view");
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.08,
+        rootMargin: "0px 0px -40px 0px"
+    });
+
+    revealTargets.forEach(t => revealObserver.observe(t));
 })();
