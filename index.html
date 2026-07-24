@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
@@ -26,6 +27,38 @@
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="nav-dropdown">
+                <a href="javascript:void(0)" class="dropdown-trigger" id="dropdownTriggerBtn">
+                    More <i class="fa-solid fa-chevron-down"></i>
+                </a>
+                <ul class="dropdown-menu glass">
+                    <li><a href="#services"><i class="fa-solid fa-briefcase"></i> Services</a></li>
+                    <li><a href="#experience"><i class="fa-solid fa-history"></i> Experience</a></li>
+                    <li><a href="#certificates"><i class="fa-solid fa-award"></i> Certificates</a></li>
+                    <li><a href="#github"><i class="fab fa-github"></i> GitHub</a></li>
+                    <li><a href="#education"><i class="fa-solid fa-graduation-cap"></i> Education</a></li>
+                    <li><a href="#resume"><i class="fa-solid fa-file-pdf"></i> Resume</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="nav-actions">
+            <button id="theme-toggle" aria-label="Toggle theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <button id="mobile-nav-toggle" aria-label="Toggle navigation menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+    <!-- Mobile Nav Drawer -->
+    <div class="mobile-nav-drawer glass" id="mobileNavDrawer">
+        <ul class="mobile-nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#skills">Skills</a></li>
@@ -36,19 +69,12 @@
             <li><a href="#resume">Resume</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-
-        <div class="nav-actions">
-            <button id="theme-toggle" aria-label="Toggle theme">
-                <i class="fa-solid fa-moon"></i>
-            </button>
-        </div>
-    </nav>
+    </div>
 </header>
 
 <section id="home" class="hero">
     
     <canvas id="hero-canvas"></canvas>
-    <div class="hero-aurora"></div>
 
     <div class="hero-content">
         <h1>
@@ -209,7 +235,7 @@
             <span class="stat-label">Projects Built</span>
         </div>
         <div class="stat-item">
-            <span class="stat-num" data-count="8">0</span>
+            <span class="stat-num" data-count="9">0</span>
             <span class="stat-label">Certifications</span>
         </div>
         <div class="stat-item">
@@ -371,9 +397,38 @@
         <button class="cert-filter-btn" data-filter="nasscom">NASSCOM</button>
         <button class="cert-filter-btn" data-filter="forage">Forage</button>
         <button class="cert-filter-btn" data-filter="udemy">Udemy</button>
+        <button class="cert-filter-btn" data-filter="unstop">Unstop</button>
     </div>
 
     <div class="certificate-grid">
+
+        <!-- Certificate 9 -->
+        <div class="certificate-card">
+            <div class="certificate-image">
+                <img src="images/certificates/quizoff-2026.png" alt="QuizOff 2026: India's Biggest AI Quiz">
+            </div>
+
+            <div class="certificate-content">
+                <h3>QuizOff 2026: India's Biggest AI Quiz</h3>
+
+                <p>
+                    Unstop • CampusCrew
+                </p>
+
+                <div class="certificate-tags">
+                    <span>AI Quiz</span>
+                    <span>Unstop</span>
+                    <span>CampusCrew</span>
+                </div>
+
+                <a href="images/certificates/quizoff-2026.png"
+                   target="_blank"
+                   class="certificate-btn">
+                    View Certificate
+                </a>
+
+            </div>
+        </div>
 
         <!-- Certificate 1 -->
         <div class="certificate-card">
@@ -1055,12 +1110,13 @@
     <div class="theme-panel" id="themePanel">
         <p class="theme-panel-label">Accent Color</p>
         <div class="swatch-row">
-            <span class="swatch swatch-gold active" data-theme="" title="Gold"></span>
+            <span class="swatch swatch-cyber active" data-theme="" title="Cyber-Amethyst (Default)"></span>
             <span class="swatch swatch-ocean" data-theme="ocean" title="Ocean"></span>
             <span class="swatch swatch-emerald" data-theme="emerald" title="Emerald"></span>
             <span class="swatch swatch-purple" data-theme="purple" title="Purple"></span>
-            <span class="swatch swatch-crimson" data-theme="crimson" title="Crimson"></span>
+            <span class="swatch swatch-sunset" data-theme="sunset" title="Sunset"></span>
             <span class="swatch swatch-pink" data-theme="pink" title="Pink"></span>
+            <span class="swatch swatch-glacier" data-theme="glacier" title="Glacier"></span>
         </div>
     </div>
     <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Change accent color">

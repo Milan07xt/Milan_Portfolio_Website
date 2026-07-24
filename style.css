@@ -2,22 +2,24 @@
    1. DESIGN TOKENS & CORE SYSTEM
    ================================================================ */
 :root {
-    /* Color Palette - Premium Slate & Cosmic Dark */
-    --ink:          #080c14; /* Refined slate-black canvas */
-    --ink-2:        #0d1321;
-    --panel:        rgba(13, 20, 38, 0.6); /* Glassmorphic card fill */
-    --panel-2:      rgba(22, 32, 60, 0.75);
-    --line:         rgba(255, 255, 255, 0.08); /* Razor-thin borders */
-    --line-soft:    rgba(255, 255, 255, 0.04);
+    /* Color Palette - Premium Cyberpunk Obsidian & Cyber-Amethyst */
+    --ink:          #05050a; /* Cyber deep-space black */
+    --ink-2:        #0a0815; /* Cyber dark violet */
+    --panel:        rgba(10, 8, 24, 0.45); /* Glassmorphic card fill */
+    --panel-2:      rgba(18, 14, 38, 0.65);
+    --line:         rgba(168, 85, 247, 0.18); /* Amethyst glowing border */
+    --line-soft:    rgba(6, 182, 212, 0.12);  /* Neon cyan glowing touch */
     
     --text:         #f8fafc;
     --text-dim:     #94a3b8;
     --text-faint:   #64748b;
 
-    /* Theme Accents (Gold/Amber default) */
-    --amber:        #e2a73b;
-    --amber-dim:    #b5812a;
-    --amber-rgb:    226, 167, 59;
+    /* Theme Accents (Amethyst Purple & Cyan default) */
+    --amber:        #a855f7; /* Primary Accent (Purple) */
+    --amber-dim:    #7e22ce;
+    --amber-rgb:    168, 85, 247;
+    --secondary:    #06b6d4; /* Secondary Accent (Cyan) */
+    --secondary-rgb: 6, 182, 212;
     --green:        #10b981;
     --red:          #ef4444;
 
@@ -34,35 +36,44 @@
     --transition:   all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Light Theme Variables */
+/* Light Theme Variables (Nordic Frost) */
 body.light {
-    --ink:          #f8fafc;
-    --ink-2:        #f1f5f9;
-    --panel:        rgba(255, 255, 255, 0.85);
-    --panel-2:      rgba(241, 245, 249, 0.9);
-    --line:         rgba(15, 23, 42, 0.08);
-    --line-soft:    rgba(15, 23, 42, 0.04);
+    --ink:          #f3f4f6;
+    --ink-2:        #e5e7eb;
+    --panel:        rgba(255, 255, 255, 0.8);
+    --panel-2:      rgba(243, 244, 246, 0.85);
+    --line:         rgba(168, 85, 247, 0.12);
+    --line-soft:    rgba(6, 182, 212, 0.08);
     
-    --text:         #0f172a;
-    --text-dim:     #475569;
-    --text-faint:   #94a3b8;
+    --text:         #111827;
+    --text-dim:     #374151;
+    --text-faint:   #6b7280;
 }
 
-/* Theme Accents via data-theme selector */
+/* Theme Accents via data-theme selector (with dual accents) */
 :root[data-theme="ocean"] {
     --amber: #3b82f6; --amber-dim: #1d4ed8; --amber-rgb: 59,130,246;
+    --secondary: #00ffff; --secondary-rgb: 0,255,255;
 }
 :root[data-theme="emerald"] {
     --amber: #10b981; --amber-dim: #047857; --amber-rgb: 16,185,129;
+    --secondary: #3ddc84; --secondary-rgb: 61,220,132;
 }
 :root[data-theme="purple"] {
     --amber: #8b5cf6; --amber-dim: #6d28d9; --amber-rgb: 139,92,246;
+    --secondary: #ec4899; --secondary-rgb: 236,72,153;
 }
-:root[data-theme="crimson"] {
-    --amber: #ef4444; --amber-dim: #b91c1c; --amber-rgb: 239,68,68;
+:root[data-theme="sunset"] {
+    --amber: #f59e0b; --amber-dim: #d97706; --amber-rgb: 245,158,11;
+    --secondary: #ff5e3a; --secondary-rgb: 255,94,58;
 }
 :root[data-theme="pink"] {
     --amber: #ec4899; --amber-dim: #be185d; --amber-rgb: 236,72,153;
+    --secondary: #8b5cf6; --secondary-rgb: 139,92,246;
+}
+:root[data-theme="glacier"] {
+    --amber: #0ea5e9; --amber-dim: #0284c7; --amber-rgb: 14,165,233;
+    --secondary: #2dd4bf; --secondary-rgb: 45,212,191;
 }
 
 /* ================================================================
@@ -117,7 +128,7 @@ button, input, textarea {
     height: 3px;
     width: 0%;
     z-index: 9999;
-    background: linear-gradient(90deg, var(--amber), #3ddc84);
+    background: linear-gradient(90deg, var(--amber), var(--secondary));
     box-shadow: 0 0 12px rgba(var(--amber-rgb), 0.6);
 }
 
@@ -176,7 +187,7 @@ section {
 }
 
 .gradient-text {
-    background: linear-gradient(90deg, var(--amber), #3ddc84);
+    background: linear-gradient(90deg, var(--amber), var(--secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -324,12 +335,13 @@ section {
     box-shadow: 0 0 10px rgba(var(--amber-rgb), 0.5);
 }
 
-.swatch-gold { background: #e2a73b; }
-.swatch-ocean { background: #3b82f6; }
-.swatch-emerald { background: #10b981; }
-.swatch-purple { background: #8b5cf6; }
-.swatch-crimson { background: #ef4444; }
-.swatch-pink { background: #ec4899; }
+.swatch-cyber { background: linear-gradient(135deg, #a855f7, #06b6d4); }
+.swatch-ocean { background: linear-gradient(135deg, #3b82f6, #00ffff); }
+.swatch-emerald { background: linear-gradient(135deg, #10b981, #3ddc84); }
+.swatch-purple { background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+.swatch-sunset { background: linear-gradient(135deg, #f59e0b, #ff5e3a); }
+.swatch-pink { background: linear-gradient(135deg, #ec4899, #8b5cf6); }
+.swatch-glacier { background: linear-gradient(135deg, #0ea5e9, #2dd4bf); }
 
 /* ================================================================
    4. HEADER & NAV
@@ -376,6 +388,7 @@ nav {
 
 .nav-links {
     display: flex;
+    align-items: center;
     list-style: none;
     gap: 24px;
     margin-left: auto;
@@ -392,6 +405,97 @@ nav {
     color: var(--amber);
 }
 
+/* Dropdown navigation item */
+.nav-dropdown {
+    position: relative;
+}
+
+.dropdown-trigger {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 0;
+    transition: var(--transition);
+}
+
+.dropdown-trigger:hover, .nav-dropdown:hover .dropdown-trigger, .nav-dropdown:has(.dropdown-menu a.active) .dropdown-trigger {
+    color: var(--amber);
+}
+
+.dropdown-trigger i {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.nav-dropdown:hover .dropdown-trigger i {
+    transform: rotate(180deg);
+}
+
+/* Glassmorphic Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 200px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    border-radius: var(--radius-md);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+    z-index: 1000;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.nav-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    font-family: var(--font-mono);
+    color: var(--text-dim);
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.dropdown-menu li a i {
+    font-size: 0.9rem;
+    color: var(--amber);
+    opacity: 0.75;
+    width: 14px;
+}
+
+.dropdown-menu li a:hover {
+    color: var(--text);
+    background: rgba(var(--amber-rgb), 0.12);
+    transform: translateX(4px);
+}
+
+/* Nav Actions */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
 #theme-toggle {
     background: transparent;
     border: none;
@@ -406,9 +510,71 @@ nav {
     transform: scale(1.1);
 }
 
+#mobile-nav-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.15rem;
+    cursor: pointer;
+    display: none;
+    transition: var(--transition);
+}
+
+#mobile-nav-toggle:hover {
+    color: var(--amber);
+    transform: scale(1.05);
+}
+
+/* Mobile Nav Drawer overlay/container */
+.mobile-nav-drawer {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    border-top: none;
+    border-bottom: 0 solid var(--line);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-width 0.3s;
+}
+
+.mobile-nav-drawer.open {
+    max-height: 480px;
+    border-bottom-width: 1px;
+}
+
+.mobile-nav-links {
+    list-style: none;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mobile-nav-links li a {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    padding: 6px 0;
+    transition: var(--transition);
+}
+
+.mobile-nav-links li a:hover {
+    color: var(--amber);
+    padding-left: 8px;
+}
+
 @media (max-width: 900px) {
     .nav-links {
         display: none;
+    }
+    #mobile-nav-toggle {
+        display: block;
     }
 }
 
@@ -426,27 +592,17 @@ nav {
 }
 
 #hero-canvas {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: -2;
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.55;
 }
 
-.hero-aurora {
-    position: absolute;
-    top: -200px;
-    right: -200px;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(var(--amber-rgb), 0.15) 0%, transparent 60%);
-    filter: blur(80px);
-    z-index: -1;
-    animation: auroraRotate 20s infinite linear;
-}
+
 
 .hero-content {
     flex: 1.2;
@@ -2295,11 +2451,7 @@ footer .accent {
 /* ================================================================
    14. KEYFRAMES ANIMATIONS & CUSTOM CURSOR
    ================================================================ */
-@keyframes auroraRotate {
-    0% { transform: rotate(0deg) translate(0, 0); }
-    50% { transform: rotate(180deg) translate(20px, -20px); }
-    100% { transform: rotate(360deg) translate(0, 0); }
-}
+
 
 @keyframes pulse {
     0% { transform: scale(0.95); opacity: 0.5; }
@@ -2341,15 +2493,17 @@ footer .accent {
 }
 
 .cursor-dot {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     background: var(--amber);
+    box-shadow: 0 0 10px rgba(var(--amber-rgb), 0.8), 0 0 20px var(--secondary);
 }
 
 .cursor-ring {
-    width: 30px;
-    height: 30px;
-    border: 1.5px solid var(--amber);
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid var(--secondary);
+    box-shadow: 0 0 12px rgba(var(--secondary-rgb), 0.4);
 }
 
 body:hover .cursor-dot, body:hover .cursor-ring {

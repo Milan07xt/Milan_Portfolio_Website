@@ -166,41 +166,7 @@ if(themeBtn){
     targets.forEach(el => observer.observe(el));
 })();
 
-// ---------------------------------------------------------------
-// Unified 3D tilt effect — applied to project, certificate & contact cards
-// ---------------------------------------------------------------
-(function initTilt(){
-    if(prefersReducedMotion) return;
-    if(window.matchMedia("(hover: none)").matches) return; // skip on touch devices
 
-    const selectors = ".project-card, .certificate-card, .contact-card";
-    const cards = document.querySelectorAll(selectors);
-
-    cards.forEach(card=>{
-        const maxTilt = 10;
-
-        card.addEventListener("mousemove", e=>{
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const rotateY = ((x / rect.width) - 0.5) * maxTilt;
-            const rotateX = ((y / rect.height) - 0.5) * -maxTilt;
-
-            card.style.transform = `
-                perspective(1200px)
-                rotateX(${rotateX}deg)
-                rotateY(${rotateY}deg)
-                translateY(-8px)
-                scale(1.015)
-            `;
-        });
-
-        card.addEventListener("mouseleave", ()=>{
-            card.style.transform = "";
-        });
-    });
-})();
 
 // ---------------------------------------------------------------
 // Theme switcher — persists choice via localStorage
@@ -307,23 +273,6 @@ if(themeBtn){
     });
 })();
 
-// ---------------------------------------------------------------
-// Hero aurora — subtle mouse-follow glow
-// ---------------------------------------------------------------
-(function initHeroAurora(){
-    if(prefersReducedMotion) return;
-
-    const hero = document.querySelector(".hero");
-    if(!hero) return;
-
-    hero.addEventListener("mousemove", e=>{
-        const rect = hero.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        hero.style.setProperty("--hx", x + "%");
-        hero.style.setProperty("--hy", y + "%");
-    });
-})();
 
 // ---------------------------------------------------------------
 // Back to top button
@@ -509,6 +458,42 @@ if(themeBtn){
     });
 })();
 
+// Mobile Hamburger Navigation Drawer Controller
+(function initMobileNav() {
+    const toggle = document.getElementById("mobile-nav-toggle");
+    const drawer = document.getElementById("mobileNavDrawer");
+    if (!toggle || !drawer) return;
+
+    toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = drawer.classList.contains("open");
+        if (isOpen) {
+            drawer.classList.remove("open");
+            toggle.innerHTML = `<i class="fa-solid fa-bars"></i>`;
+        } else {
+            drawer.classList.add("open");
+            toggle.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
+        }
+    });
+
+    // Close when clicking links
+    const drawerLinks = drawer.querySelectorAll("a");
+    drawerLinks.forEach(link => {
+        link.addEventListener("click", () => {
+            drawer.classList.remove("open");
+            toggle.innerHTML = `<i class="fa-solid fa-bars"></i>`;
+        });
+    });
+
+    // Close when clicking outside
+    document.addEventListener("click", (e) => {
+        if (!drawer.contains(e.target) && !toggle.contains(e.target)) {
+            drawer.classList.remove("open");
+            toggle.innerHTML = `<i class="fa-solid fa-bars"></i>`;
+        }
+    });
+})();
+
 // ---------------------------------------------------------------
 // ScrollSpy Navigation
 // ---------------------------------------------------------------
@@ -537,83 +522,251 @@ if(themeBtn){
 })();
 
 // ---------------------------------------------------------------
-// Canvas Particle Network Background
+// Interactive 3D Particle Network (Three.js WebGL)
 // ---------------------------------------------------------------
-(function initParticleNetwork() {
+(function initThreeJSBackground() {
     const canvas = document.getElementById("hero-canvas");
-    if (!canvas || prefersReducedMotion) return;
+    if (typeof THREE === "undefined" || !canvas || prefersReducedMotion) return;
 
-    const ctx = canvas.getContext("2d");
-    let width, height;
-    let particles = [];
-    
-    // Config
-    const PARTICLE_COUNT = 50;
-    const CONNECT_DISTANCE = 120;
+    let width = canvas.offsetWidth;
+    let height = canvas.offsetHeight;
 
-    function resize() {
-        width = canvas.width = canvas.offsetWidth;
-        height = canvas.height = canvas.offsetHeight;
-    }
-    
-    window.addEventListener("resize", resize);
-    resize();
+    // 1. Scene & Camera Setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, width / height, 1, 1000);
+    camera.position.z = 250;
 
-    class Particle {
-        constructor() {
-            this.x = Math.random() * width;
-            this.y = Math.random() * height;
-            this.vx = (Math.random() - 0.5) * 1.5;
-            this.vy = (Math.random() - 0.5) * 1.5;
-            this.size = Math.random() * 2 + 1;
-        }
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
+    // 2. Renderer Setup
+    const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            if (this.x < 0 || this.x > width) this.vx *= -1;
-            if (this.y < 0 || this.y > height) this.vy *= -1;
-        }
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--amber').trim() || "#e3a83b";
-            ctx.fill();
-        }
+    // 3. Circle Texture generator (for nice glowing round particles)
+    function createCircleTexture() {
+        const c = document.createElement("canvas");
+        c.width = 16;
+        c.height = 16;
+        const ctx = c.getContext("2d");
+        const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
+        grad.addColorStop(0, "rgba(255, 255, 255, 1)");
+        grad.addColorStop(0.3, "rgba(255, 255, 255, 0.8)");
+        grad.addColorStop(1, "rgba(255, 255, 255, 0)");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 16, 16);
+        return new THREE.CanvasTexture(c);
     }
 
+    const particleTexture = createCircleTexture();
+
+    // 4. Generate Swirling Particles
+    const PARTICLE_COUNT = 350;
+    const particlesData = [];
+    const positions = new Float32Array(PARTICLE_COUNT * 3);
+    const particleGeometry = new THREE.BufferGeometry();
+
+    const areaRadius = 180;
     for (let i = 0; i < PARTICLE_COUNT; i++) {
-        particles.push(new Particle());
+        // Distribute in a sphere shell
+        const u = Math.random();
+        const v = Math.random();
+        const theta = u * 2.0 * Math.PI;
+        const phi = Math.acos(2.0 * v - 1.0);
+        const r = areaRadius * (0.6 + 0.4 * Math.random()); // sphere thickness
+
+        const x = r * Math.sin(phi) * Math.cos(theta);
+        const y = r * Math.sin(phi) * Math.sin(theta);
+        const z = r * Math.cos(phi);
+
+        positions[i * 3] = x;
+        positions[i * 3 + 1] = y;
+        positions[i * 3 + 2] = z;
+
+        particlesData.push({
+            x: x,
+            y: y,
+            z: z,
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4,
+            vz: (Math.random() - 0.5) * 0.4
+        });
     }
+
+    particleGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+    // Dynamic Materials
+    const pointsMaterial = new THREE.PointsMaterial({
+        size: 5,
+        map: particleTexture,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        color: 0xa855f7
+    });
+
+    const particles = new THREE.Points(particleGeometry, pointsMaterial);
+    scene.add(particles);
+
+    // 5. Lines Geometry Setup
+    const maxConnections = PARTICLE_COUNT * 4;
+    const linePositions = new Float32Array(maxConnections * 6);
+    const lineColors = new Float32Array(maxConnections * 6);
+    const lineGeometry = new THREE.BufferGeometry();
+
+    lineGeometry.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
+    lineGeometry.setAttribute("color", new THREE.BufferAttribute(lineColors, 3));
+
+    const lineMaterial = new THREE.LineBasicMaterial({
+        vertexColors: true,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        linewidth: 1,
+        depthWrite: false
+    });
+
+    const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+    scene.add(lines);
+
+    // 6. Interactive Cursor Tracking
+    let targetMouseX = 0, targetMouseY = 0;
+    let mouseX = 0, mouseY = 0;
+
+    window.addEventListener("mousemove", (e) => {
+        targetMouseX = (e.clientX - window.innerWidth / 2) * 0.25;
+        targetMouseY = (e.clientY - window.innerHeight / 2) * 0.25;
+    });
+
+    let scrollY = 0;
+    window.addEventListener("scroll", () => {
+        scrollY = window.scrollY;
+    }, { passive: true });
+
+    // 7. Resize Handler
+    function onResize() {
+        width = canvas.offsetWidth;
+        height = canvas.offsetHeight;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+    }
+    window.addEventListener("resize", onResize);
+
+    // 8. Animation loop
+    let frameCount = 0;
+    const tempColor = new THREE.Color();
 
     function animate() {
-        ctx.clearRect(0, 0, width, height);
+        requestAnimationFrame(animate);
+
+        frameCount++;
         
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
+        // Dynamic Theme Color Reading (optimized)
+        if (frameCount % 30 === 0) {
+            const rootStyles = getComputedStyle(document.documentElement);
+            const amberHex = rootStyles.getPropertyValue("--amber").trim() || "#a855f7";
+            tempColor.set(amberHex);
+            pointsMaterial.color.copy(tempColor);
+        }
 
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
+        // Mouse Parallax smooth lerp
+        mouseX += (targetMouseX - mouseX) * 0.05;
+        mouseY += (targetMouseY - mouseY) * 0.05;
 
-                if (dist < CONNECT_DISTANCE) {
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    const alpha = 1 - (dist / CONNECT_DISTANCE);
-                    const colorStr = getComputedStyle(document.documentElement).getPropertyValue('--amber-rgb').trim() || "227,168,59";
-                    ctx.strokeStyle = `rgba(${colorStr}, ${alpha * 0.4})`;
-                    ctx.lineWidth = 1;
-                    ctx.stroke();
+        camera.position.x += (mouseX - camera.position.x) * 0.05;
+        camera.position.y += (-mouseY - camera.position.y) * 0.05;
+        camera.lookAt(scene.position);
+
+        // Swirl particles in 3D
+        const positions = particleGeometry.attributes.position.array;
+        
+        // Slowly rotate whole scene + add dynamic scroll-based rotation
+        const scrollRotation = scrollY * 0.0008;
+        particles.rotation.y = frameCount * 0.0008 + scrollRotation;
+        lines.rotation.y = frameCount * 0.0008 + scrollRotation;
+        particles.rotation.x = frameCount * 0.0003 + scrollRotation * 0.5;
+        lines.rotation.x = frameCount * 0.0003 + scrollRotation * 0.5;
+
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            const data = particlesData[i];
+            
+            data.x += data.vx;
+            data.y += data.vy;
+            data.z += data.vz;
+
+            // Constrain inside boundaries
+            const distSq = data.x * data.x + data.y * data.y + data.z * data.z;
+            if (distSq > areaRadius * areaRadius) {
+                data.vx *= -1.02;
+                data.vy *= -1.02;
+                data.vz *= -1.02;
+            }
+
+            positions[i * 3] = data.x;
+            positions[i * 3 + 1] = data.y;
+            positions[i * 3 + 2] = data.z;
+        }
+        particleGeometry.attributes.position.needsUpdate = true;
+
+        // Build Connecting Lines
+        let vertexIdx = 0;
+        let colorIdx = 0;
+        let connections = 0;
+
+        const maxDist = 65;
+        
+        // Grab current theme colors
+        const rootStyles = getComputedStyle(document.documentElement);
+        const amberHex = rootStyles.getPropertyValue("--amber").trim() || "#a855f7";
+        const secondaryHex = rootStyles.getPropertyValue("--secondary").trim() || "#06b6d4";
+        
+        const col1 = new THREE.Color(amberHex);
+        const col2 = new THREE.Color(secondaryHex);
+
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            for (let j = i + 1; j < PARTICLE_COUNT; j++) {
+                const dx = particlesData[i].x - particlesData[j].x;
+                const dy = particlesData[i].y - particlesData[j].y;
+                const dz = particlesData[i].z - particlesData[j].z;
+                const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                if (dist < maxDist) {
+                    const alpha = 1.0 - (dist / maxDist);
+
+                    // Add segment coordinates
+                    linePositions[vertexIdx++] = particlesData[i].x;
+                    linePositions[vertexIdx++] = particlesData[i].y;
+                    linePositions[vertexIdx++] = particlesData[i].z;
+
+                    linePositions[vertexIdx++] = particlesData[j].x;
+                    linePositions[vertexIdx++] = particlesData[j].y;
+                    linePositions[vertexIdx++] = particlesData[j].z;
+
+                    // Fade gradient colors
+                    lineColors[colorIdx++] = col1.r * alpha * 0.6;
+                    lineColors[colorIdx++] = col1.g * alpha * 0.6;
+                    lineColors[colorIdx++] = col1.b * alpha * 0.6;
+
+                    lineColors[colorIdx++] = col2.r * alpha * 0.6;
+                    lineColors[colorIdx++] = col2.g * alpha * 0.6;
+                    lineColors[colorIdx++] = col2.b * alpha * 0.6;
+
+                    connections++;
+                    if (connections >= maxConnections) break;
                 }
             }
+            if (connections >= maxConnections) break;
         }
-        requestAnimationFrame(animate);
+
+        lineGeometry.attributes.position.needsUpdate = true;
+        lineGeometry.attributes.color.needsUpdate = true;
+        lineGeometry.setDrawRange(0, connections * 2);
+
+        renderer.render(scene, camera);
     }
+
     animate();
 })();
 
@@ -863,7 +1016,7 @@ Role: Backend / CV Fresher
     }
 
     function drawStaticHUD() {
-        ctx.fillStyle = "#020408";
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--ink-2').trim() || "#0a0815";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         ctx.strokeStyle = "rgba(227, 168, 59, 0.2)";
@@ -901,7 +1054,7 @@ Role: Backend / CV Fresher
         if (localStream && video.readyState === video.HAVE_ENOUGH_DATA) {
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         } else {
-            ctx.fillStyle = "#040810";
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--ink-2').trim() || "#0a0815";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
             ctx.strokeStyle = "rgba(61, 220, 132, 0.1)";
@@ -1719,6 +1872,8 @@ Client Side Model:
                     isMatch = text.includes("forage");
                 } else if (filterVal === "udemy") {
                     isMatch = text.includes("udemy");
+                } else if (filterVal === "unstop") {
+                    isMatch = text.includes("unstop") || text.includes("campuscrew");
                 }
 
                 if (isMatch) {
