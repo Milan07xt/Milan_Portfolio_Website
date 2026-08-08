@@ -282,11 +282,32 @@ if(themeBtn){
     if(!btn) return;
 
     window.addEventListener("scroll", ()=>{
-        btn.classList.toggle("visible", window.scrollY > 500);
+        btn.classList.toggle("visible", window.scrollY > 300);
     }, { passive: true });
 
-    btn.addEventListener("click", ()=>{
-        window.scrollTo({ top: 0, behavior: "smooth" });
+    btn.addEventListener("click", (e)=>{
+        e.preventDefault();
+        const homeSection = document.getElementById("home");
+        if (homeSection) {
+            homeSection.scrollIntoView({ behavior: "smooth" });
+        } else {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        if (window.history && window.history.pushState) {
+            window.history.pushState(null, null, "#home");
+        } else {
+            window.location.hash = "#home";
+        }
+
+        const navLinks = document.querySelectorAll(".nav-links a, .mobile-nav-links a");
+        navLinks.forEach(link => {
+            if (link.getAttribute("href") === "#home") {
+                link.classList.add("active");
+            } else {
+                link.classList.remove("active");
+            }
+        });
     });
 })();
 (function initScrollProgress(){

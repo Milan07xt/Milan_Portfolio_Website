@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="ai-agent-widget.css">
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -46,6 +47,9 @@
         </ul>
 
         <div class="nav-actions">
+            <button id="nav-ai-btn" class="nav-ai-btn" aria-label="Ask AI Assistant">
+                <i class="fa-solid fa-robot"></i> <span>Milan AI</span>
+            </button>
             <button id="theme-toggle" aria-label="Toggle theme">
                 <i class="fa-solid fa-moon"></i>
             </button>
@@ -788,6 +792,31 @@
     <div class="project-grid">
         <div class="project-card">
             <div class="project-media">
+                <div style="width: 100%; height: 220px; background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%); display: flex; align-items: center; justify-content: center; font-size: 64px;">🤖</div>
+                <span class="badge badge-live"><span class="pulse-dot small"></span> LIVE</span>
+            </div>
+            <div class="project-body">
+                <h3>
+    <i class="fa-solid fa-robot project-title-icon"></i>
+    AI Portfolio Assistant
+</h3>
+                <p>
+                    A professional AI assistant built with FastAPI and OpenAI that understands the portfolio context and answers visitor questions dynamically.
+                </p>
+                <div class="chip-row small">
+                    <span class="chip">Python</span>
+                    <span class="chip">FastAPI</span>
+                    <span class="chip">OpenAI</span>
+                    <span class="chip">JS</span>
+                </div>
+                <div class="project-links">
+                    <a href="javascript:void(0)" onclick="document.getElementById('ai-agent-btn').click()" class="btn-link"><i class="fa-solid fa-comment-dots"></i> Try it now!</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-media">
                 <img src="images/face-attendance.png" alt="Face Recognition Attendance System" width="300" height="220">
                 <span class="badge badge-live"><span class="pulse-dot small"></span> LIVE</span>
             </div>
@@ -1101,9 +1130,9 @@
 <div class="cursor-ring"></div>
 
 <!-- Back to top -->
-<button class="back-to-top" aria-label="Back to top">
+<a href="#home" class="back-to-top" aria-label="Back to top">
     <i class="fa-solid fa-rocket"></i>
-</button>
+</a>
 
 <!-- Theme switcher -->
 <div class="theme-switcher">
@@ -1182,5 +1211,6 @@
     </div>
 </div>
 
+<script src="ai-agent-widget.js"></script>
 </body>
 </html>
