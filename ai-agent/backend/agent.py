@@ -19,7 +19,7 @@ Rules:
 7. Be polite and welcoming. If the user just says "Hi", greet them and offer to share info about Milan's skills, projects, or experience.
 """
 
-DEFAULT_MODELS = ["gemini-flash-latest", "gemini-3.5-flash", "gemini-3.6-flash", "gemini-2.5-flash-lite"]
+DEFAULT_MODELS = ["gemini-flash-latest", "gemini-3.5-flash", "gemini-3.6-flash", "gemini-1.5-flash"]
 
 def get_candidate_models():
     primary = os.getenv("GEMINI_MODEL", "gemini-flash-latest")
@@ -41,6 +41,7 @@ def process_chat_message(user_message: str) -> str:
     )
 
     last_exception = None
+    rate_limit_hit = False
 
     for model_name in candidate_models:
         try:
@@ -92,14 +93,17 @@ def process_chat_message(user_message: str) -> str:
             last_exception = e
             # Try next model if 429 rate limit or 404 missing model
             if "429" in err_str or "404" in err_str or "RESOURCE_EXHAUSTED" in err_str:
+                if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str or "Quota exceeded" in err_str:
+                    rate_limit_hit = True
                 continue
             else:
                 break
 
-    err_msg = str(last_exception) if last_exception else "Unknown error"
-    if "429" in err_msg or "RESOURCE_EXHAUSTED" in err_msg or "Quota exceeded" in err_msg:
+    if rate_limit_hit:
         return "⚠️ **Rate Limit Exceeded:** The AI Assistant has reached its temporary request limit. Please wait about 30 seconds before asking your next question!"
-    elif "401" in err_msg or "API_KEY_INVALID" in err_msg or "unauthorized" in err_msg.lower():
+
+    err_msg = str(last_exception) if last_exception else "Unknown error"
+    if "401" in err_msg or "API_KEY_INVALID" in err_msg or "unauthorized" in err_msg.lower():
         return "⚠️ **Authentication Error:** Invalid Gemini API key. Please verify your API key in `ai-agent/backend/.env`."
     else:
         return "⚠️ **Service Temporarily Unavailable:** The AI assistant encountered an issue. Please try again shortly."
