@@ -877,7 +877,7 @@ Contact Details:
 `,
         "download-resume": () => {
             const link = document.createElement('a');
-            link.href = 'resume/Milankumar_Rathod_Resume 03 (1).pdf';
+            link.href = 'resume/Milankumar_Rathod_Resume.pdf';
             link.download = 'Milankumar_Rathod_Resume.pdf';
             document.body.appendChild(link);
             link.click();
