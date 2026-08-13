@@ -1272,29 +1272,37 @@ Client Side Model:
 
         const linksDiv = card.querySelector(".project-links");
         if (linksDiv) {
-            const caseBtn = document.createElement("a");
-            caseBtn.className = "btn-link";
-            caseBtn.style.cursor = "pointer";
-            caseBtn.innerHTML = `<i class="fa-solid fa-circle-info"></i> Case Study`;
+            // Check if a case study link already exists (to avoid duplicates)
+            const existingCaseStudyLink = Array.from(linksDiv.querySelectorAll("a")).some(a => 
+                a.textContent.toLowerCase().includes("case study")
+            );
             
-            caseBtn.addEventListener("click", (e) => {
-                e.preventDefault();
-                const key = titleEl.textContent.trim().toLowerCase();
-                let data = null;
-                for (let k in projectData) {
-                    if (key.includes(k) || k.includes(key)) {
-                        data = projectData[k];
-                        break;
+            // Only add dynamic case study button if one doesn't already exist
+            if (!existingCaseStudyLink) {
+                const caseBtn = document.createElement("a");
+                caseBtn.className = "btn-link";
+                caseBtn.style.cursor = "pointer";
+                caseBtn.innerHTML = `<i class="fa-solid fa-circle-info"></i> Case Study`;
+                
+                caseBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const key = titleEl.textContent.trim().toLowerCase();
+                    let data = null;
+                    for (let k in projectData) {
+                        if (key.includes(k) || k.includes(key)) {
+                            data = projectData[k];
+                            break;
+                        }
                     }
-                }
-                if (data) {
-                    openModal(data);
-                } else {
-                    window.open(viewLink.getAttribute("href"), "_blank");
-                }
-            });
-            
-            linksDiv.appendChild(caseBtn);
+                    if (data) {
+                        openModal(data);
+                    } else {
+                        window.open(viewLink.getAttribute("href"), "_blank");
+                    }
+                });
+                
+                linksDiv.appendChild(caseBtn);
+            }
         }
     });
 
