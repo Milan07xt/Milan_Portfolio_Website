@@ -1259,6 +1259,41 @@ Client Side Model:
             tags: ["HTML5", "CSS3", "JavaScript", "Responsive Design", "UI/UX"],
             live: "https://hotel-website-project-kappa.vercel.app/index.html",
             code: "https://github.com/Milan07xt/Hotel-Website-Project"
+        },
+        "ai portfolio assistant": {
+            title: "AI Portfolio Assistant",
+            category: "Python / FastAPI / OpenAI / JavaScript",
+            desc: `
+                <div class="case-study-block">
+                    <p style="margin-bottom: 12px;"><strong>Problem & Motivation:</strong> Static portfolio websites don't engage visitors or showcase problem-solving skills. Recruiters must manually browse through projects, and any portfolio updates require backend code changes.</p>
+                    <p><strong>Proposed Solution:</strong> Built an intelligent AI chatbot using FastAPI and OpenAI function calling that understands portfolio context and answers visitor questions dynamically. The system reads from structured JSON files to prevent hallucination and ensure 100% accuracy about projects, skills, and credentials.</p>
+                </div>
+            `,
+            features: [
+                "Real-time AI chatbot with streaming responses integrated into portfolio widget.",
+                "Function calling architecture ensures AI only uses verified portfolio data—zero hallucinations.",
+                "Modular knowledge base: projects, skills, certificates, experience stored in JSON files.",
+                "FastAPI backend with CORS support for cross-origin deployment (frontend on Vercel, backend on Railway/Render).",
+                "Graceful model fallback strategy for multiple AI providers (OpenAI, Gemini, etc.).",
+                "Theme-aware frontend widget with smooth animations and mobile responsiveness."
+            ],
+            architecture: `
+Architecture Layers:
+  1. Frontend Widget (JavaScript + CSS)
+     - Floating chat interface with theme switching
+     - Real-time message streaming
+
+  2. FastAPI Backend (/chat endpoint)
+     - OpenAI function calling for safe data access
+     - System prompt enforces portfolio-only responses
+
+  3. Knowledge Base (JSON Files)
+     - profile.json, projects.json, skills.json
+     - certificates.json, experience.json, education.json
+`,
+            tags: ["Python", "FastAPI", "OpenAI API", "JavaScript", "Function Calling", "REST API"],
+            live: "http://localhost:3000",
+            code: "https://github.com/Milan07xt/Milan_Portfolio_Website"
         }
     };
 
@@ -1346,6 +1381,14 @@ Client Side Model:
         modal.classList.remove("open");
         document.body.style.overflow = "";
     }
+
+    // Expose openAICaseStudy globally for onclick handler
+    window.openAICaseStudy = function() {
+        const aiData = projectData["ai portfolio assistant"];
+        if (aiData) {
+            openModal(aiData);
+        }
+    };
 })();
 
 // 5. GitHub API stats fetcher
