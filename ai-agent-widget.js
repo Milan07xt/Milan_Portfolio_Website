@@ -64,10 +64,13 @@ function initAIAgent() {
     const chatBody = document.getElementById('chat-body');
     const quickActions = document.querySelectorAll('.quick-action-btn');
 
+    // Determine API endpoint based on environment
+    const isLocalhost = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1' || 
+                       window.location.hostname === '0.0.0.0';
+    
     const API_URL = window.__MILAN_AI_API_URL__ ||
-        (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-            ? 'http://localhost:8000/chat'
-            : '/api/chat');
+        (isLocalhost ? 'http://localhost:8000/chat' : '/api/chat');
 
     // Show notification shortly after load and auto-hide after 5 seconds
     let notifTimer;
