@@ -2,8 +2,35 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const { spawn } = require('child_process');
 
 const app = express();
+
+function startAIAgentBackend() {
+    const backendDir = path.join(__dirname, 'ai-agent', 'backend');
+    const pythonExecutable = process.platform === 'win32'
+        ? path.join(backendDir, 'venv', 'Scripts', 'python.exe')
+        : path.join(backendDir, 'venv', 'bin', 'python');
+
+    const command = fs.existsSync(pythonExecutable) ? pythonExecutable : (process.platform === 'win32' ? 'python' : 'python3');
+    const args = fs.existsSync(pythonExecutable)
+        ? ['-m', 'uvicorn', 'main:app', '--host', '0.0.0.0', '--port', '8000']
+        : ['-m', 'uvicorn', 'main:app', '--host', '0.0.0.0', '--port', '8000'];
+
+    const child = spawn(command, args, {
+        cwd: backendDir,
+        stdio: 'inherit',
+        env: process.env
+    });
+
+    child.on('error', (err) => {
+        console.error('Failed to start AI backend:', err.message);
+    });
+
+    return child;
+}
+
+startAIAgentBackend();
 // Serve static site files so visiting http://localhost:3000 shows your portfolio
 app.use(express.static(__dirname));
 app.use(cors());

@@ -135,7 +135,19 @@ function initAIAgent() {
                 body: JSON.stringify({ message: message })
             });
 
-            if (!response.ok) throw new Error('Network response was not ok');
+            if (!response.ok) {
+                const errorText = await response.text();
+                let details = 'The AI assistant is currently offline. Please start the backend or use the contact section to reach Milan.';
+
+                try {
+                    const parsed = JSON.parse(errorText);
+                    if (parsed && parsed.detail) details = parsed.detail;
+                } catch (err) {
+                    if (errorText && errorText.trim()) details = errorText;
+                }
+
+                throw new Error(details);
+            }
 
             const data = await response.json();
             removeTypingIndicator(typingId);
@@ -144,7 +156,12 @@ function initAIAgent() {
         } catch (error) {
             console.error('Error:', error);
             removeTypingIndicator(typingId);
-            appendMessage("Sorry, the AI assistant is temporarily unavailable. Please use the contact section to reach Milan.", 'ai');
+            appendMessage(
+                error && error.message
+                    ? error.message
+                    : 'The AI assistant is currently offline. Please start the backend or use the contact section to reach Milan.',
+                'ai'
+            );
         }
     };
 
