@@ -108,11 +108,11 @@ def process_chat_message(user_message: str) -> str:
                 break
 
     if rate_limit_hit:
-        return "⚠️ **Rate Limit Exceeded:** The AI Assistant has reached its temporary request limit. Please wait about 30 seconds before asking your next question!"
+        return "⚠️ **Rate Limit Exceeded:** The AI assistant has reached its temporary request limit. Please wait a moment and try again, or use the contact section to reach Milan directly."
 
     err_msg = str(last_exception) if last_exception else "Unknown error"
     if "401" in err_msg or "API_KEY_INVALID" in err_msg or "unauthorized" in err_msg.lower():
-        return "⚠️ **Authentication Error:** Invalid Gemini API key. Please verify your API key in `ai-agent/backend/.env`."
+        return "⚠️ **Authentication Error:** Invalid Gemini API key. Please verify your API key in `ai-agent/backend/.env`, or use the contact section to reach Milan."
     else:
-        return "⚠️ **Service Temporarily Unavailable:** The AI assistant encountered an issue. Please try again shortly."
+        return "⚠️ **The AI assistant is currently offline. Please use the contact section to reach Milan directly.**"
 

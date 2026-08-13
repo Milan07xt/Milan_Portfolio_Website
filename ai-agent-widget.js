@@ -156,10 +156,14 @@ function initAIAgent() {
         } catch (error) {
             console.error('Error:', error);
             removeTypingIndicator(typingId);
+
+            const fallbackMessage =
+                'The AI assistant is currently offline. Please [contact Milan](#contact) or use the contact section to reach him.';
+
             appendMessage(
                 error && error.message
-                    ? error.message
-                    : 'The AI assistant is currently offline. Please start the backend or use the contact section to reach Milan.',
+                    ? `${error.message}. Please [contact Milan](#contact) or use the contact section to reach him.`
+                    : fallbackMessage,
                 'ai'
             );
         }
