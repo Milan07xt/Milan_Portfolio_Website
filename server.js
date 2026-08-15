@@ -4,17 +4,8 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
-const nodemailer = require('nodemailer');
 
 const app = express();
-
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
 
 function startAIAgentBackend() {
     const backendDir = path.join(__dirname, 'ai-agent', 'backend');
@@ -51,7 +42,7 @@ const CSV_PATH = path.join(__dirname, 'contact.csv');
 // Ensure CSV exists and has header
 function ensureHeader(){
     if(!fs.existsSync(CSV_PATH)){
-        const header = 'Name,Mail,Number,Subject,Message,Timestamp\n';
+        const header = 'Name,Mail,Number,Subject,Message,Timestamp,IPAddress,UserAgent,Referrer,Browser,Device\n';
         fs.writeFileSync(CSV_PATH, header, 'utf8');
     }
 }
@@ -71,8 +62,28 @@ app.post('/submit-contact', (req, res)=>{
 
         console.log('Received contact submission:', { name, email, number, subject });
 
+        // Capture metadata
         const timestamp = new Date().toISOString();
-        const row = [name, email, number || '', subject || '', message || '', timestamp]
+        const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress || 'Unknown';
+        const userAgent = req.headers['user-agent'] || 'Unknown';
+        const referrer = req.headers['referer'] || req.headers['referrer'] || 'Direct';
+        
+        // Parse user agent to extract browser and device info
+        let browser = 'Unknown';
+        let device = 'Unknown';
+        
+        if (userAgent.includes('Chrome')) browser = 'Chrome';
+        else if (userAgent.includes('Safari')) browser = 'Safari';
+        else if (userAgent.includes('Firefox')) browser = 'Firefox';
+        else if (userAgent.includes('Edge')) browser = 'Edge';
+        else if (userAgent.includes('Opera')) browser = 'Opera';
+        
+        if (userAgent.includes('Mobile')) device = 'Mobile';
+        else if (userAgent.includes('Tablet')) device = 'Tablet';
+        else if (userAgent.includes('iPad')) device = 'Tablet';
+        else device = 'Desktop';
+        
+        const row = [name, email, number || '', subject || '', message || '', timestamp, ipAddress, userAgent, referrer, browser, device]
             .map(escapeCsv).join(',') + '\n';
 
         fs.appendFile(CSV_PATH, row, 'utf8', (err)=>{
@@ -81,23 +92,30 @@ app.post('/submit-contact', (req, res)=>{
                 return res.status(500).send('Failed to save');
             }
             
-            // Send email notification
-            if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-                const mailOptions = {
-                    from: process.env.EMAIL_USER,
-                    to: process.env.EMAIL_USER, // Send to yourself
-                    subject: `New Portfolio Contact: ${subject || 'No Subject'}`,
-                    text: `You have received a new contact submission:\n\nName: ${name}\nEmail: ${email}\nPhone: ${number || 'N/A'}\nSubject: ${subject || 'N/A'}\n\nMessage:\n${message || 'N/A'}`
-                };
-                
-                transporter.sendMail(mailOptions, (error, info) => {
-                    if (error) {
-                        console.error('Error sending email:', error);
-                    } else {
-                        console.log('Email notification sent:', info.response);
-                    }
-                });
-            }
+            // Send email notification via Formsubmit (No App Password needed!)
+            fetch('https://formsubmit.co/ajax/rathodmilan216@gmail.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    phone: number || 'N/A',
+                    subject: subject || 'New Portfolio Contact',
+                    message: message || 'N/A',
+                    _subject: `New Portfolio Contact from ${name}`
+                })
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Email notification sent via Formsubmit.');
+                } else {
+                    console.error('Error sending email via Formsubmit:', response.status);
+                }
+            }).catch(error => {
+                console.error('Error in Formsubmit fetch:', error);
+            });
             
             res.status(200).send('Saved');
         });
