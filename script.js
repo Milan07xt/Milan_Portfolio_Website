@@ -2149,4 +2149,166 @@ if (modalCloseBtn) {
         const modal = document.getElementById('projectModal');
         if (modal) modal.classList.remove('open');
     });
-}
+}
+
+// ===============================================================
+// Contact Submissions Display & CSV Loader
+// ===============================================================
+(function initContactSubmissionsLoader() {
+    const loadBtn = document.getElementById('loadContactsBtn');
+    const statusEl = document.getElementById('contactsStatus');
+    const tableWrap = document.querySelector('.submissions-table-wrap');
+    const tableBody = document.getElementById('contactsTableBody');
+    const grid = document.getElementById('contactsGrid');
+
+    if (!loadBtn || !statusEl || !tableBody) return;
+
+    // Load submissions on page load
+    function loadSubmissions() {
+        statusEl.textContent = 'Loading...';
+        loadBtn.disabled = true;
+
+        fetch('contact.csv')
+            .then(response => response.text())
+            .then(csvText => {
+                const lines = csvText.trim().split('\n');
+                if (lines.length <= 1) {
+                    statusEl.textContent = 'No submissions yet.';
+                    return;
+                }
+
+                // Parse CSV headers
+                const headers = parseCSVLine(lines[0]);
+                const submissions = [];
+
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (!line) continue;
+                    
+                    const values = parseCSVLine(line);
+                    const submission = {};
+                    headers.forEach((header, idx) => {
+                        submission[header] = values[idx] || '';
+                    });
+                    submissions.push(submission);
+                }
+
+                displaySubmissions(submissions);
+                statusEl.textContent = `Loaded ${submissions.length} submission(s)`;
+                loadBtn.disabled = false;
+
+                if (tableWrap) {
+                    tableWrap.classList.add('show');
+                }
+            })
+            .catch(err => {
+                console.error('Error loading submissions:', err);
+                statusEl.textContent = 'Error loading submissions. Make sure server is running.';
+                loadBtn.disabled = false;
+            });
+    }
+
+    function parseCSVLine(line) {
+        const result = [];
+        let current = '';
+        let insideQuotes = false;
+
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            const nextChar = line[i + 1];
+
+            if (char === '"') {
+                if (insideQuotes && nextChar === '"') {
+                    current += '"';
+                    i++;
+                } else {
+                    insideQuotes = !insideQuotes;
+                }
+            } else if (char === ',' && !insideQuotes) {
+                result.push(current);
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        result.push(current);
+        return result.map(val => val.trim().replace(/^"|"$/g, ''));
+    }
+
+    function displaySubmissions(submissions) {
+        // Clear existing rows
+        tableBody.innerHTML = '';
+        grid.innerHTML = '';
+
+        // Sort by timestamp (newest first)
+        submissions.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp));
+
+        submissions.forEach(sub => {
+            // Add to table
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${escapeHTML(sub.Name)}</td>
+                <td><a href="mailto:${sub.Mail}">${escapeHTML(sub.Mail)}</a></td>
+                <td>${escapeHTML(sub.Number)}</td>
+                <td>${escapeHTML(sub.Subject)}</td>
+                <td>${escapeHTML(sub.Message.substring(0, 50))}${sub.Message.length > 50 ? '...' : ''}</td>
+                <td>${formatDate(sub.Timestamp)}</td>
+                <td>${escapeHTML(sub.Device || 'Unknown')}</td>
+            `;
+            tableBody.appendChild(row);
+
+            // Add to grid (mobile)
+            const card = document.createElement('div');
+            card.className = 'contact-submission-card glass';
+            card.innerHTML = `
+                <div class="submission-card-header">
+                    <span class="submission-card-name">${escapeHTML(sub.Name)}</span>
+                    <span class="submission-card-device">${escapeHTML(sub.Device || 'Unknown')}</span>
+                </div>
+                <div class="submission-card-meta">
+                    <div class="submission-card-item">
+                        <span class="submission-card-label">Email:</span>
+                        <span class="submission-card-value"><a href="mailto:${sub.Mail}">${escapeHTML(sub.Mail)}</a></span>
+                    </div>
+                    <div class="submission-card-item">
+                        <span class="submission-card-label">Phone:</span>
+                        <span class="submission-card-value"><a href="tel:${sub.Number}">${escapeHTML(sub.Number)}</a></span>
+                    </div>
+                    <div class="submission-card-item">
+                        <span class="submission-card-label">Subject:</span>
+                        <span class="submission-card-value">${escapeHTML(sub.Subject)}</span>
+                    </div>
+                </div>
+                <div class="submission-card-message">
+                    <strong>Message:</strong><br>
+                    ${escapeHTML(sub.Message)}
+                </div>
+                <div class="submission-card-timestamp">${formatDate(sub.Timestamp)}</div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return 'N/A';
+        const date = new Date(dateStr);
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function escapeHTML(str) {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;')
+                  .replace(/</g, '&lt;')
+                  .replace(/>/g, '&gt;')
+                  .replace(/"/g, '&quot;')
+                  .replace(/'/g, '&#039;');
+    }
+
+    // Load on page load
+    loadSubmissions();
+
+    // Refresh button handler
+    if (loadBtn) {
+        loadBtn.addEventListener('click', loadSubmissions);
+    }
+})();
