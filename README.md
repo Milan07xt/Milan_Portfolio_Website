@@ -10,7 +10,7 @@ Quick start
 ```powershell
 cd "c:\Users\ABC\Downloads\Milan_Portfolio_Website"
 npm install
-npm start
+npm run start:local
 ```
 
 3. Serve the site files in a browser. Easiest options:

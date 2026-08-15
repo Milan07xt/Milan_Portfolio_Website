@@ -55,7 +55,7 @@ This is a professional portfolio website for Milan Rathod (Python/Django Develop
 5. **Start the application**
    ```bash
    # Terminal 1: Start the Node.js server (serves portfolio + manages Python backend)
-   npm start
+   npm run start:local
    
    # This will:
    # - Start the website on http://localhost:3000
@@ -164,14 +164,14 @@ In the Vercel project settings:
 
 **Fix:**
 - Ensure `GEMINI_API_KEY` is set in `.env` (local) or Vercel Environment Variables (production)
-- Restart the server: `npm start`
+- Restart the server: `npm run start:local`
 - Check browser console for detailed error messages
 
 ### Contact Form Not Saving
 **Cause:** Server not running or CORS issue
 
 **Fix:**
-- Ensure Node.js server is running: `npm start`
+- Ensure Node.js server is running: `npm run start:local`
 - Check that `contact.csv` exists and is writable
 - Clear browser cache and retry
 

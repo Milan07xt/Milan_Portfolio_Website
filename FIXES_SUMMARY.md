@@ -96,7 +96,7 @@ Returns answer from portfolio data
 - [ ] Clone repository
 - [ ] Run `npm install`
 - [ ] Create `.env` file with `GEMINI_API_KEY`
-- [ ] Run `npm start`
+- [ ] Run `npm run start:local`
 - [ ] Visit http://localhost:3000
 - [ ] Click "Ask AI Assistant" button
 - [ ] Test: "Tell me about Milan" → Should get a response
@@ -146,7 +146,7 @@ Returns answer from portfolio data
 
 2. **Test Locally**
    ```bash
-   npm start
+   npm run start:local
    # Visit http://localhost:3000
    ```
 
