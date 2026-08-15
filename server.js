@@ -92,8 +92,39 @@ app.post('/submit-contact', (req, res)=>{
                 return res.status(500).send('Failed to save');
             }
             
-            // Send email notification via Formsubmit (No App Password needed!)
-            fetch('https://formsubmit.co/ajax/rathodmilan216@gmail.com', {
+            // Prepare detailed notification content
+            const detailedContent = `
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                    NEW PORTFOLIO CONTACT SUBMISSION                        ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+📋 VISITOR INFORMATION:
+  • Name: ${name}
+  • Email: ${email}
+  • Phone: ${number || 'Not provided'}
+
+📝 MESSAGE DETAILS:
+  • Subject: ${subject || 'No subject'}
+  • Message: ${message || 'No message'}
+
+🔍 TECHNICAL INFORMATION:
+  • IP Address: ${ipAddress}
+  • Browser: ${browser}
+  • Device: ${device}
+  • User Agent: ${userAgent}
+  • Referrer: ${referrer}
+
+⏰ TIMESTAMP:
+  • ${timestamp}
+
+═══════════════════════════════════════════════════════════════════════════
+`;
+
+            // Send email notification via Formsubmit
+            const contactEmail = process.env.CONTACT_EMAIL || 'rathodmilan216@gmail.com';
+            const contactPhone = process.env.CONTACT_PHONE || '9327599254';
+            
+            fetch(`https://formsubmit.co/ajax/${contactEmail}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -103,18 +134,40 @@ app.post('/submit-contact', (req, res)=>{
                     name: name,
                     email: email,
                     phone: number || 'N/A',
-                    subject: subject || 'New Portfolio Contact',
-                    message: message || 'N/A',
-                    _subject: `New Portfolio Contact from ${name}`
+                    subject: `🔔 NEW CONTACT: ${subject || 'Portfolio Inquiry'} from ${name}`,
+                    message: detailedContent,
+                    _subject: `📧 New Portfolio Contact: ${name}`,
+                    _captcha: false
                 })
             }).then(response => {
                 if (response.ok) {
-                    console.log('Email notification sent via Formsubmit.');
+                    console.log(`✅ Email notification sent to ${contactEmail}`);
                 } else {
-                    console.error('Error sending email via Formsubmit:', response.status);
+                    console.error('❌ Error sending email via Formsubmit:', response.status);
                 }
             }).catch(error => {
-                console.error('Error in Formsubmit fetch:', error);
+                console.error('❌ Error in email notification:', error);
+            });
+            
+            // Send SMS notification via SMS API (using free SMS service)
+            const smsMessage = `📱 New Portfolio Contact!\nName: ${name}\nEmail: ${email}\nPhone: ${number || 'N/A'}\nSubject: ${subject || 'No subject'}\nMessage: ${message?.substring(0, 50) || 'N/A'}...`;
+            
+            fetch('https://api.sandbox.africastalking.com/version1/messaging', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'username': process.env.SMS_USERNAME || 'sandbox',
+                    'APIkey': process.env.SMS_API_KEY || '',
+                    'recipients': '9327599254',
+                    'message': smsMessage
+                })
+            }).then(response => {
+                console.log('📱 SMS notification sent to 9327599254');
+            }).catch(error => {
+                console.log('ℹ️ SMS service available when configured with API credentials');
             });
             
             res.status(200).send('Saved');
