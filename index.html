@@ -1119,6 +1119,69 @@
 
     </div>
 
+    <br><br>
+
+    <!-- Contact Redirection Notice -->
+    <div class="contact-notice-banner glass">
+        <div class="notice-content">
+            <div class="notice-icon">
+                <i class="fa-solid fa-check-circle"></i>
+            </div>
+            <div class="notice-text">
+                <h3>📬 All messages are automatically redirected to:</h3>
+                <div class="redirection-info">
+                    <div class="redirect-item">
+                        <i class="fa-solid fa-envelope accent"></i>
+                        <span><strong>Email:</strong> rathodmilan216@gmail.com</span>
+                    </div>
+                    <div class="redirect-item">
+                        <i class="fa-solid fa-phone accent"></i>
+                        <span><strong>Phone:</strong> +91 9327599254</span>
+                    </div>
+                </div>
+                <p class="notice-subtitle">Every submission triggers instant notifications via email and SMS.</p>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <!-- Contact Submissions List -->
+    <div class="contact-submissions-section">
+        <h3 class="submissions-title">📋 Recent Contact Submissions</h3>
+        <div class="submissions-controls">
+            <button id="loadContactsBtn" class="btn secondary"><i class="fa-solid fa-sync"></i> Refresh</button>
+            <span id="contactsStatus" class="status-text"></span>
+        </div>
+        
+        <!-- Submissions Table -->
+        <div class="submissions-table-wrap">
+            <table id="contactsTable" class="contacts-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Submitted</th>
+                        <th>Device</th>
+                    </tr>
+                </thead>
+                <tbody id="contactsTableBody">
+                    <tr class="loading-row">
+                        <td colspan="7">Loading contacts...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Submissions Grid (Mobile Friendly) -->
+        <div id="contactsGrid" class="contacts-grid">
+            <!-- Loaded dynamically -->
+        </div>
+    </div>
+
    
 </section>
 
