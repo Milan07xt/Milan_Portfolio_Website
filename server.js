@@ -1,10 +1,20 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
+const nodemailer = require('nodemailer');
 
 const app = express();
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+});
 
 function startAIAgentBackend() {
     const backendDir = path.join(__dirname, 'ai-agent', 'backend');
@@ -70,6 +80,25 @@ app.post('/submit-contact', (req, res)=>{
                 console.error('Failed to append to CSV', err);
                 return res.status(500).send('Failed to save');
             }
+            
+            // Send email notification
+            if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+                const mailOptions = {
+                    from: process.env.EMAIL_USER,
+                    to: process.env.EMAIL_USER, // Send to yourself
+                    subject: `New Portfolio Contact: ${subject || 'No Subject'}`,
+                    text: `You have received a new contact submission:\n\nName: ${name}\nEmail: ${email}\nPhone: ${number || 'N/A'}\nSubject: ${subject || 'N/A'}\n\nMessage:\n${message || 'N/A'}`
+                };
+                
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        console.error('Error sending email:', error);
+                    } else {
+                        console.log('Email notification sent:', info.response);
+                    }
+                });
+            }
+            
             res.status(200).send('Saved');
         });
     }catch(err){
