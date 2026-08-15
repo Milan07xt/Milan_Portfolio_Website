@@ -414,9 +414,11 @@ if(themeBtn){
 
         try{
             const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0';
-            const contactUrl = isLocalhost ? 'http://localhost:3000/submit-contact' : 'https://formsubmit.co/ajax/rathodmilan216@gmail.com';
+            const emailUrl = isLocalhost ? 'http://localhost:3000/submit-contact' : 'https://formsubmit.co/ajax/rathodmilan216@gmail.com';
+            const smsUrl = isLocalhost ? 'http://localhost:3000/submit-sms' : '/api/sms';
 
-            const res = await fetch(contactUrl, {
+            // Send Email
+            const res = await fetch(emailUrl, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
@@ -431,6 +433,14 @@ if(themeBtn){
                     _subject: `New Portfolio Contact from ${data.name}`
                 })
             });
+
+            // Send SMS silently in the background
+            fetch(smsUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).catch(e => console.error('SMS Error:', e));
+
             if(res.ok){
                 statusEl.textContent = '';
                 form.reset();

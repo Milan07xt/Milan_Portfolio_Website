@@ -178,6 +178,30 @@ app.post('/submit-contact', (req, res)=>{
     }
 });
 
+// Submit SMS route for local testing
+app.post('/submit-sms', async (req, res) => {
+    try {
+        const { name, email, number, subject, message } = req.body || {};
+        const smsText = `Portfolio Contact!\nName: ${name}\nEmail: ${email}\nPhone: ${number}\nMsg: ${message ? message.substring(0, 40) : ''}...`;
+
+        const response = await fetch('https://textbelt.com/text', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                phone: '+919327599254',
+                message: smsText,
+                key: 'textbelt'
+            })
+        });
+
+        const data = await response.json();
+        return res.status(200).json(data);
+    } catch(err) {
+        console.error('Local SMS Error:', err);
+        return res.status(500).send('Server error');
+    }
+});
+
 // Admin Login (simple password verification)
 app.post('/api/admin/login', (req, res) => {
     const { password } = req.body || {};
