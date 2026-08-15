@@ -413,7 +413,10 @@ if(themeBtn){
         statusEl.textContent = 'Sending...';
 
         try{
-            const res = await fetch('http://localhost:3000/submit-contact', {
+            const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0';
+            const contactUrl = isLocalhost ? 'http://localhost:3000/submit-contact' : '/api/contact';
+
+            const res = await fetch(contactUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
