@@ -414,12 +414,22 @@ if(themeBtn){
 
         try{
             const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0';
-            const contactUrl = isLocalhost ? 'http://localhost:3000/submit-contact' : '/api/contact';
+            const contactUrl = isLocalhost ? 'http://localhost:3000/submit-contact' : 'https://formsubmit.co/ajax/rathodmilan216@gmail.com';
 
             const res = await fetch(contactUrl, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json' 
+                },
+                body: JSON.stringify({
+                    name: data.name,
+                    email: data.email,
+                    phone: data.number,
+                    subject: data.subject,
+                    message: data.message,
+                    _subject: `New Portfolio Contact from ${data.name}`
+                })
             });
             if(res.ok){
                 statusEl.textContent = '';
