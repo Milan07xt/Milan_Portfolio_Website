@@ -2125,20 +2125,20 @@ window.openAICaseStudy = function() {
     
     document.getElementById('modalDesc').innerHTML = 'A professional AI assistant built with FastAPI and OpenAI that understands the portfolio context and answers visitor questions dynamically. The backend serves an API that the frontend widget interacts with.';
     
-    document.getElementById('modalFeatures').innerHTML = \`
+    document.getElementById('modalFeatures').innerHTML = `
         <li><strong>Context-Aware Responses:</strong> Uses a tailored system prompt and portfolio data to answer specific questions.</li>
         <li><strong>Tool-Calling:</strong> Extracts data via custom tools in the backend.</li>
         <li><strong>Vercel Serverless Fallback:</strong> In production, seamlessly transitions to Vercel Serverless Functions.</li>
-    \`;
+    `;
     
     document.getElementById('modalArchitecture').innerHTML = 'FastAPI acts as the local backend while Vercel Serverless Functions handle production requests. Both interface with the OpenAI-compatible Gemini API.';
     
-    document.getElementById('modalTags').innerHTML = \`
+    document.getElementById('modalTags').innerHTML = `
         <span class="chip">Python</span>
         <span class="chip">FastAPI</span>
         <span class="chip">OpenAI</span>
         <span class="chip">JavaScript</span>
-    \`;
+    `;
     
     modal.classList.add('open');
 };
