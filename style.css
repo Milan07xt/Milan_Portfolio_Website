@@ -2476,6 +2476,259 @@ body.light .contrib-legend .sq-0 {
 }
 
 /* ================================================================
+   15A. CONTACT REDIRECTION NOTICE & SUBMISSIONS
+   ================================================================ */
+.contact-notice-banner {
+    background: var(--panel);
+    border: 1.5px solid var(--secondary);
+    border-radius: var(--radius-md);
+    padding: 28px;
+    margin: 40px auto;
+    max-width: 800px;
+    box-shadow: 0 8px 24px rgba(var(--secondary-rgb), 0.1);
+}
+
+.contact-notice-banner .notice-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.contact-notice-banner .notice-icon {
+    font-size: 2rem;
+    color: var(--secondary);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.notice-text h3 {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    color: var(--text);
+}
+
+.redirection-info {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.redirect-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--panel-2);
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+}
+
+.redirect-item i {
+    font-size: 1.1rem;
+}
+
+.redirect-item span {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+}
+
+.redirect-item strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.notice-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-faint);
+    margin: 0;
+    font-style: italic;
+}
+
+/* Contact Submissions Section */
+.contact-submissions-section {
+    max-width: 1000px;
+    margin: 50px auto 0;
+}
+
+.submissions-title {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.submissions-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.status-text {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-faint);
+}
+
+/* Submissions Table */
+.submissions-table-wrap {
+    display: none;
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+    background: var(--panel);
+}
+
+.submissions-table-wrap.show {
+    display: block;
+}
+
+.contacts-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+}
+
+.contacts-table thead {
+    background: var(--panel-2);
+    border-bottom: 2px solid var(--line);
+}
+
+.contacts-table th {
+    padding: 14px 16px;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.contacts-table tbody tr {
+    border-bottom: 1px solid var(--line-soft);
+    transition: background 0.3s ease;
+}
+
+.contacts-table tbody tr:hover {
+    background: rgba(var(--amber-rgb), 0.05);
+}
+
+.contacts-table tbody tr.loading-row {
+    text-align: center;
+    color: var(--text-faint);
+    padding: 30px;
+}
+
+.contacts-table td {
+    padding: 14px 16px;
+    color: var(--text-dim);
+}
+
+.contacts-table td:first-child {
+    font-weight: 500;
+    color: var(--text);
+}
+
+/* Submissions Grid (Mobile) */
+#contactsGrid {
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+#contactsGrid.show {
+    display: grid;
+}
+
+.contact-submission-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.submission-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.submission-card-name {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.submission-card-device {
+    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    background: var(--panel-2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--text-faint);
+}
+
+.submission-card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+}
+
+.submission-card-item {
+    display: flex;
+    gap: 8px;
+    font-size: 0.8rem;
+}
+
+.submission-card-label {
+    color: var(--text-faint);
+    min-width: 50px;
+}
+
+.submission-card-value {
+    color: var(--text-dim);
+    word-break: break-word;
+}
+
+.submission-card-message {
+    padding-top: 10px;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.4;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.submission-card-timestamp {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    text-align: right;
+}
+
+@media (max-width: 900px) {
+    .submissions-table-wrap {
+        display: none !important;
+    }
+
+    #contactsGrid {
+        display: grid !important;
+    }
+}
+
+/* ================================================================
    16. FOOTER
    ================================================================ */
 footer {
