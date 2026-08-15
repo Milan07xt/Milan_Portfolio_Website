@@ -60,8 +60,6 @@ app.post('/submit-contact', (req, res)=>{
             return res.status(400).send('Name and email are required');
         }
 
-        console.log('Received contact submission:', { name, email, number, subject });
-
         // Capture metadata
         const timestamp = new Date().toISOString();
         const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress || 'Unknown';
@@ -164,10 +162,12 @@ app.post('/submit-contact', (req, res)=>{
                     'recipients': '9327599254',
                     'message': smsMessage
                 })
-            }).then(response => {
-                console.log('📱 SMS notification sent to 9327599254');
+            }).then(async (response) => {
+                if (response.ok) {
+                    console.log('📱 SMS notification sent to 9327599254');
+                }
             }).catch(error => {
-                console.log('ℹ️ SMS service available when configured with API credentials');
+                // Silently fail if SMS is not configured
             });
             
             res.status(200).send('Saved');
