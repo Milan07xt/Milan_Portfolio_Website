@@ -15,7 +15,7 @@ async function handler(req, res) {
   try {
     const { name, email, number, subject, message } = req.body || {};
     
-    const smsText = `Portfolio Contact!\nName: ${name}\nEmail: ${email}\nPhone: ${number}\nMsg: ${message ? message.substring(0, 40) : ''}...`;
+    const smsText = `Portfolio Contact!\nName: ${name}\nEmail: ${email}\nPhone: ${number}\nMsg: ${message}`;
 
     // Using Textbelt API for free SMS delivery to India (+91)
     const response = await fetch('https://textbelt.com/text', {
