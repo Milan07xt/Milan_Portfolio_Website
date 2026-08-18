@@ -1492,7 +1492,7 @@ Architecture Layers:
     };
 
     fetchProfile();
-    fetchRepos();
+    // fetchRepos(); // Disabled to use statically rendered HTML repos
 
     async function fetchProfile() {
         const cached = getCachedData("profile_Milan07xt");
@@ -2364,4 +2364,37 @@ document.addEventListener('DOMContentLoaded', () => {
     revealElements.forEach(el => {
         revealObserver.observe(el);
     });
+});
+
+// ---------------------------------------------------------------
+// MacBook Terminal Window Controls
+// ---------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    const terminal = document.querySelector('.hero-terminal');
+    const closeBtn = document.querySelector('.terminal-dots .dot.red');
+    const minBtn = document.querySelector('.terminal-dots .dot.amber');
+    const maxBtn = document.querySelector('.terminal-dots .dot.green');
+    
+    if (terminal) {
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                terminal.classList.add('closed');
+                console.log('Terminal closed. Refresh page to reopen.');
+            });
+        }
+        
+        if (minBtn) {
+            minBtn.addEventListener('click', () => {
+                terminal.classList.remove('maximized'); // Ensure it's not full screen when minimizing
+                terminal.classList.toggle('minimized');
+            });
+        }
+        
+        if (maxBtn) {
+            maxBtn.addEventListener('click', () => {
+                terminal.classList.remove('minimized'); // Ensure it's not minimized when maximizing
+                terminal.classList.toggle('maximized');
+            });
+        }
+    }
 });

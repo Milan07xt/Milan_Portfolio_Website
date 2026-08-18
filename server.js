@@ -285,6 +285,15 @@ app.post('/api/admin/contacts/clear', requireAuth, (req, res) => {
 // Health check
 app.get('/health', (req, res)=> res.send('OK'));
 
+// API Chat endpoint (mirroring Vercel Serverless Function)
+try {
+    const chatHandler = require('./api/chat.js');
+    app.post('/api/chat', chatHandler);
+    app.options('/api/chat', chatHandler);
+} catch (err) {
+    console.error('Failed to load local chat handler:', err);
+}
+
 // Default route: send index.html
 app.get('/', (req, res)=>{
     res.sendFile(path.join(__dirname, 'index.html'));
