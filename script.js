@@ -1,4 +1,4 @@
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+﻿const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // ---------------------------------------------------------------
 // Typing effect for hero role text
@@ -56,7 +56,7 @@ if(themeBtn){
 }
 
 // ---------------------------------------------------------------
-// EDUCATION SECTION — Scroll reveal + mouse-light spotlight
+// EDUCATION SECTION â€” Scroll reveal + mouse-light spotlight
 // ---------------------------------------------------------------
 (function initEducationEffects(){
 
@@ -97,7 +97,7 @@ if(themeBtn){
 })();
 
 // ---------------------------------------------------------------
-// RESUME SECTION — Scroll reveal + mouse-light spotlight
+// RESUME SECTION â€” Scroll reveal + mouse-light spotlight
 // ---------------------------------------------------------------
 (function initResumeEffects(){
 
@@ -169,7 +169,7 @@ if(themeBtn){
 
 
 // ---------------------------------------------------------------
-// Theme switcher — persists choice via localStorage
+// Theme switcher â€” persists choice via localStorage
 // ---------------------------------------------------------------
 (function initThemeSwitcher(){
     const root = document.documentElement;
@@ -213,7 +213,7 @@ if(themeBtn){
 })();
 
 // ---------------------------------------------------------------
-// Custom cursor — glow dot + trailing ring
+// Custom cursor â€” glow dot + trailing ring
 // ---------------------------------------------------------------
 (function initCustomCursor(){
     if(prefersReducedMotion) return;
@@ -1274,7 +1274,7 @@ Client Side Model:
             `,
             features: [
                 "Real-time AI chatbot with streaming responses integrated into portfolio widget.",
-                "Function calling architecture ensures AI only uses verified portfolio data—zero hallucinations.",
+                "Function calling architecture ensures AI only uses verified portfolio dataâ€”zero hallucinations.",
                 "Modular knowledge base: projects, skills, certificates, experience stored in JSON files.",
                 "FastAPI backend with CORS support for cross-origin deployment (frontend on Vercel, backend on Railway/Render).",
                 "Graceful model fallback strategy for multiple AI providers (OpenAI, Gemini, etc.).",

@@ -1869,4 +1869,127 @@ nav {
     .cgpa-grid {
         grid-template-columns: 1fr 1fr;
     }
+}/* ================================================================
+   11.5 GITHUB REPOSITORIES (Dynamically Generated)
+   ================================================================ */
+.github-repos-section {
+    margin-top: 60px;
 }
+
+.github-repos-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+    color: var(--text-main);
+}
+
+.github-repos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.repo-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.repo-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--secondary);
+    box-shadow: 0 10px 20px rgba(6, 182, 212, 0.15);
+}
+
+.repo-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.repo-card-head h4 {
+    font-size: 1.25rem;
+    margin: 0;
+    font-family: var(--font-display);
+}
+
+.repo-card-head h4 a {
+    color: var(--text-main);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.repo-card-head h4 a:hover {
+    color: var(--primary);
+}
+
+.repo-icon-git {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+}
+
+.repo-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.repo-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.repo-lang {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.repo-stats {
+    display: flex;
+    gap: 16px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.repo-stats span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.repo-loading {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+    grid-column: 1 / -1;
+    padding: 40px;
+}
+
+/* Fix for contribution calendar cells mismatch */
+.contrib-grid .contrib-cell { 
+    width: 14px; 
+    height: 14px; 
+    border-radius: 3px; 
+    background: rgba(255,255,255,0.05); 
+    border: 1px solid rgba(255,255,255,0.02); 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.contrib-grid .contrib-cell:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(192, 38, 211, 0.4);
+    z-index: 10;
+}
+.contrib-grid .lvl-1 { background: rgba(192, 38, 211, 0.3); }
+.contrib-grid .lvl-2 { background: rgba(192, 38, 211, 0.6); }
+.contrib-grid .lvl-3 { background: rgba(192, 38, 211, 0.8); }
+.contrib-grid .lvl-4 { background: rgba(192, 38, 211, 1); box-shadow: 0 0 10px rgba(192, 38, 211, 0.5); }

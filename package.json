@@ -4,6 +4,7 @@
   "description": "Local server to accept contact form submissions and append to contact.csv",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "start:local": "node server.js"
   },
   "author": "Milan",
