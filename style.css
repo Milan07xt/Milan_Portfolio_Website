@@ -575,30 +575,12 @@ nav {
 
 /* Hero Right Visual (Terminal or Image) */
 .hero-visual {
-    background: var(--bg-surface);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    min-height: 440px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
     position: relative;
-}
-
-.hero-visual::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, var(--primary), var(--secondary));
-    z-index: -1;
-    border-radius: calc(var(--radius-md) + 2px);
-    opacity: 0.3;
-    filter: blur(10px);
+    width: 100%;
 }
 
 .terminal-head {
@@ -618,7 +600,7 @@ nav {
 .dot {
     width: 12px;
     height: 12px;
-    border-radius: 50%;
+
 }
 
 .dot.red {
@@ -1870,7 +1852,9 @@ nav {
     .cgpa-grid {
         grid-template-columns: 1fr 1fr;
     }
-}/* ================================================================
+}
+
+/* ================================================================
    11.5 GITHUB REPOSITORIES (Dynamically Generated)
    ================================================================ */
 .github-repos-section {
@@ -1977,27 +1961,53 @@ nav {
 }
 
 /* Fix for contribution calendar cells mismatch */
-.contrib-grid .contrib-cell { 
-    width: 14px; 
-    height: 14px; 
-    border-radius: 3px; 
-    background: rgba(255,255,255,0.05); 
-    border: 1px solid rgba(255,255,255,0.02); 
+.contrib-grid .contrib-cell {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.02);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .contrib-grid .contrib-cell:hover {
     transform: scale(1.2);
     box-shadow: 0 0 10px rgba(192, 38, 211, 0.4);
     z-index: 10;
 }
-.contrib-grid .lvl-1 { background: rgba(192, 38, 211, 0.3); }
-.contrib-grid .lvl-2 { background: rgba(192, 38, 211, 0.6); }
-.contrib-grid .lvl-3 { background: rgba(192, 38, 211, 0.8); }
-.contrib-grid .lvl-4 { background: rgba(192, 38, 211, 1); box-shadow: 0 0 10px rgba(192, 38, 211, 0.5); }
+
+.contrib-grid .lvl-1 {
+    background: rgba(192, 38, 211, 0.3);
+}
+
+.contrib-grid .lvl-2 {
+    background: rgba(192, 38, 211, 0.6);
+}
+
+.contrib-grid .lvl-3 {
+    background: rgba(192, 38, 211, 0.8);
+}
+
+.contrib-grid .lvl-4 {
+    background: rgba(192, 38, 211, 1);
+    box-shadow: 0 0 10px rgba(192, 38, 211, 0.5);
+}
 
 /* Footer Styling */
-footer { text-align: center; padding: 30px 0; width: 100%; border-top: 1px solid var(--border-color, #333); margin-top: 40px; }
-footer p { margin: 0; color: var(--text-muted); font-size: 0.95rem; }
+footer {
+    text-align: center;
+    padding: 30px 0;
+    width: 100%;
+    border-top: 1px solid var(--border-color, #333);
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
 /* ================================================================
    Semester Grid Animations
    ================================================================ */
@@ -2098,6 +2108,28 @@ footer p { margin: 0; color: var(--text-muted); font-size: 0.95rem; }
 }
 
 /* Hero Profile Image */
-.profile-image-container { width: 100%; max-width: 450px; position: relative; border-radius: 50%; background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 60%); display: flex; justify-content: center; align-items: center; margin: 0 auto; aspect-ratio: 1; }
-.hero-profile-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 20px 30px rgba(124, 58, 237, 0.4)); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 50%; }
-.hero-profile-img:hover { transform: scale(1.05) translateY(-10px); }
+.profile-image-container {
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 60%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    aspect-ratio: 1;
+}
+
+.hero-profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 30px rgba(124, 58, 237, 0.4));
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+}
+
+.hero-profile-img:hover {
+    transform: scale(1.05) translateY(-10px);
+}
