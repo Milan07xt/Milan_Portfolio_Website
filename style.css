@@ -2102,6 +2102,201 @@ footer p {
 }
 
 /* Fix text-align for CV button if needed */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.repo-card-head h4 a:hover {
+    color: var(--primary);
+}
+
+.repo-icon-git {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+}
+
+.repo-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.repo-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.repo-lang {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.repo-stats {
+    display: flex;
+    gap: 16px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.repo-stats span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.repo-loading {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+    grid-column: 1 / -1;
+    padding: 40px;
+}
+
+/* Fix for contribution calendar cells mismatch */
+.contrib-grid .contrib-cell {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contrib-grid .contrib-cell:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(192, 38, 211, 0.4);
+    z-index: 10;
+}
+
+.contrib-grid .lvl-1 {
+    background: rgba(192, 38, 211, 0.3);
+}
+
+.contrib-grid .lvl-2 {
+    background: rgba(192, 38, 211, 0.6);
+}
+
+.contrib-grid .lvl-3 {
+    background: rgba(192, 38, 211, 0.8);
+}
+
+.contrib-grid .lvl-4 {
+    background: rgba(192, 38, 211, 1);
+    box-shadow: 0 0 10px rgba(192, 38, 211, 0.5);
+}
+
+/* Footer Styling */
+footer {
+    text-align: center;
+    padding: 30px 0;
+    width: 100%;
+    border-top: 1px solid var(--border-color, #333);
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* ================================================================
+   Semester Grid Animations
+   ================================================================ */
+.semester-grid {
+    margin-top: 30px;
+}
+
+.sem-title {
+    font-size: 1.05rem;
+    color: var(--text-muted, #aaa);
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.sem-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+}
+
+.sem-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.in-view .sem-card,
+.reveal-up.in-view .sem-card,
+.reveal-3d.in-view .sem-card {
+    animation: slideUpFade 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: var(--d, 0s);
+}
+
+@keyframes slideUpFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sem-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted, #aaa);
+    margin-bottom: 4px;
+}
+
+.sem-value {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-main, #fff);
+    font-family: var(--font-display, sans-serif);
+}
+
+.sem-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent-gradient, linear-gradient(90deg, #c026d3, #7c3aed));
+    width: 0;
+    opacity: 0;
+}
+
+.in-view .sem-card .sem-bar,
+.reveal-up.in-view .sem-card .sem-bar,
+.reveal-3d.in-view .sem-card .sem-bar {
+    animation: growBar 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: calc(var(--d, 0s) + 0.4s);
+}
+
+@keyframes growBar {
+    to {
+        width: var(--val, 0%);
+        opacity: 1;
+    }
+}
+
+.sem-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Fix text-align for CV button if needed */
 .resume-btn-wrap {
     text-align: left;
     margin-top: 24px;
@@ -2112,22 +2307,18 @@ footer p {
     width: 100%;
     max-width: 450px;
     position: relative;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 60%);
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    aspect-ratio: 1;
 }
 
 .hero-profile-img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: contain;
     filter: drop-shadow(0 20px 30px rgba(124, 58, 237, 0.4));
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 50%;
 }
 
 .hero-profile-img:hover {
