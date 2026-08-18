@@ -1535,40 +1535,41 @@ nav {
     z-index: 10;
 }
 
-/* Theme Switcher */
-.theme-switcher {
+/* Back to Top Button */
+.back-to-top {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
-    z-index: 100;
-}
-
-.theme-panel {
-    display: none;
-    background: var(--bg-surface, #111);
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color, #333);
-    margin-bottom: 10px;
-}
-
-.theme-switcher.open .theme-panel {
-    display: block;
-}
-
-.theme-toggle-btn {
-    width: 45px;
-    height: 45px;
+    bottom: 30px;
+    left: 30px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background: var(--primary, #c026d3);
+    background: var(--accent-gradient, linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%));
     color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    font-size: 1.25rem;
+    text-decoration: none;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    color: #fff;
 }
 
 /* Contact Specific Missing Styles */
@@ -1993,3 +1994,105 @@ nav {
 .contrib-grid .lvl-2 { background: rgba(192, 38, 211, 0.6); }
 .contrib-grid .lvl-3 { background: rgba(192, 38, 211, 0.8); }
 .contrib-grid .lvl-4 { background: rgba(192, 38, 211, 1); box-shadow: 0 0 10px rgba(192, 38, 211, 0.5); }
+
+/* Footer Styling */
+footer { text-align: center; padding: 30px 0; width: 100%; border-top: 1px solid var(--border-color, #333); margin-top: 40px; }
+footer p { margin: 0; color: var(--text-muted); font-size: 0.95rem; }
+/* ================================================================
+   Semester Grid Animations
+   ================================================================ */
+.semester-grid {
+    margin-top: 30px;
+}
+
+.sem-title {
+    font-size: 1.05rem;
+    color: var(--text-muted, #aaa);
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.sem-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+}
+
+.sem-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.in-view .sem-card,
+.reveal-up.in-view .sem-card,
+.reveal-3d.in-view .sem-card {
+    animation: slideUpFade 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: var(--d, 0s);
+}
+
+@keyframes slideUpFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sem-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted, #aaa);
+    margin-bottom: 4px;
+}
+
+.sem-value {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-main, #fff);
+    font-family: var(--font-display, sans-serif);
+}
+
+.sem-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent-gradient, linear-gradient(90deg, #c026d3, #7c3aed));
+    width: 0;
+    opacity: 0;
+}
+
+.in-view .sem-card .sem-bar,
+.reveal-up.in-view .sem-card .sem-bar,
+.reveal-3d.in-view .sem-card .sem-bar {
+    animation: growBar 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: calc(var(--d, 0s) + 0.4s);
+}
+
+@keyframes growBar {
+    to {
+        width: var(--val, 0%);
+        opacity: 1;
+    }
+}
+
+.sem-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Fix text-align for CV button if needed */
+.resume-btn-wrap {
+    text-align: left;
+    margin-top: 24px;
+}

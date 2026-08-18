@@ -1,4 +1,4 @@
-﻿const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // ---------------------------------------------------------------
 // Typing effect for hero role text
@@ -1673,6 +1673,15 @@ Architecture Layers:
         });
     }
 
+    const customDescriptions = {
+        "Milan_Portfolio_Website": "A sleek, interactive portfolio website showcasing my skills, projects, and professional experience with 3D animations.",
+        "Milan07xt": "My personal GitHub profile readme and configuration files.",
+        "Textbook-RAG-Assistant": "An AI-powered RAG assistant that answers queries based on textbook content using generative models.",
+        "ai-career-assistant": "An AI career assistant leveraging Python to provide career advice and resume analysis.",
+        "SEM-06": "Coursework and projects completed during Semester 6 of my IT degree.",
+        "Hemani_Portfolio_Template": "A modern, responsive portfolio template built with HTML, CSS, and JavaScript."
+    };
+
     function renderRepos(repos) {
         reposGrid.innerHTML = "";
         
@@ -1680,13 +1689,15 @@ Architecture Layers:
             const card = document.createElement("div");
             card.className = "repo-card";
             
+            const desc = repo.description || customDescriptions[repo.name] || 'No description available for this project.';
+            
             card.innerHTML = `
                 <div>
                     <div class="repo-card-head">
                         <h4><a href="${repo.html_url}" target="_blank">${repo.name}</a></h4>
                         <i class="fab fa-github repo-icon-git"></i>
                     </div>
-                    <p class="repo-desc">${repo.description || 'No description available for this project.'}</p>
+                    <p class="repo-desc">${desc}</p>
                 </div>
                 <div class="repo-footer">
                     <div class="repo-lang" id="repo-lang-${idx}">
