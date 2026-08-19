@@ -4,6 +4,7 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
+const { Pool } = require('pg');
 
 const app = express();
 
@@ -37,23 +38,35 @@ app.use(express.static(__dirname));
 app.use(cors());
 app.use(express.json());
 
-const CSV_PATH = path.join(__dirname, 'contact.csv');
+// Initialize Postgres Database Pool
+const connectionUrl = process.env.POSTGRES_URL ? process.env.POSTGRES_URL.split('?')[0] : '';
+const pool = new Pool({
+  connectionString: connectionUrl,
+  ssl: { rejectUnauthorized: false }
+});
 
-// Ensure CSV exists and has header
-function ensureHeader(){
-    if(!fs.existsSync(CSV_PATH)){
-        const header = 'Name,Mail,Number,Subject,Message,Timestamp,IPAddress,UserAgent,Referrer,Browser,Device\n';
-        fs.writeFileSync(CSV_PATH, header, 'utf8');
-    }
+// Auto-create the contacts table on startup
+async function initDb() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS contacts (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        number VARCHAR(50),
+        subject VARCHAR(255),
+        message TEXT,
+        timestamp VARCHAR(255)
+      )
+    `);
+    console.log('PostgreSQL database initialized');
+  } catch (err) {
+    console.error('Failed to initialize PostgreSQL table:', err);
+  }
 }
-ensureHeader();
+initDb();
 
-function escapeCsv(value){
-    if(value === undefined || value === null) return '';
-    return '"' + String(value).replace(/"/g, '""') + '"';
-}
-
-app.post('/submit-contact', (req, res)=>{
+app.post('/submit-contact', async (req, res)=>{
     try{
         const { name, email, number, subject, message } = req.body || {};
         if(!name || !email){
@@ -81,17 +94,15 @@ app.post('/submit-contact', (req, res)=>{
         else if (userAgent.includes('iPad')) device = 'Tablet';
         else device = 'Desktop';
         
-        const row = [name, email, number || '', subject || '', message || '', timestamp, ipAddress, userAgent, referrer, browser, device]
-            .map(escapeCsv).join(',') + '\n';
+        // Insert into PostgreSQL instead of CSV
+        await pool.query(
+            `INSERT INTO contacts (name, email, number, subject, message, timestamp) 
+             VALUES ($1, $2, $3, $4, $5, $6)`,
+            [name, email, number || '', subject || '', message || '', timestamp]
+        );
 
-        fs.appendFile(CSV_PATH, row, 'utf8', (err)=>{
-            if(err){
-                console.error('Failed to append to CSV', err);
-                return res.status(500).send('Failed to save');
-            }
-            
-            // Prepare detailed notification content
-            const detailedContent = `
+        // Prepare email notification formatting
+        const detailedContent = `
 ╔═══════════════════════════════════════════════════════════════════════════╗
 ║                    NEW PORTFOLIO CONTACT SUBMISSION                        ║
 ╚═══════════════════════════════════════════════════════════════════════════╝
@@ -120,7 +131,6 @@ app.post('/submit-contact', (req, res)=>{
 
             // Send email notification via Formsubmit
             const contactEmail = process.env.CONTACT_EMAIL || 'rathodmilan216@gmail.com';
-            const contactPhone = process.env.CONTACT_PHONE || '9327599254';
             
             fetch(`https://formsubmit.co/ajax/${contactEmail}`, {
                 method: 'POST',
@@ -171,7 +181,6 @@ app.post('/submit-contact', (req, res)=>{
             });
             
             res.status(200).send('Saved');
-        });
     }catch(err){
         console.error('Unexpected error in /submit-contact', err);
         res.status(500).send('Server error');
@@ -196,73 +205,29 @@ function requireAuth(req, res, next) {
     return res.status(401).send('Unauthorized');
 }
 
-// Get all contacts from CSV
-app.get('/api/admin/contacts', requireAuth, (req, res) => {
+// Get all contacts from Database
+app.get('/api/admin/contacts', requireAuth, async (req, res) => {
     try {
-        ensureHeader();
-        const content = fs.readFileSync(CSV_PATH, 'utf8');
-        const lines = content.trim().split('\n');
-        if (lines.length <= 1) {
-            return res.json([]);
-        }
-        
-        const contacts = [];
-        // Regex to match CSV columns including those with quotes and commas inside
-        // e.g. "Milan Rathod","email@email.com","number","subject","message","timestamp"
-        const regex = /(".*?"|[^",\s]+)(?=\s*,|\s*$)/g;
-        
-        for (let i = 1; i < lines.length; i++) {
-            const line = lines[i];
-            if (!line) continue;
-            
-            let matches = [];
-            let match;
-            while ((match = regex.exec(line)) !== null) {
-                matches.push(match[0]);
-            }
-            // Fallback if regex split fails
-            if (matches.length === 0) {
-                matches = line.split(',');
-            }
-            
-            const cleaned = matches.map(m => m.replace(/^"|"$/g, '').replace(/""/g, '"'));
-            
-            contacts.push({
-                index: i - 1, // Store CSV array row index for deletion
-                name: cleaned[0] || '',
-                email: cleaned[1] || '',
-                number: cleaned[2] || '',
-                subject: cleaned[3] || '',
-                message: cleaned[4] || '',
-                timestamp: cleaned[5] || ''
-            });
-        }
+        const result = await pool.query('SELECT * FROM contacts ORDER BY id ASC');
+        // Map id to index to avoid breaking admin frontend
+        const contacts = result.rows.map(row => ({
+            ...row,
+            index: row.id
+        }));
         res.json(contacts);
     } catch (err) {
-        console.error('Failed to read contacts CSV', err);
+        console.error('Failed to read contacts DB', err);
         res.status(500).send('Failed to read contacts');
     }
 });
 
-// Delete specific contact by index
-app.post('/api/admin/contacts/delete', requireAuth, (req, res) => {
+// Delete specific contact by id (mapped from index)
+app.post('/api/admin/contacts/delete', requireAuth, async (req, res) => {
     try {
         const { index } = req.body;
         if (index === undefined) return res.status(400).send('Index is required');
         
-        ensureHeader();
-        const content = fs.readFileSync(CSV_PATH, 'utf8');
-        const lines = content.trim().split('\n');
-        
-        const targetIndex = parseInt(index, 10);
-        if (isNaN(targetIndex) || targetIndex < 0 || targetIndex >= lines.length - 1) {
-            return res.status(400).send('Invalid contact index');
-        }
-        
-        // Remove the row (index + 1 because index 0 is header)
-        lines.splice(targetIndex + 1, 1);
-        
-        fs.writeFileSync(CSV_PATH, lines.join('\n') + '\n', 'utf8');
+        await pool.query('DELETE FROM contacts WHERE id = $1', [index]);
         res.status(200).send('Deleted successfully');
     } catch (err) {
         console.error('Failed to delete contact', err);
@@ -271,10 +236,9 @@ app.post('/api/admin/contacts/delete', requireAuth, (req, res) => {
 });
 
 // Clear all contacts
-app.post('/api/admin/contacts/clear', requireAuth, (req, res) => {
+app.post('/api/admin/contacts/clear', requireAuth, async (req, res) => {
     try {
-        const header = 'Name,Mail,Number,Subject,Message,Timestamp\n';
-        fs.writeFileSync(CSV_PATH, header, 'utf8');
+        await pool.query('TRUNCATE TABLE contacts');
         res.status(200).send('Cleared all contacts');
     } catch (err) {
         console.error('Failed to clear contacts', err);
