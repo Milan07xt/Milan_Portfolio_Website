@@ -39,6 +39,7 @@ async function handler(req, res) {
     const timestamp = new Date().toISOString();
 
     // Insert into PostgreSQL
+    let dbStatus = "Database OK";
     try {
         await pool.query(
             `INSERT INTO contacts (name, email, number, subject, message, timestamp) 
@@ -47,35 +48,43 @@ async function handler(req, res) {
         );
     } catch (dbError) {
         console.error('Database insertion error:', dbError);
-        // Continue even if DB fails so we can at least try to send the email
+        dbStatus = "DB Error: " + dbError.message;
     }
 
     // Send email using Formsubmit.co AJAX API
-    const response = await fetch('https://formsubmit.co/ajax/rathodmilan216@gmail.com', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            name: name,
-            email: email,
-            phone: number || 'N/A',
-            subject: subject || 'New Portfolio Contact',
-            message: message || 'N/A',
-            _subject: `New Portfolio Contact from ${name}`
-        })
-    });
+    let emailStatus = "Email OK";
+    try {
+        const response = await fetch('https://formsubmit.co/ajax/rathodmilan216@gmail.com', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                phone: number || 'N/A',
+                subject: subject || 'New Portfolio Contact',
+                message: message || 'N/A',
+                _subject: `New Portfolio Contact from ${name}`
+            })
+        });
 
-    if (!response.ok) {
-        throw new Error('Failed to send email via Formsubmit');
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Formsubmit rejected: ${response.status} ${errorText}`);
+        }
+    } catch (emailError) {
+        console.error('Email error:', emailError);
+        emailStatus = "Email Error: " + emailError.message;
+        throw new Error(emailStatus); // Fail the request if email fails
     }
 
     return res.status(200).send('Saved');
 
   } catch (error) {
     console.error('Contact API Error:', error);
-    return res.status(500).send('Failed to send message');
+    return res.status(500).send(`Failed to send message: ${error.message}`);
   }
 }
 
