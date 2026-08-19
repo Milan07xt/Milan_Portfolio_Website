@@ -413,6 +413,30 @@ if(themeBtn){
         statusEl.textContent = 'Sending...';
 
         try{
+            // Send Email directly from the frontend to bypass Cloudflare bot protection
+            const emailRes = await fetch('https://formsubmit.co/ajax/rathodmilan216@gmail.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: data.name,
+                    email: data.email,
+                    phone: data.number || 'N/A',
+                    subject: data.subject || 'New Portfolio Contact',
+                    message: data.message || 'N/A',
+                    _subject: `New Portfolio Contact from ${data.name}`,
+                    _captcha: false
+                })
+            });
+
+            // If the email fails, we still want to try saving it to the database
+            if (!emailRes.ok) {
+                console.warn('Formsubmit failed on the frontend, but we will still save to the database.');
+            }
+
+            // Save to PostgreSQL via Backend
             const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0';
             const contactUrl = isLocalhost ? 'http://localhost:3000/submit-contact' : '/api/contact';
 

@@ -129,34 +129,9 @@ app.post('/submit-contact', async (req, res)=>{
 ═══════════════════════════════════════════════════════════════════════════
 `;
 
-            // Send email notification via Formsubmit
-            const contactEmail = process.env.CONTACT_EMAIL || 'rathodmilan216@gmail.com';
-            
-            fetch(`https://formsubmit.co/ajax/${contactEmail}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    phone: number || 'N/A',
-                    subject: `🔔 NEW CONTACT: ${subject || 'Portfolio Inquiry'} from ${name}`,
-                    message: detailedContent,
-                    _subject: `📧 New Portfolio Contact: ${name}`,
-                    _captcha: false
-                })
-            }).then(response => {
-                if (response.ok) {
-                    console.log(`✅ Email notification sent to ${contactEmail}`);
-                } else {
-                    console.log('⚠️ Formsubmit rejected email. It may be blocked.');
-                }
-            }).catch(error => {
-                console.log('⚠️ Error in email notification:', error);
-            });
-            
+            // Send email logic has been moved to the frontend (script.js) 
+            // to bypass Cloudflare's serverless bot protection.
+
             // Send SMS notification via SMS API (using free SMS service)
             const smsMessage = `📱 New Portfolio Contact!\nName: ${name}\nEmail: ${email}\nPhone: ${number || 'N/A'}\nSubject: ${subject || 'No subject'}\nMessage: ${message?.substring(0, 50) || 'N/A'}...`;
             
