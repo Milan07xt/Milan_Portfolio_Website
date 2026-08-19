@@ -1,8 +1,15 @@
 /**
  * Vercel Serverless Function for Contact Submissions
  * This function handles the contact form submission in production on Vercel.
- * It sends an email notification using Formsubmit.co (no passwords required).
+ * It saves data to Supabase Postgres and sends an email notification using Formsubmit.co.
  */
+const { Pool } = require('pg');
+
+const connectionUrl = process.env.POSTGRES_URL ? process.env.POSTGRES_URL.split('?')[0] : '';
+const pool = new Pool({
+  connectionString: connectionUrl,
+  ssl: { rejectUnauthorized: false }
+});
 
 async function handler(req, res) {
   // Enable CORS
@@ -29,6 +36,20 @@ async function handler(req, res) {
         return res.status(400).send('Name and email are required');
     }
 
+    const timestamp = new Date().toISOString();
+
+    // Insert into PostgreSQL
+    try {
+        await pool.query(
+            `INSERT INTO contacts (name, email, number, subject, message, timestamp) 
+             VALUES ($1, $2, $3, $4, $5, $6)`,
+            [name, email, number || '', subject || '', message || '', timestamp]
+        );
+    } catch (dbError) {
+        console.error('Database insertion error:', dbError);
+        // Continue even if DB fails so we can at least try to send the email
+    }
+
     // Send email using Formsubmit.co AJAX API
     const response = await fetch('https://formsubmit.co/ajax/rathodmilan216@gmail.com', {
         method: 'POST',
@@ -49,9 +70,6 @@ async function handler(req, res) {
     if (!response.ok) {
         throw new Error('Failed to send email via Formsubmit');
     }
-    
-    // Note: Vercel has a read-only filesystem, so we don't write to contact.csv in production.
-    // The email serves as the primary notification and storage.
 
     return res.status(200).send('Saved');
 
