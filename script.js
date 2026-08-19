@@ -379,13 +379,13 @@ if(themeBtn){
 
     function showContactSuccessModal() {
         if (!successModal) return;
-        successModal.classList.add("open");
+        successModal.classList.add("active");
         document.body.style.overflow = "hidden";
         setTimeout(closeSuccessModal, 4000);
     }
     
     function closeSuccessModal() {
-        if (successModal) successModal.classList.remove("open");
+        if (successModal) successModal.classList.remove("active");
         document.body.style.overflow = "";
     }
 
