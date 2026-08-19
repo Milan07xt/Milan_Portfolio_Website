@@ -164,7 +164,7 @@ function initAIAgent() {
 
             appendMessage(
                 error && error.message
-                    ? `${error.message}. Please [contact Milan](#contact) or use the contact section to reach him.`
+                    ? error.message.includes('contact Milan') ? error.message : `${error.message}. Please [contact Milan](#contact) or use the contact section to reach him.`
                     : fallbackMessage,
                 'ai'
             );
@@ -192,8 +192,9 @@ function initAIAgent() {
         const msgDiv = document.createElement('div');
         msgDiv.className = `message ${sender}`;
         
-        // Simple markdown parsing for bold and links
+        // Simple markdown parsing for bold, links, and stripping headers
         let formattedText = text
+            .replace(/#{1,3}\s+(.*)/g, '<strong>$1</strong>') // Convert ### Header to bold
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
             .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
         
