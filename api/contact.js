@@ -76,8 +76,8 @@ async function handler(req, res) {
         }
     } catch (emailError) {
         console.error('Email error:', emailError);
-        emailStatus = "Email Error: " + emailError.message;
-        throw new Error(emailStatus); // Fail the request if email fails
+        // We do NOT throw the error here. Cloudflare blocks Vercel IPs sometimes.
+        // We want the form to succeed since the data is already saved in PostgreSQL!
     }
 
     return res.status(200).send('Saved');

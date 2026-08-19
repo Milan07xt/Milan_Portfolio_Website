@@ -151,10 +151,10 @@ app.post('/submit-contact', async (req, res)=>{
                 if (response.ok) {
                     console.log(`✅ Email notification sent to ${contactEmail}`);
                 } else {
-                    console.error('❌ Error sending email via Formsubmit:', response.status);
+                    console.log('⚠️ Formsubmit rejected email. It may be blocked.');
                 }
             }).catch(error => {
-                console.error('❌ Error in email notification:', error);
+                console.log('⚠️ Error in email notification:', error);
             });
             
             // Send SMS notification via SMS API (using free SMS service)
