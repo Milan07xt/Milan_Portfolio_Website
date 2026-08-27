@@ -4,7 +4,7 @@
  */
 
 const API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
 const SYSTEM_PROMPT = `You are Milan Rathod's AI Portfolio Assistant, a professional, friendly, and helpful digital representative for his portfolio.
 Your job is to answer only questions about Milan's background, skills, projects, education, certificates, resume, experience, and contact info.
@@ -152,20 +152,22 @@ ${JSON.stringify(PORTFOLIO_DATA.resume, null, 2)}
 User Question: ${message}
 `;
 
-    const response = await fetch(GEMINI_API_URL, {
+    const response = await fetch(`${GEMINI_API_URL}?key=${API_KEY}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'gemini-3.6-flash',
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT + '\n' + portfolioContext },
-          { role: 'user', content: message }
+        systemInstruction: {
+          parts: [{ text: SYSTEM_PROMPT + '\n' + portfolioContext }]
+        },
+        contents: [
+          { role: 'user', parts: [{ text: message }] }
         ],
-        temperature: 0.7,
-        max_tokens: 500
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 500
+        }
       })
     });
 
@@ -195,14 +197,14 @@ User Question: ${message}
 
     const data = await response.json();
 
-    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
       return res.status(500).json({
         error: 'Invalid API response format',
         answer: '⚠️ The AI assistant encountered an issue. Please try again shortly or contact Milan.'
       });
     }
 
-    const answer = data.choices[0].message.content;
+    const answer = data.candidates[0].content.parts[0].text;
 
     return res.status(200).json({
       success: true,

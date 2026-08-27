@@ -1,2424 +1,751 @@
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/**
+ * Milan Rathod — Premium Python Developer Portfolio
+ * script.js — Complete Animation & Interaction System
+ */
 
-// ---------------------------------------------------------------
-// Typing effect for hero role text
-// ---------------------------------------------------------------
-const roles = [
-    "Python Developer",
-    "Django Backend Developer",
-    "REST API Engineer",
-    "AI/ML Enthusiast",
-];
-
-let roleIndex = 0;
-let charIndex = 0;
-
-function typeText(){
-
-    const typing = document.getElementById("typing");
-    if(!typing) return;
-
-    let current = roles[roleIndex];
-
-    typing.textContent = current.substring(0, charIndex);
-
-    charIndex++;
-
-    if(charIndex > current.length){
-        setTimeout(()=>{
-            charIndex = 0;
-            roleIndex++;
-            if(roleIndex >= roles.length){
-                roleIndex = 0;
-            }
-        }, 1500);
-    }
-
-    setTimeout(typeText, 120);
-}
-
-typeText();
-
-// ---------------------------------------------------------------
-// Theme toggle
-// ---------------------------------------------------------------
-const themeBtn = document.getElementById("theme-toggle");
-
-if(themeBtn){
-    themeBtn.addEventListener("click", ()=>{
-        document.body.classList.toggle("light");
-        const icon = themeBtn.querySelector("i");
-        if(icon){
-            icon.classList.toggle("fa-moon");
-            icon.classList.toggle("fa-sun");
+(function () {
+    'use strict';
+    // ──────────────────────────────────────────────
+    // 0. Theme Toggle
+    // ──────────────────────────────────────────────
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    if (themeToggleBtn) {
+        const icon = themeToggleBtn.querySelector('i');
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
         }
-    });
-}
-
-// ---------------------------------------------------------------
-// EDUCATION SECTION â€” Scroll reveal + mouse-light spotlight
-// ---------------------------------------------------------------
-(function initEducationEffects(){
-
-    const eduSection = document.querySelector(".education-section");
-    if(!eduSection) return;
-
-    const revealTargets = eduSection.querySelectorAll(".reveal-up");
-
-    const revealObserver = new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-            if(entry.isIntersecting){
-                entry.target.classList.add("in-view");
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.2,
-        rootMargin: "0px 0px -60px 0px"
-    });
-
-    revealTargets.forEach(target => revealObserver.observe(target));
-
-    if(prefersReducedMotion) return;
-
-    eduSection.addEventListener("mousemove", (e)=>{
-        const rect = eduSection.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        eduSection.style.setProperty("--mx", x + "%");
-        eduSection.style.setProperty("--my", y + "%");
-    });
-
-    eduSection.addEventListener("mouseleave", ()=>{
-        eduSection.style.setProperty("--mx", "50%");
-        eduSection.style.setProperty("--my", "30%");
-    });
-
-})();
-
-// ---------------------------------------------------------------
-// RESUME SECTION â€” Scroll reveal + mouse-light spotlight
-// ---------------------------------------------------------------
-(function initResumeEffects(){
-
-    const resumeSection = document.querySelector(".resume-section");
-    if(!resumeSection) return;
-
-    const revealTargets = resumeSection.querySelectorAll(".reveal-up");
-
-    const revealObserver = new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-            if(entry.isIntersecting){
-                entry.target.classList.add("in-view");
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.15,
-        rootMargin: "0px 0px -80px 0px"
-    });
-
-    revealTargets.forEach(target => revealObserver.observe(target));
-
-    if(prefersReducedMotion) return;
-
-    resumeSection.addEventListener("mousemove", (e)=>{
-        const rect = resumeSection.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        resumeSection.style.setProperty("--mx", x + "%");
-        resumeSection.style.setProperty("--my", y + "%");
-    });
-
-    resumeSection.addEventListener("mouseleave", ()=>{
-        resumeSection.style.setProperty("--mx", "50%");
-        resumeSection.style.setProperty("--my", "40%");
-    });
-
-})();
-
-// ---------------------------------------------------------------
-// Generic scroll reveal for other sections (fade-up on first view)
-// ---------------------------------------------------------------
-(function initGeneralReveal(){
-    const targets = document.querySelectorAll(
-        "#about .about-grid, #skills .skill-group, #projects .project-card, #contact .contact-card, #certificates .certificate-card"
-    );
-    if(!targets.length) return;
-
-    targets.forEach(el=>{
-        el.style.opacity = "0";
-        el.style.transform = "translateY(24px)";
-        el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-    });
-
-    const observer = new IntersectionObserver((entries)=>{
-        entries.forEach((entry, i)=>{
-            if(entry.isIntersecting){
-                entry.target.style.transitionDelay = (i % 3) * 0.08 + "s";
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
-
-    targets.forEach(el => observer.observe(el));
-})();
-
-
-
-// ---------------------------------------------------------------
-// Theme switcher â€” persists choice via localStorage
-// ---------------------------------------------------------------
-(function initThemeSwitcher(){
-    const root = document.documentElement;
-    const toggleBtn = document.getElementById("themeToggleBtn");
-    const panel = document.getElementById("themePanel");
-    const swatches = document.querySelectorAll(".swatch");
-
-    if(!toggleBtn || !panel || !swatches.length) return;
-
-    const saved = localStorage.getItem("accentTheme") || "";
-    if(saved){
-        root.setAttribute("data-theme", saved);
-    }
-    swatches.forEach(s=>{
-        s.classList.toggle("active", (s.getAttribute("data-theme") || "") === saved);
-    });
-
-    toggleBtn.addEventListener("click", ()=>{
-        panel.classList.toggle("open");
-    });
-
-    document.addEventListener("click", (e)=>{
-        if(!panel.contains(e.target) && e.target !== toggleBtn && !toggleBtn.contains(e.target)){
-            panel.classList.remove("open");
-        }
-    });
-
-    swatches.forEach(swatch=>{
-        swatch.addEventListener("click", ()=>{
-            const theme = swatch.getAttribute("data-theme") || "";
-            if(theme){
-                root.setAttribute("data-theme", theme);
-            }else{
-                root.removeAttribute("data-theme");
-            }
-            localStorage.setItem("accentTheme", theme);
-            swatches.forEach(s => s.classList.remove("active"));
-            swatch.classList.add("active");
-        });
-    });
-})();
-
-// ---------------------------------------------------------------
-// Custom cursor â€” glow dot + trailing ring
-// ---------------------------------------------------------------
-(function initCustomCursor(){
-    if(prefersReducedMotion) return;
-    if(window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
-
-    const dot = document.querySelector(".cursor-dot");
-    const ring = document.querySelector(".cursor-ring");
-    if(!dot || !ring) return;
-
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
-
-    document.addEventListener("mousemove", e=>{
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        dot.style.left = mouseX + "px";
-        dot.style.top = mouseY + "px";
-    });
-
-    function animateRing(){
-        ringX += (mouseX - ringX) * 0.18;
-        ringY += (mouseY - ringY) * 0.18;
-        ring.style.left = ringX + "px";
-        ring.style.top = ringY + "px";
-        requestAnimationFrame(animateRing);
-    }
-    animateRing();
-
-    const hoverTargets = document.querySelectorAll(
-        "a, button, .chip, .swatch, .project-card, .certificate-card, .contact-card"
-    );
-    hoverTargets.forEach(el=>{
-        el.addEventListener("mouseenter", ()=> ring.classList.add("hovering"));
-        el.addEventListener("mouseleave", ()=> ring.classList.remove("hovering"));
-    });
-})();
-
-// ---------------------------------------------------------------
-// Magnetic buttons
-// ---------------------------------------------------------------
-(function initMagneticButtons(){
-    if(prefersReducedMotion) return;
-    if(window.matchMedia("(hover: none)").matches) return;
-
-    const buttons = document.querySelectorAll(".btn, .theme-toggle-btn, .back-to-top");
-
-    buttons.forEach(btn=>{
-        btn.addEventListener("mousemove", e=>{
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            btn.style.transform = `translate(${x * 0.18}px, ${y * 0.28}px)`;
-        });
-        btn.addEventListener("mouseleave", ()=>{
-            btn.style.transform = "";
-        });
-    });
-})();
-
-
-// ---------------------------------------------------------------
-// Back to top button
-// ---------------------------------------------------------------
-(function initBackToTop(){
-    const btn = document.querySelector(".back-to-top");
-    if(!btn) return;
-
-    window.addEventListener("scroll", ()=>{
-        btn.classList.toggle("visible", window.scrollY > 300);
-    }, { passive: true });
-
-    btn.addEventListener("click", (e)=>{
-        e.preventDefault();
-        const homeSection = document.getElementById("home");
-        if (homeSection) {
-            homeSection.scrollIntoView({ behavior: "smooth" });
-        } else {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-
-        if (window.history && window.history.pushState) {
-            window.history.pushState(null, null, "#home");
-        } else {
-            window.location.hash = "#home";
-        }
-
-        const navLinks = document.querySelectorAll(".nav-links a, .mobile-nav-links a");
-        navLinks.forEach(link => {
-            if (link.getAttribute("href") === "#home") {
-                link.classList.add("active");
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
             } else {
-                link.classList.remove("active");
+                localStorage.setItem('theme', 'light');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
             }
         });
-    });
-})();
-(function initScrollProgress(){
-    const bar = document.querySelector(".scroll-progress");
-    if(!bar) return;
-
-    function updateBar(){
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        bar.style.width = progress + "%";
     }
 
-    window.addEventListener("scroll", updateBar, { passive: true });
-    updateBar();
-})();
+    // ──────────────────────────────────────────────
+    // 1. Custom Cursor
+    // ──────────────────────────────────────────────
+    (function initCursor() {
+        const dot  = document.getElementById('cursorDot');
+        const ring = document.getElementById('cursorRing');
+        if (!dot || !ring) return;
 
-// ---------------------------------------------------------------
-// Count-up stats
-// ---------------------------------------------------------------
-(function initStatCounters(){
-    const stats = document.querySelectorAll(".stat-num");
-    if(!stats.length) return;
+        let mouseX = 0, mouseY = 0;
+        let ringX  = 0, ringY  = 0;
+        let animId;
 
-    function animateCount(el){
-        const target = parseFloat(el.getAttribute("data-count"));
-        const isDecimal = el.getAttribute("data-decimal") === "true";
-        const duration = 1400;
-        const start = performance.now();
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.12;
+            ringY += (mouseY - ringY) * 0.12;
+            ring.style.left = ringX + 'px';
+            ring.style.top  = ringY + 'px';
+            animId = requestAnimationFrame(animateRing);
+        }
+        animateRing();
 
-        if(prefersReducedMotion){
-            el.textContent = isDecimal ? target.toFixed(2) : target;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            dot.style.left = e.clientX + 'px';
+            dot.style.top  = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button, .project-card, .cert-card, .skill-node').forEach(el => {
+            el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
+        });
+    })();
+
+    // ──────────────────────────────────────────────
+    // 2. Mouse Glow
+    // ──────────────────────────────────────────────
+    (function initMouseGlow() {
+        const glow = document.getElementById('mouseGlow');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        document.addEventListener('mousemove', (e) => {
+            if (glow) {
+                glow.style.left = e.clientX + 'px';
+                glow.style.top  = e.clientY + 'px';
+            }
+            
+            navLinks.forEach(link => {
+                const rect = link.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                link.style.setProperty('--lx', `${x}px`);
+                link.style.setProperty('--ly', `${y}px`);
+            });
+
+            projectCards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--card-mouse-x', `${x}px`);
+                card.style.setProperty('--card-mouse-y', `${y}px`);
+            });
+        });
+    })();
+
+    // ──────────────────────────────────────────────
+    // 3. Navbar — Scroll Behavior & Active ScrollSpy
+    // ──────────────────────────────────────────────
+    (function initNavbar() {
+        const header     = document.getElementById('navHeader');
+        const hamburger  = document.getElementById('navHamburger');
+        const drawer     = document.getElementById('mobileDrawer');
+        const drawerClose= document.getElementById('mobileDrawerClose');
+        const progressBar= document.getElementById('scrollProgressBar');
+        const backToTop  = document.getElementById('backToTop');
+        const navLinks   = document.querySelectorAll('.nav-link');
+        const sections   = document.querySelectorAll('section[id]');
+        const mobileLinks= document.querySelectorAll('.mobile-nav-link');
+
+        // Scroll progress + back-to-top + spy
+        window.addEventListener('scroll', () => {
+            const scrollTop  = window.scrollY;
+            const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+
+            // Scroll progress bar
+            if (progressBar && docHeight > 0) {
+                progressBar.style.width = (scrollTop / docHeight * 100) + '%';
+            }
+
+            // Header style
+            if (header) {
+                header.classList.toggle('scrolled', scrollTop > 40);
+            }
+
+            // Back-to-top
+            if (backToTop) {
+                backToTop.classList.toggle('visible', scrollTop > 350);
+            }
+
+            // ScrollSpy
+            let current = '';
+            sections.forEach(section => {
+                if (scrollTop >= section.offsetTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.dataset.section === current);
+            });
+            mobileLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                link.classList.toggle('active', href === '#' + current);
+            });
+        }, { passive: true });
+
+        // Hamburger
+        function openDrawer() {
+            drawer.classList.add('open');
+            drawer.removeAttribute('aria-hidden');
+            hamburger.classList.add('open');
+            hamburger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeDrawer() {
+            drawer.classList.remove('open');
+            drawer.setAttribute('aria-hidden', 'true');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        if (hamburger) hamburger.addEventListener('click', openDrawer);
+        if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+
+        mobileLinks.forEach(link => link.addEventListener('click', closeDrawer));
+
+        document.addEventListener('click', (e) => {
+            if (drawer && drawer.classList.contains('open') && !drawer.contains(e.target) && !hamburger.contains(e.target)) {
+                closeDrawer();
+            }
+        });
+    })();
+
+    // ──────────────────────────────────────────────
+    // 4. Reveal on Scroll (IntersectionObserver)
+    // ──────────────────────────────────────────────
+    (function initReveal() {
+        if (!('IntersectionObserver' in window)) {
+            document.querySelectorAll('.reveal-up, .reveal-fade, .section').forEach(el => {
+                el.classList.add('revealed');
+                if (el.classList.contains('section')) el.classList.add('in-view');
+            });
             return;
         }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    if (entry.target.classList.contains('section')) {
+                        entry.target.classList.add('in-view');
+                    } else {
+                        observer.unobserve(entry.target);
+                    }
+                } else if (entry.target.classList.contains('section')) {
+                    // Optional: remove in-view if we want it to trigger again
+                    // entry.target.classList.remove('in-view');
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-        function tick(now){
-            const progress = Math.min((now - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            const value = target * eased;
-            el.textContent = isDecimal ? value.toFixed(2) : Math.round(value);
-            if(progress < 1) requestAnimationFrame(tick);
+        document.querySelectorAll('.reveal-up, .reveal-fade, .section').forEach(el => observer.observe(el));
+    })();
+
+    // ──────────────────────────────────────────────
+    // 5. Animated Stat Counters
+    // ──────────────────────────────────────────────
+    (function initCounters() {
+        const stats = document.querySelectorAll('.stat-num');
+        if (!stats.length) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCount(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        stats.forEach(el => observer.observe(el));
+
+        function animateCount(el) {
+            const target   = parseFloat(el.dataset.count || 0);
+            const isDecimal= el.dataset.decimal === 'true';
+            const duration = 1400;
+            const start    = performance.now();
+
+            function step(now) {
+                const pct  = Math.min((now - start) / duration, 1);
+                const eased= 1 - Math.pow(1 - pct, 3);
+                el.textContent = isDecimal
+                    ? (target * eased).toFixed(2)
+                    : Math.floor(target * eased);
+                if (pct < 1) requestAnimationFrame(step);
+                else el.textContent = isDecimal ? target.toFixed(2) : target;
+            }
+            requestAnimationFrame(step);
         }
-        requestAnimationFrame(tick);
-    }
+    })();
 
-    const observer = new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-            if(entry.isIntersecting){
-                entry.target.closest(".stat-item").classList.add("in-view");
-                animateCount(entry.target);
-                observer.unobserve(entry.target);
+    // ──────────────────────────────────────────────
+    // 6. CGPA Ring Animation
+    // ──────────────────────────────────────────────
+    (function initCgpaRing() {
+        const ring = document.querySelector('.cgpa-ring-fill');
+        if (!ring) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    ring.classList.add('animate');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        observer.observe(ring);
+    })();
+
+    // ──────────────────────────────────────────────
+    // 7. Semester Bars Animation
+    // ──────────────────────────────────────────────
+    (function initSemBars() {
+        const bars = document.querySelectorAll('.sem-fill');
+        if (!bars.length) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        bars.forEach(bar => observer.observe(bar));
+    })();
+
+    // ──────────────────────────────────────────────
+    // 8. GitHub Language Bars Animation
+    // ──────────────────────────────────────────────
+    (function initGlbBars() {
+        const bars = document.querySelectorAll('.glb-fill');
+        if (!bars.length) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        bars.forEach(bar => observer.observe(bar));
+    })();
+
+    // ──────────────────────────────────────────────
+    // 9. Project 3D Tilt Effect
+    // ──────────────────────────────────────────────
+    (function initTilt() {
+        if (window.matchMedia('(hover: none)').matches) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect  = card.getBoundingClientRect();
+                const cx    = rect.left + rect.width  / 2;
+                const cy    = rect.top  + rect.height / 2;
+                const dx    = (e.clientX - cx) / (rect.width  / 2);
+                const dy    = (e.clientY - cy) / (rect.height / 2);
+                const rotX  = -dy * 6;
+                const rotY  =  dx * 6;
+                card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+    })();
+
+    // ──────────────────────────────────────────────
+    // 10. Project Filter
+    // ──────────────────────────────────────────────
+    (function initProjectFilter() {
+        const filterBtns = document.querySelectorAll('[data-filter]');
+        const cards      = document.querySelectorAll('.project-card');
+        if (!filterBtns.length) return;
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
+
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                cards.forEach(card => {
+                    const tags = (card.dataset.tags || '');
+                    if (filter === 'all' || tags.includes(filter)) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    })();
+
+    // ──────────────────────────────────────────────
+    // 11. Certificate Filter
+    // ──────────────────────────────────────────────
+    (function initCertFilter() {
+        const filterBtns = document.querySelectorAll('[data-cert-filter]');
+        const cards      = document.querySelectorAll('.cert-card');
+        if (!filterBtns.length) return;
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.certFilter;
+
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                cards.forEach(card => {
+                    const tags = (card.dataset.certTags || '');
+                    if (filter === 'all' || tags.includes(filter)) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    })();
+
+    // ──────────────────────────────────────────────
+    // 12. Recruiter Mode Toggle
+    // ──────────────────────────────────────────────
+    (function initRecruiterMode() {
+        const btn     = document.getElementById('recruiterModeBtn');
+        const overlay = document.getElementById('recruiterOverlay');
+        const closeBtn= document.getElementById('recruiterClose');
+        if (!btn || !overlay) return;
+
+        function openRecruiter() {
+            overlay.removeAttribute('hidden');
+            document.body.style.overflow = 'hidden';
+            requestAnimationFrame(() => overlay.style.opacity = '1');
+        }
+        function closeRecruiter() {
+            overlay.setAttribute('hidden', '');
+            document.body.style.overflow = '';
+        }
+
+        btn.addEventListener('click', openRecruiter);
+        if (closeBtn) closeBtn.addEventListener('click', closeRecruiter);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeRecruiter();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !overlay.hasAttribute('hidden')) closeRecruiter();
+        });
+    })();
+
+    // ──────────────────────────────────────────────
+    // 13. Project Modal (Case Studies)
+    // ──────────────────────────────────────────────
+    const projectData = {
+        ai: {
+            category: 'Python / FastAPI / OpenAI',
+            title: 'AI Portfolio Assistant',
+            liveLink: '#',
+            codeLink: 'https://github.com/Milan07xt',
+            desc: 'A professional AI assistant built with FastAPI and OpenAI that understands the full portfolio context and answers visitor questions dynamically in real time.',
+            features: [
+                'FastAPI backend with OpenAI API integration',
+                'Context-aware responses about skills and projects',
+                'Real-time streaming responses via Server-Sent Events',
+                'Floating widget UI with smooth animation',
+                'Session memory for conversation continuity',
+            ],
+            architecture: 'Python FastAPI REST endpoint receives user queries, injects portfolio context into a system prompt, and streams OpenAI GPT responses back to the browser widget.',
+            tags: ['Python', 'FastAPI', 'OpenAI', 'JavaScript', 'Node.js'],
+        },
+        face: {
+            category: 'Python / Django / OpenCV',
+            title: 'Face Recognition Attendance System',
+            liveLink: 'https://face-detection-attendance-woad.vercel.app/home/',
+            codeLink: 'https://github.com/Milan07xt/SEM-06',
+            desc: 'Real-time face recognition attendance tracking system. Uses OpenCV for face detection and Django REST Framework for backend API and attendance log management.',
+            features: [
+                'Real-time face detection with OpenCV and dlib',
+                'Django REST Framework API for attendance records',
+                'SQLite3 database for storing employee/student data',
+                'Admin dashboard for report generation',
+                'Attendance export to CSV',
+            ],
+            architecture: 'OpenCV captures video frames, dlib extracts facial embeddings, Python compares against known faces, Django REST API records attendance to SQLite3.',
+            tags: ['Python', 'Django', 'OpenCV', 'REST API', 'SQLite3', 'dlib'],
+        },
+        gym: {
+            category: 'Python / Django / SQLite',
+            title: 'Gym Management System',
+            liveLink: 'https://django-gym-management-system-websit-one.vercel.app/',
+            codeLink: 'https://github.com/Milan07xt/Django-Gym-Management-System-Website',
+            desc: 'Comprehensive Django-based gym management application for handling memberships, subscription plans, and payment tracking with a complete admin dashboard.',
+            features: [
+                'Member registration and profile management',
+                'Subscription plan management with expiry tracking',
+                'Payment recording and history dashboard',
+                'Django Admin extended for gym operations',
+                'Responsive frontend with Bootstrap',
+            ],
+            architecture: 'Django MVC architecture with SQLite3 database. Django ORM for all database operations, Django Admin for management interface, template-based views for public pages.',
+            tags: ['Python', 'Django', 'SQLite3', 'HTML5', 'CSS3', 'Bootstrap'],
+        },
+        hotel: {
+            category: 'HTML5 / CSS3 / JavaScript',
+            title: 'Hotel Management Website',
+            liveLink: 'https://hotel-website-project-kappa.vercel.app/index.html',
+            codeLink: 'https://github.com/Milan07xt/Hotel-Website-Project',
+            desc: 'Responsive hotel booking website with a modern UI design, interactive room gallery, booking flow, and fully optimized mobile experience.',
+            features: [
+                'Responsive design with CSS Grid and Flexbox',
+                'Interactive room gallery with image carousel',
+                'Smooth scroll and section animations',
+                'Contact/booking form with validation',
+                'Mobile-first approach and touch optimization',
+            ],
+            architecture: 'Pure HTML5, CSS3 and vanilla JavaScript. No framework dependencies. Deployed on Vercel with static site hosting.',
+            tags: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design', 'Vercel'],
+        },
+    };
+
+    (function initProjectModal() {
+        const modal       = document.getElementById('projectModal');
+        const closeBtn    = document.getElementById('modalCloseBtn');
+        const modalCat    = document.getElementById('modalCategory');
+        const modalTitle  = document.getElementById('modalTitle');
+        const modalLive   = document.getElementById('modalLiveLink');
+        const modalCode   = document.getElementById('modalCodeLink');
+        const modalDesc   = document.getElementById('modalDesc');
+        const modalFeat   = document.getElementById('modalFeatures');
+        const modalArch   = document.getElementById('modalArchitecture');
+        const modalTags   = document.getElementById('modalTags');
+        if (!modal) return;
+
+        function openModal(key) {
+            const data = projectData[key];
+            if (!data) return;
+            modalCat.textContent   = data.category;
+            modalTitle.textContent = data.title;
+            modalLive.href         = data.liveLink;
+            modalCode.href         = data.codeLink;
+            modalDesc.textContent  = data.desc;
+            modalArch.textContent  = data.architecture;
+            modalFeat.innerHTML    = data.features.map(f => `<li>${f}</li>`).join('');
+            modalTags.innerHTML    = data.tags.map(t => `<span class="ptag">${t}</span>`).join('');
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+        });
+
+        // Expose for onclick attributes
+        window.openAICaseStudy   = () => openModal('ai');
+        window.openFaceCaseStudy = () => openModal('face');
+        window.openGymCaseStudy  = () => openModal('gym');
+        window.openHotelCaseStudy= () => openModal('hotel');
+    })();
+
+    // ──────────────────────────────────────────────
+    // 14. Contact Form Submission
+    // ──────────────────────────────────────────────
+    (function initContactForm() {
+        const form        = document.getElementById('contactForm');
+        const status      = document.getElementById('formStatus');
+        const submitBtn   = document.getElementById('contactSubmitBtn');
+        const successModal= document.getElementById('contactSuccessModal');
+        const successClose= document.getElementById('successCloseBtn');
+        if (!form) return;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+            }
+            if (status) { status.textContent = ''; status.className = 'form-status'; }
+
+            const data = {
+                name:    form.querySelector('[name="name"]')?.value    || '',
+                email:   form.querySelector('[name="email"]')?.value   || '',
+                number:  form.querySelector('[name="number"]')?.value  || '',
+                subject: form.querySelector('[name="subject"]')?.value || '',
+                message: form.querySelector('[name="message"]')?.value || '',
+                device:  navigator.userAgent,
+            };
+
+            try {
+                const res = await fetch('/submit-contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+                const json = await res.json().catch(() => ({}));
+
+                if (res.ok) {
+                    form.reset();
+                    if (successModal) {
+                        successModal.classList.add('open');
+                        document.body.style.overflow = 'hidden';
+                    } else if (status) {
+                        status.textContent = '✓ Message sent successfully!';
+                        status.className = 'form-status success';
+                    }
+                } else {
+                    throw new Error(json.message || 'Server error');
+                }
+            } catch (err) {
+                if (status) {
+                    status.textContent = '✗ Failed to send. Please email directly: rathodmilan216@gmail.com';
+                    status.className = 'form-status error';
+                }
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
+                }
             }
         });
-    }, { threshold: 0.1 });
 
-    stats.forEach(el => observer.observe(el));
-})();
+        // Close success modal
+        if (successClose) {
+            successClose.addEventListener('click', () => {
+                successModal.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        }
+        if (successModal) {
+            successModal.addEventListener('click', (e) => {
+                if (e.target === successModal) {
+                    successModal.classList.remove('open');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+    })();
 
-// ---------------------------------------------------------------
-// Contact form submission
-// ---------------------------------------------------------------
-(function initContactForm(){
-    const form = document.getElementById('contactForm');
-    const statusEl = document.getElementById('formStatus');
-    const successModal = document.getElementById("contactSuccessModal");
-    const successCloseBtn = document.getElementById("successCloseBtn");
-    
-    if(!form) return;
+    // ──────────────────────────────────────────────
+    // 15. Skills Galaxy — Pause on hover
+    // ──────────────────────────────────────────────
+    (function initGalaxy() {
+        const galaxy = document.getElementById('skillsGalaxy');
+        const nodes  = galaxy ? galaxy.querySelectorAll('.skill-node') : [];
 
-    function showContactSuccessModal() {
-        if (!successModal) return;
-        successModal.classList.add("active");
-        document.body.style.overflow = "hidden";
-        setTimeout(closeSuccessModal, 4000);
-    }
-    
-    function closeSuccessModal() {
-        if (successModal) successModal.classList.remove("active");
-        document.body.style.overflow = "";
-    }
-
-    if (successCloseBtn) {
-        successCloseBtn.addEventListener("click", closeSuccessModal);
-    }
-    if (successModal) {
-        successModal.addEventListener("click", (e) => {
-            if (e.target === successModal) closeSuccessModal();
+        nodes.forEach(node => {
+            node.addEventListener('mouseenter', () => {
+                node.style.animationPlayState = 'paused';
+            });
+            node.addEventListener('mouseleave', () => {
+                node.style.animationPlayState = 'running';
+            });
         });
-    }
+    })();
 
-    form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        const data = {
-            name: form.name.value.trim(),
-            email: form.email.value.trim(),
-            number: form.number.value.trim(),
-            subject: form.subject.value.trim(),
-            message: form.message.value.trim()
+    // ──────────────────────────────────────────────
+    // 16. GitHub Contribution Calendar (preserved)
+    // ──────────────────────────────────────────────
+    (function initContribGraph() {
+        const grid   = document.getElementById('contrib-grid');
+        const months = document.getElementById('contrib-months');
+        if (!grid) return;
+
+        const today = new Date();
+        const days  = 371;
+        const start = new Date(today);
+        start.setDate(start.getDate() - days);
+
+        const activityData = {
+            '2025-09-12': 2, '2025-09-13': 3, '2025-09-20': 1,
+            '2025-10-05': 4, '2025-10-06': 2, '2025-10-15': 3,
+            '2025-10-22': 1, '2025-11-03': 5, '2025-11-04': 3,
+            '2025-11-10': 2, '2025-11-17': 4, '2025-11-24': 1,
+            '2025-12-01': 3, '2025-12-08': 2, '2025-12-15': 4,
+            '2025-12-22': 1, '2025-12-29': 2, '2026-01-05': 3,
+            '2026-01-12': 5, '2026-01-19': 2, '2026-01-26': 4,
+            '2026-02-02': 3, '2026-02-09': 2, '2026-02-16': 5,
+            '2026-02-23': 1, '2026-03-02': 4, '2026-03-09': 3,
+            '2026-03-16': 2, '2026-03-23': 5, '2026-04-06': 3,
+            '2026-04-13': 4, '2026-04-20': 2, '2026-04-27': 3,
+            '2026-05-04': 5, '2026-05-11': 2, '2026-05-18': 4,
+            '2026-05-25': 3, '2026-06-01': 5, '2026-06-08': 2,
+            '2026-06-15': 4, '2026-06-22': 3, '2026-06-29': 2,
+            '2026-07-06': 5, '2026-07-13': 4, '2026-07-20': 3,
+            '2026-07-27': 2, '2026-08-03': 5, '2026-08-10': 4,
+            '2026-08-17': 3, '2026-08-24': 5, '2026-08-31': 4,
+            '2026-09-01': 3, '2026-09-02': 2,
         };
 
-        const submitBtn = form.querySelector('button[type="submit"]');
-        submitBtn.disabled = true;
-        statusEl.textContent = 'Sending...';
-
-        try{
-            // Send Email directly from the frontend to bypass Cloudflare bot protection
-            const emailRes = await fetch('https://formsubmit.co/ajax/rathodmilan216@gmail.com', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: data.name,
-                    email: data.email,
-                    phone: data.number || 'N/A',
-                    subject: data.subject || 'New Portfolio Contact',
-                    message: data.message || 'N/A',
-                    _subject: `New Portfolio Contact from ${data.name}`,
-                    _captcha: false
-                })
-            });
-
-            // If the email fails, we still want to try saving it to the database
-            if (!emailRes.ok) {
-                console.warn('Formsubmit failed on the frontend, but we will still save to the database.');
-            }
-
-            // Save to PostgreSQL via Backend
-            const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0';
-            const contactUrl = isLocalhost ? 'http://localhost:3000/submit-contact' : '/api/contact';
-
-            const res = await fetch(contactUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            if(res.ok){
-                statusEl.textContent = '';
-                form.reset();
-                showContactSuccessModal();
-            }else{
-                const txt = await res.text();
-                statusEl.textContent = 'Error: ' + (txt || res.statusText);
-            }
-        }catch(err){
-            console.warn('Local server offline. Falling back to frontend mockup response.', err);
-            statusEl.textContent = '';
-            form.reset();
-            showContactSuccessModal();
-        }finally{
-            submitBtn.disabled = false;
-            setTimeout(()=> {
-                if (statusEl.textContent.indexOf('Sending') === -1) {
-                    statusEl.textContent = '';
-                }
-            }, 5000);
-        }
-    });
-})();
-
-// ---------------------------------------------------------------
-// 3D tilt for contact form card specifically
-// ---------------------------------------------------------------
-(function initContactTilt(){
-    if(prefersReducedMotion) return;
-    if(window.matchMedia('(hover: none)').matches) return;
-
-    const formWrap = document.querySelector('.contact-form-wrap');
-    if(!formWrap) return;
-
-    // stronger tilt for the contact card
-    const maxTilt = 12;
-    formWrap.addEventListener('mousemove', e=>{
-        const rect = formWrap.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const rotateY = ((x / rect.width) - 0.5) * maxTilt;
-        const rotateX = ((y / rect.height) - 0.5) * -maxTilt;
-        formWrap.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-        formWrap.style.boxShadow = `0 30px 80px rgba(0,0,0,0.45), 0 0 40px rgba(${getComputedStyle(document.documentElement).getPropertyValue('--amber-rgb')},0.06)`;
-        // subtle parallax for inner inputs
-        const inputs = formWrap.querySelectorAll('input, textarea, label, .btn');
-        inputs.forEach((el, i)=>{
-            const depth = (i % 4) * 0.6; // slight depth variation
-            const moveX = ((x / rect.width) - 0.5) * (maxTilt * 0.6) * (depth / 2);
-            const moveY = ((y / rect.height) - 0.5) * (maxTilt * 0.3) * (depth / 2);
-            el.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
-        });
-    });
-    formWrap.addEventListener('mouseleave', ()=>{
-        formWrap.style.transform = '';
-        formWrap.style.boxShadow = '';
-        const inputs = formWrap.querySelectorAll('input, textarea, label, .btn');
-        inputs.forEach(el=> el.style.transform = '');
-    });
-})();
-
-// Mobile Hamburger Navigation Drawer Controller
-(function initMobileNav() {
-    const toggle = document.getElementById("mobile-nav-toggle");
-    const drawer = document.getElementById("mobileNavDrawer");
-    if (!toggle || !drawer) return;
-
-    toggle.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const isOpen = drawer.classList.contains("open");
-        if (isOpen) {
-            drawer.classList.remove("open");
-            toggle.innerHTML = `<i class="fa-solid fa-bars"></i>`;
-        } else {
-            drawer.classList.add("open");
-            toggle.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
-        }
-    });
-
-    // Close when clicking links
-    const drawerLinks = drawer.querySelectorAll("a");
-    drawerLinks.forEach(link => {
-        link.addEventListener("click", () => {
-            drawer.classList.remove("open");
-            toggle.innerHTML = `<i class="fa-solid fa-bars"></i>`;
-        });
-    });
-
-    // Close when clicking outside
-    document.addEventListener("click", (e) => {
-        if (!drawer.contains(e.target) && !toggle.contains(e.target)) {
-            drawer.classList.remove("open");
-            toggle.innerHTML = `<i class="fa-solid fa-bars"></i>`;
-        }
-    });
-})();
-
-// ---------------------------------------------------------------
-// ScrollSpy Navigation
-// ---------------------------------------------------------------
-(function initScrollSpy() {
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll(".nav-links a");
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const id = entry.target.getAttribute("id");
-                navLinks.forEach(link => {
-                    link.classList.remove("active");
-                    if (link.getAttribute("href") === `#${id}`) {
-                        link.classList.add("active");
-                    }
-                });
-            }
-        });
-    }, {
-        threshold: 0.3,
-        rootMargin: "-20% 0px -60% 0px"
-    });
-
-    sections.forEach(section => observer.observe(section));
-})();
-
-// ---------------------------------------------------------------
-// Interactive 3D Particle Network (Three.js WebGL)
-// ---------------------------------------------------------------
-(function initThreeJSBackground() {
-    const canvas = document.getElementById("hero-canvas");
-    if (typeof THREE === "undefined" || !canvas || prefersReducedMotion) return;
-
-    let width = canvas.offsetWidth;
-    let height = canvas.offsetHeight;
-
-    // 1. Scene & Camera Setup
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, width / height, 1, 1000);
-    camera.position.z = 250;
-
-    // 2. Renderer Setup
-    const renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        alpha: true,
-        antialias: true
-    });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    // 3. Circle Texture generator (for nice glowing round particles)
-    function createCircleTexture() {
-        const c = document.createElement("canvas");
-        c.width = 16;
-        c.height = 16;
-        const ctx = c.getContext("2d");
-        const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
-        grad.addColorStop(0, "rgba(255, 255, 255, 1)");
-        grad.addColorStop(0.3, "rgba(255, 255, 255, 0.8)");
-        grad.addColorStop(1, "rgba(255, 255, 255, 0)");
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, 16, 16);
-        return new THREE.CanvasTexture(c);
-    }
-
-    const particleTexture = createCircleTexture();
-
-    // 4. Generate Swirling Particles
-    const PARTICLE_COUNT = 350;
-    const particlesData = [];
-    const positions = new Float32Array(PARTICLE_COUNT * 3);
-    const particleGeometry = new THREE.BufferGeometry();
-
-    const areaRadius = 180;
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-        // Distribute in a sphere shell
-        const u = Math.random();
-        const v = Math.random();
-        const theta = u * 2.0 * Math.PI;
-        const phi = Math.acos(2.0 * v - 1.0);
-        const r = areaRadius * (0.6 + 0.4 * Math.random()); // sphere thickness
-
-        const x = r * Math.sin(phi) * Math.cos(theta);
-        const y = r * Math.sin(phi) * Math.sin(theta);
-        const z = r * Math.cos(phi);
-
-        positions[i * 3] = x;
-        positions[i * 3 + 1] = y;
-        positions[i * 3 + 2] = z;
-
-        particlesData.push({
-            x: x,
-            y: y,
-            z: z,
-            vx: (Math.random() - 0.5) * 0.4,
-            vy: (Math.random() - 0.5) * 0.4,
-            vz: (Math.random() - 0.5) * 0.4
-        });
-    }
-
-    particleGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-
-    // Dynamic Materials
-    const pointsMaterial = new THREE.PointsMaterial({
-        size: 5,
-        map: particleTexture,
-        transparent: true,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        color: 0xa855f7
-    });
-
-    const particles = new THREE.Points(particleGeometry, pointsMaterial);
-    scene.add(particles);
-
-    // 5. Lines Geometry Setup
-    const maxConnections = PARTICLE_COUNT * 4;
-    const linePositions = new Float32Array(maxConnections * 6);
-    const lineColors = new Float32Array(maxConnections * 6);
-    const lineGeometry = new THREE.BufferGeometry();
-
-    lineGeometry.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
-    lineGeometry.setAttribute("color", new THREE.BufferAttribute(lineColors, 3));
-
-    const lineMaterial = new THREE.LineBasicMaterial({
-        vertexColors: true,
-        transparent: true,
-        blending: THREE.AdditiveBlending,
-        linewidth: 1,
-        depthWrite: false
-    });
-
-    const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-    scene.add(lines);
-
-    // 6. Interactive Cursor Tracking
-    let targetMouseX = 0, targetMouseY = 0;
-    let mouseX = 0, mouseY = 0;
-
-    window.addEventListener("mousemove", (e) => {
-        targetMouseX = (e.clientX - window.innerWidth / 2) * 0.25;
-        targetMouseY = (e.clientY - window.innerHeight / 2) * 0.25;
-    });
-
-    let scrollY = 0;
-    window.addEventListener("scroll", () => {
-        scrollY = window.scrollY;
-    }, { passive: true });
-
-    // 7. Resize Handler
-    function onResize() {
-        width = canvas.offsetWidth;
-        height = canvas.offsetHeight;
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
-    }
-    window.addEventListener("resize", onResize);
-
-    // 8. Animation loop
-    let frameCount = 0;
-    const tempColor = new THREE.Color();
-
-    function animate() {
-        requestAnimationFrame(animate);
-
-        frameCount++;
-        
-        // Dynamic Theme Color Reading (optimized)
-        if (frameCount % 30 === 0) {
-            const rootStyles = getComputedStyle(document.documentElement);
-            const amberHex = rootStyles.getPropertyValue("--amber").trim() || "#a855f7";
-            tempColor.set(amberHex);
-            pointsMaterial.color.copy(tempColor);
+        function fmt(d) {
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
         }
 
-        // Mouse Parallax smooth lerp
-        mouseX += (targetMouseX - mouseX) * 0.05;
-        mouseY += (targetMouseY - mouseY) * 0.05;
-
-        camera.position.x += (mouseX - camera.position.x) * 0.05;
-        camera.position.y += (-mouseY - camera.position.y) * 0.05;
-        camera.lookAt(scene.position);
-
-        // Swirl particles in 3D
-        const positions = particleGeometry.attributes.position.array;
-        
-        // Slowly rotate whole scene + add dynamic scroll-based rotation
-        const scrollRotation = scrollY * 0.0008;
-        particles.rotation.y = frameCount * 0.0008 + scrollRotation;
-        lines.rotation.y = frameCount * 0.0008 + scrollRotation;
-        particles.rotation.x = frameCount * 0.0003 + scrollRotation * 0.5;
-        lines.rotation.x = frameCount * 0.0003 + scrollRotation * 0.5;
-
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
-            const data = particlesData[i];
-            
-            data.x += data.vx;
-            data.y += data.vy;
-            data.z += data.vz;
-
-            // Constrain inside boundaries
-            const distSq = data.x * data.x + data.y * data.y + data.z * data.z;
-            if (distSq > areaRadius * areaRadius) {
-                data.vx *= -1.02;
-                data.vy *= -1.02;
-                data.vz *= -1.02;
-            }
-
-            positions[i * 3] = data.x;
-            positions[i * 3 + 1] = data.y;
-            positions[i * 3 + 2] = data.z;
-        }
-        particleGeometry.attributes.position.needsUpdate = true;
-
-        // Build Connecting Lines
-        let vertexIdx = 0;
-        let colorIdx = 0;
-        let connections = 0;
-
-        const maxDist = 65;
-        
-        // Grab current theme colors
-        const rootStyles = getComputedStyle(document.documentElement);
-        const amberHex = rootStyles.getPropertyValue("--amber").trim() || "#a855f7";
-        const secondaryHex = rootStyles.getPropertyValue("--secondary").trim() || "#06b6d4";
-        
-        const col1 = new THREE.Color(amberHex);
-        const col2 = new THREE.Color(secondaryHex);
-
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
-            for (let j = i + 1; j < PARTICLE_COUNT; j++) {
-                const dx = particlesData[i].x - particlesData[j].x;
-                const dy = particlesData[i].y - particlesData[j].y;
-                const dz = particlesData[i].z - particlesData[j].z;
-                const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-                if (dist < maxDist) {
-                    const alpha = 1.0 - (dist / maxDist);
-
-                    // Add segment coordinates
-                    linePositions[vertexIdx++] = particlesData[i].x;
-                    linePositions[vertexIdx++] = particlesData[i].y;
-                    linePositions[vertexIdx++] = particlesData[i].z;
-
-                    linePositions[vertexIdx++] = particlesData[j].x;
-                    linePositions[vertexIdx++] = particlesData[j].y;
-                    linePositions[vertexIdx++] = particlesData[j].z;
-
-                    // Fade gradient colors
-                    lineColors[colorIdx++] = col1.r * alpha * 0.6;
-                    lineColors[colorIdx++] = col1.g * alpha * 0.6;
-                    lineColors[colorIdx++] = col1.b * alpha * 0.6;
-
-                    lineColors[colorIdx++] = col2.r * alpha * 0.6;
-                    lineColors[colorIdx++] = col2.g * alpha * 0.6;
-                    lineColors[colorIdx++] = col2.b * alpha * 0.6;
-
-                    connections++;
-                    if (connections >= maxConnections) break;
-                }
-            }
-            if (connections >= maxConnections) break;
+        function getLevel(count) {
+            if (!count) return 0;
+            if (count <= 1) return 1;
+            if (count <= 2) return 2;
+            if (count <= 4) return 3;
+            return 4;
         }
 
-        lineGeometry.attributes.position.needsUpdate = true;
-        lineGeometry.attributes.color.needsUpdate = true;
-        lineGeometry.setDrawRange(0, connections * 2);
-
-        renderer.render(scene, camera);
-    }
-
-    animate();
-})();
-
-// ===============================================================
-// INTERACTIVE PORTFOLIO FEATURES
-// ===============================================================
-
-// 1. Terminal Tab Switching
-(function initTerminalTabs() {
-    const tabs = document.querySelectorAll(".term-tab");
-    const contents = document.querySelectorAll(".terminal-tab-content");
-
-    tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-            const target = tab.getAttribute("data-tab");
-            
-            tabs.forEach(t => t.classList.remove("active"));
-            tab.classList.add("active");
-
-            contents.forEach(c => {
-                c.classList.remove("active");
-                if (c.getAttribute("id") === `tab-${target}`) {
-                    c.classList.add("active");
-                }
-            });
-
-            if (target === "cli") {
-                const input = document.getElementById("terminal-cli-input");
-                if (input) input.focus();
-            }
-        });
-    });
-})();
-
-// 2. CLI Command Prompt
-(function initTerminalCLI() {
-    const input = document.getElementById("terminal-cli-input");
-    const output = document.getElementById("cli-output");
-    if (!input || !output) return;
-
-    const commandHistory = [];
-    let historyIndex = -1;
-
-    const commands = {
-        help: () => `
-Available commands:
-  <span class="accent">help</span>             - Show list of available commands
-  <span class="accent">about</span>            - Info about Milan Rathod
-  <span class="accent">skills</span>           - List developer technical skills
-  <span class="accent">projects</span>         - Brief listing of Milan's projects
-  <span class="accent">certificates</span>     - View certifications
-  <span class="accent">contact</span>          - Contact email and phone number
-  <span class="accent">download-resume</span>  - Trigger resume file download
-  <span class="accent">clear</span>            - Clear screen
-  <span class="accent">hack-mode</span>        - Toggle retro cybersecurity green theme
-`,
-        about: () => `
-Milan Rathod is a B.ScIT graduate (Class of 2026) specializing in backend systems (Python/Django) and computer-vision toolings (OpenCV).
-Currently looking for a fresher developer role.
-`,
-        skills: () => `
-Technical Skills:
-  - Languages  : Python, JavaScript, SQL, HTML5, CSS3
-  - Frameworks : Django, Django REST Framework (DRF)
-  - Databases  : SQLite3, MySQL
-  - Vision/ML  : OpenCV (Face recognition, image processing)
-  - Tools      : Git, GitHub, VS Code
-`,
-        projects: () => `
-Featured Projects:
-  1. <span class="accent">Face Attendance System</span> - OpenCV + Django REST API face logging.
-  2. <span class="accent">Gym Management System</span> - Membership tracking with Django & SQL.
-  3. <span class="accent">Hotel Website</span> - Modern responsive booking site.
-Type "projects [number]" or click on cards below for full case-studies!
-`,
-        certificates: () => `
-Certifications:
-  - NASSCOM: Information Security Analyst, Network Security Engineer, IoT Security Analyst
-  - Forage: Tata Cybersecurity Analyst Job Simulation
-  - Udemy: AI DevOps Analyst, Windows Command Mastery, Microsoft Copilot
-`,
-        contact: () => `
-Contact Details:
-  - Email : <a href="mailto:rathodmilan216@gmail.com" class="accent">rathodmilan216@gmail.com</a>
-  - Phone : +91 9327599254
-  - Place : Junagadh, Gujarat, India
-`,
-        "download-resume": () => {
-            const link = document.createElement('a');
-            link.href = 'resume/Milankumar_Rathod_Resume.pdf';
-            link.download = 'Milankumar_Rathod_Resume.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            return "Downloading resume PDF...";
-        },
-        clear: () => {
-            output.innerHTML = '';
-            return '';
-        },
-        "hack-mode": () => {
-            document.body.classList.toggle("hack-theme");
-            const isHack = document.body.classList.contains("hack-theme");
-            return isHack 
-                ? "<span style='color:#3ddc84;'>CYBERSECURITY HACK MODE INITIATED. Theme accent colors overridden.</span>" 
-                : "Cybersecurity theme disabled. Standard accent colors restored.";
-        }
-    };
-
-    input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            const value = input.value.trim();
-            input.value = "";
-            if (!value) return;
-
-            const cmdRow = document.createElement("div");
-            cmdRow.className = "cli-row";
-            cmdRow.innerHTML = `<span class="cli-prompt">milan@portfolio:~$</span> ${escapeHTML(value)}`;
-            output.appendChild(cmdRow);
-
-            commandHistory.push(value);
-            historyIndex = commandHistory.length;
-
-            const cmdParts = value.split(" ");
-            const mainCmd = cmdParts[0].toLowerCase();
-            
-            let response = "";
-            if (commands[mainCmd]) {
-                response = commands[mainCmd]();
-            } else if (mainCmd === "neofetch") {
-                response = `
-   /\\_/\\
-  ( o.o )
-   > ^ <
-  MILAN-OS
---------------------
-OS: Ubuntu 22.04 LTS (Local)
-Shell: zsh / bash
-Stack: Python, Django, DRF, SQL
-Role: Backend / CV Fresher
-`;
-            } else {
-                response = `Command not found: '${escapeHTML(mainCmd)}'. Type 'help' to see list of valid commands.`;
-            }
-
-            if (response) {
-                const respRow = document.createElement("div");
-                respRow.className = "cli-row";
-                respRow.innerHTML = response.trim().replace(/\n/g, "<br>");
-                output.appendChild(respRow);
-            }
-
-            output.scrollTop = output.scrollHeight;
-        } else if (e.key === "ArrowUp") {
-            e.preventDefault();
-            if (historyIndex > 0) {
-                historyIndex--;
-                input.value = commandHistory[historyIndex];
-            }
-        } else if (e.key === "ArrowDown") {
-            e.preventDefault();
-            if (historyIndex < commandHistory.length - 1) {
-                historyIndex++;
-                input.value = commandHistory[historyIndex];
-            } else {
-                historyIndex = commandHistory.length;
-                input.value = "";
-            }
-        }
-    });
-
-    function escapeHTML(str) {
-        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    }
-})();
-
-// 3. OpenCV webcam scanning HUD simulator
-(function initOpenCVSimulator() {
-    const canvas = document.getElementById("scanner-canvas");
-    const video = document.getElementById("webcam-feed");
-    const toggleBtn = document.getElementById("toggle-camera-btn");
-    if (!canvas || !toggleBtn || !video) return;
-
-    const ctx = canvas.getContext("2d");
-    let isStreaming = false;
-    let localStream = null;
-    let scanY = 0;
-    let scanDirection = 1;
-    let detectedBoxes = [];
-    let animationId = null;
-
-    function resizeCanvas() {
-        canvas.width = canvas.offsetWidth || 300;
-        canvas.height = canvas.offsetHeight || 250;
-    }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    drawStaticHUD();
-
-    toggleBtn.addEventListener("click", async () => {
-        if (isStreaming) {
-            stopCamera();
-        } else {
-            await startCamera();
-        }
-    });
-
-    function stopCamera() {
-        isStreaming = false;
-        if (localStream) {
-            localStream.getTracks().forEach(track => track.stop());
-            localStream = null;
-        }
-        video.srcObject = null;
-        cancelAnimationFrame(animationId);
-        toggleBtn.innerHTML = `<i class="fa-solid fa-video"></i> Start Camera`;
-        drawStaticHUD();
-    }
-
-    async function startCamera() {
-        toggleBtn.innerHTML = `Connecting...`;
-        try {
-            const constraints = { video: { width: 640, height: 480 }, audio: false };
-            localStream = await navigator.mediaDevices.getUserMedia(constraints);
-            video.srcObject = localStream;
-            video.onloadedmetadata = () => {
-                video.play();
-                isStreaming = true;
-                toggleBtn.innerHTML = `<i class="fa-solid fa-video-slash"></i> Stop Camera`;
-                
-                detectedBoxes = [
-                    { x: 0.3, y: 0.2, w: 0.4, h: 0.55, label: "FACE: GUEST", confidence: 99.1 }
-                ];
-                
-                animateScanner();
-            };
-        } catch (err) {
-            console.warn("Webcam access failed. Falling back to synthetic simulation mode.", err);
-            isStreaming = true;
-            toggleBtn.innerHTML = `<i class="fa-solid fa-video-slash"></i> Stop Scanner`;
-            detectedBoxes = [
-                { x: 0.35, y: 0.2, w: 0.3, h: 0.45, label: "FACE: SCANNING", confidence: 94.2 }
-            ];
-            animateScanner();
-        }
-    }
-
-    function drawStaticHUD() {
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--ink-2').trim() || "#0a0815";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        ctx.strokeStyle = "rgba(227, 168, 59, 0.2)";
-        ctx.lineWidth = 1;
-        const grid = 20;
-        for(let i = 0; i < canvas.width; i += grid) {
-            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
-        }
-        for(let i = 0; i < canvas.height; i += grid) {
-            ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
-        }
-
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--amber').trim() || "#e3a83b";
-        ctx.font = "11px 'JetBrains Mono', monospace";
-        ctx.fillText("OPENCV SCAN ENGINE [OFFLINE]", 15, 25);
-        ctx.fillText("CLICK 'START CAMERA' TO ACTIVATE", 15, 45);
-        
-        drawCorners(0, 0, canvas.width, canvas.height, "rgba(227, 168, 59, 0.4)");
-    }
-
-    function drawCorners(x, y, w, h, color) {
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 2;
-        const len = 12;
-        
-        ctx.beginPath(); ctx.moveTo(x + len, y); ctx.lineTo(x, y); ctx.lineTo(x, y + len); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(x + w - len, y); ctx.lineTo(x + w, y); ctx.lineTo(x + w, y + len); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(x + len, y + h); ctx.lineTo(x, y + h); ctx.lineTo(x, y + h - len); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(x + w - len, y + h); ctx.lineTo(x + w, y + h); ctx.lineTo(x + w, y + h - len); ctx.stroke();
-    }
-
-    function animateScanner() {
-        if (!isStreaming) return;
-
-        if (localStream && video.readyState === video.HAVE_ENOUGH_DATA) {
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        } else {
-            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--ink-2').trim() || "#0a0815";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.strokeStyle = "rgba(61, 220, 132, 0.1)";
-            ctx.lineWidth = 1;
-            const grid = 24;
-            for(let i = 0; i < canvas.width; i += grid) {
-                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
-            }
-            for(let i = 0; i < canvas.height; i += grid) {
-                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
-            }
-
-            ctx.fillStyle = "rgba(61, 220, 132, 0.12)";
-            ctx.beginPath();
-            ctx.arc(canvas.width * 0.5, canvas.height * 0.42, 40, 0, Math.PI * 2);
-            ctx.fill();
-            
-            ctx.beginPath();
-            ctx.ellipse(canvas.width * 0.5, canvas.height * 0.9, 70, 50, 0, Math.PI, 0);
-            ctx.fill();
-        }
-
-        const colorStr = getComputedStyle(document.documentElement).getPropertyValue('--amber').trim() || "#e3a83b";
-        const colorRGB = getComputedStyle(document.documentElement).getPropertyValue('--amber-rgb').trim() || "227,168,59";
-
-        detectedBoxes.forEach(box => {
-            const bx = box.x * canvas.width;
-            const by = box.y * canvas.height;
-            const bw = box.w * canvas.width;
-            const bh = box.h * canvas.height;
-
-            ctx.strokeStyle = `rgba(${colorRGB}, 0.8)`;
-            ctx.lineWidth = 1.5;
-            ctx.strokeRect(bx, by, bw, bh);
-
-            drawCorners(bx, by, bw, bh, `rgb(${colorRGB})`);
-
-            ctx.fillStyle = "#3ddc84";
-            const eyeY = by + bh * 0.35;
-            const noseY = by + bh * 0.55;
-            const mouthY = by + bh * 0.75;
-            
-            ctx.beginPath(); ctx.arc(bx + bw * 0.3, eyeY, 4, 0, Math.PI*2); ctx.fill();
-            ctx.beginPath(); ctx.arc(bx + bw * 0.7, eyeY, 4, 0, Math.PI*2); ctx.fill();
-            ctx.beginPath(); ctx.arc(bx + bw * 0.5, noseY, 4, 0, Math.PI*2); ctx.fill();
-            ctx.beginPath(); ctx.arc(bx + bw * 0.35, mouthY, 3, 0, Math.PI*2); ctx.fill();
-            ctx.beginPath(); ctx.arc(bx + bw * 0.65, mouthY, 3, 0, Math.PI*2); ctx.fill();
-
-            ctx.fillStyle = `rgba(${colorRGB}, 0.85)`;
-            ctx.fillRect(bx, by - 20, bw, 20);
-            ctx.fillStyle = "#17130a";
-            ctx.font = "bold 9px 'JetBrains Mono', monospace";
-            ctx.fillText(`${box.label} (${box.confidence}%)`, bx + 5, by - 6);
-        });
-
-        scanY += 2 * scanDirection;
-        if (scanY > canvas.height || scanY < 0) {
-            scanDirection *= -1;
-        }
-        
-        ctx.strokeStyle = `rgba(${colorRGB}, 0.6)`;
-        ctx.lineWidth = 2.5;
-        ctx.beginPath();
-        ctx.moveTo(0, scanY);
-        ctx.lineTo(canvas.width, scanY);
-        ctx.stroke();
-        
-        const gradient = ctx.createLinearGradient(0, scanY - 8 * scanDirection, 0, scanY);
-        gradient.addColorStop(0, "transparent");
-        gradient.addColorStop(1, `rgba(${colorRGB}, 0.15)`);
-        ctx.fillStyle = gradient;
-        if (scanDirection > 0) {
-            ctx.fillRect(0, scanY - 30, canvas.width, 30);
-        } else {
-            ctx.fillRect(0, scanY, canvas.width, 30);
-        }
-
-        ctx.fillStyle = `rgb(${colorRGB})`;
-        ctx.font = "9px 'JetBrains Mono', monospace";
-        ctx.fillText(`FPS: 30`, 12, 20);
-        ctx.fillText(`API: DRF / OPEN-CV ACTIVE`, 12, 34);
-        ctx.fillText(`STREAM: RAW_RGB`, 12, 48);
-
-        const rx = canvas.width - 35;
-        const ry = 35;
-        const rr = 20;
-        ctx.strokeStyle = `rgba(${colorRGB}, 0.3)`;
-        ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.arc(rx, ry, rr, 0, Math.PI*2); ctx.stroke();
-        ctx.beginPath(); ctx.arc(rx, ry, rr*0.5, 0, Math.PI*2); ctx.stroke();
-        
-        const angle = (Date.now() / 450) % (Math.PI * 2);
-        ctx.beginPath();
-        ctx.moveTo(rx, ry);
-        ctx.lineTo(rx + Math.cos(angle) * rr, ry + Math.sin(angle) * rr);
-        ctx.stroke();
-
-        animationId = requestAnimationFrame(animateScanner);
-    }
-})();
-
-// 4. Project Case Studies details modal controller
-(function initProjectModals() {
-    const modal = document.getElementById("projectModal");
-    const closeBtn = document.getElementById("modalCloseBtn");
-    if (!modal || !closeBtn) return;
-
-    const projectData = {
-        "face recognition attendance system": {
-            title: "Face Recognition Attendance System",
-            category: "Python / Django / OpenCV / SQLite",
-            desc: `
-                <div class="case-study-block">
-                    <p style="margin-bottom: 12px;"><strong>Problem & Motivation:</strong> Traditional attendance tracking via paper rolls or ID card swipes is slow, error-prone, and prone to proxy attendance. For modern workplaces or academic institutions, a contactless, high-speed, and secure logging system is required.</p>
-                    <p><strong>Proposed Solution:</strong> Built an automated real-time biometric tracking solution. By combining computer vision pipelines (OpenCV Haar Cascades/deep embeddings) with a robust Django REST API backend, the system scans video feeds, recognizes student face templates instantly, and logs check-ins directly into a secure SQLite database.</p>
-                </div>
-            `,
-            features: [
-                "Real-time face detection and recognition using Haar Cascades and deep learning-based embeddings.",
-                "Custom Django REST framework APIs to receive attendance records from edge device scanners.",
-                "Admin panel with analytics for logs, exports to CSV, and student registration.",
-                "SQLite3 backend configured with optimal indexes for speedy lookup queries."
-            ],
-            architecture: `
-SQLite Database:
-  - Table: Students (ID, Name, FaceDataBlob, CreatedAt)
-  - Table: AttendanceLog (LogID, StudentID, Timestamp, DeviceID)
-
-API Routes:
-  - POST /api/attendance/check-in/ (registers live face match)
-  - GET  /api/attendance/report/ (returns attendance statistics)
-`,
-            tags: ["Python", "Django", "DRF", "OpenCV", "SQLite3", "REST API"],
-            live: "https://face-detection-attendance-woad.vercel.app/home/",
-            code: "https://github.com/Milan07xt/SEM-06"
-        },
-        "gym management system": {
-            title: "Gym Management System",
-            category: "Python / Django / SQLite",
-            desc: `
-                <div class="case-study-block">
-                    <p style="margin-bottom: 12px;"><strong>Problem & Motivation:</strong> Local gyms struggle to monitor client subscription renewals, handle membership tier transitions, and log daily payments. Manual books lead to revenue leaks and administrative overhead.</p>
-                    <p><strong>Proposed Solution:</strong> Developed a responsive management portal built on Django. The solution allows staff to register users, track active plan timelines, and generate payment audits, while members log into a personalized profile page to inspect their billing history.</p>
-                </div>
-            `,
-            features: [
-                "Member registration and dynamic subscription tier tracking.",
-                "Visual charts mapping active members, monthly billing, and renewals.",
-                "Flexible member portal displaying attendance records and profile status.",
-                "Secure Django administrative tools with tiered user permissions."
-            ],
-            architecture: `
-Relational Schema:
-  - Table: Member (MemberID, Name, PlanID, ExpiryDate)
-  - Table: Payment (PaymentID, MemberID, Amount, Date, Status)
-  - Table: Plans (PlanID, PlanName, Duration, Price)
-`,
-            tags: ["Python", "Django", "SQLite3", "CSS3", "Membership API"],
-            live: "https://django-gym-management-system-websit-one.vercel.app/",
-            code: "https://github.com/Milan07xt/Django-Gym-Management-System-Website"
-        },
-        "hotel management website": {
-            title: "Hotel Management Website",
-            category: "HTML5 / CSS3 / JavaScript",
-            desc: `
-                <div class="case-study-block">
-                    <p style="margin-bottom: 12px;"><strong>Problem & Motivation:</strong> Boutique hotels need a visually stunning and responsive landing page to drive room reservations directly. Simple static text lists fail to engage modern travel shoppers.</p>
-                    <p><strong>Proposed Solution:</strong> Engineered a premium booking frontend featuring glassmorphism cards, parallax background scrolling, dynamic room amenity search filters, and an interactive reservation calculator that updates pricing instantly in client-side state.</p>
-                </div>
-            `,
-            features: [
-                "Dynamic booking form that computes price differences by room selection.",
-                "Polished interactive layouts, hover micro-animations, and full mobile responsiveness.",
-                "Integrated room gallery with filtering options by amenities and ratings."
-            ],
-            architecture: `
-Client Side Model:
-  - LocalStorage booking logs caching.
-  - Form validation validating check-in/check-out dates.
-`,
-            tags: ["HTML5", "CSS3", "JavaScript", "Responsive Design", "UI/UX"],
-            live: "https://hotel-website-project-kappa.vercel.app/index.html",
-            code: "https://github.com/Milan07xt/Hotel-Website-Project"
-        },
-        "ai portfolio assistant": {
-            title: "AI Portfolio Assistant",
-            category: "Python / FastAPI / OpenAI / JavaScript",
-            desc: `
-                <div class="case-study-block">
-                    <p style="margin-bottom: 12px;"><strong>Problem & Motivation:</strong> Static portfolio websites don't engage visitors or showcase problem-solving skills. Recruiters must manually browse through projects, and any portfolio updates require backend code changes.</p>
-                    <p><strong>Proposed Solution:</strong> Built an intelligent AI chatbot using FastAPI and OpenAI function calling that understands portfolio context and answers visitor questions dynamically. The system reads from structured JSON files to prevent hallucination and ensure 100% accuracy about projects, skills, and credentials.</p>
-                </div>
-            `,
-            features: [
-                "Real-time AI chatbot with streaming responses integrated into portfolio widget.",
-                "Function calling architecture ensures AI only uses verified portfolio dataâ€”zero hallucinations.",
-                "Modular knowledge base: projects, skills, certificates, experience stored in JSON files.",
-                "FastAPI backend with CORS support for cross-origin deployment (frontend on Vercel, backend on Railway/Render).",
-                "Graceful model fallback strategy for multiple AI providers (OpenAI, Gemini, etc.).",
-                "Theme-aware frontend widget with smooth animations and mobile responsiveness."
-            ],
-            architecture: `
-Architecture Layers:
-  1. Frontend Widget (JavaScript + CSS)
-     - Floating chat interface with theme switching
-     - Real-time message streaming
-
-  2. FastAPI Backend (/chat endpoint)
-     - OpenAI function calling for safe data access
-     - System prompt enforces portfolio-only responses
-
-  3. Knowledge Base (JSON Files)
-     - profile.json, projects.json, skills.json
-     - certificates.json, experience.json, education.json
-`,
-            tags: ["Python", "FastAPI", "OpenAI API", "JavaScript", "Function Calling", "REST API"],
-            live: "http://localhost:3000",
-            code: "https://github.com/Milan07xt/Milan_Portfolio_Website"
-        }
-    };
-
-    const cards = document.querySelectorAll(".project-card");
-    cards.forEach(card => {
-        const titleEl = card.querySelector("h3");
-        if (!titleEl) return;
-        
-        const viewLink = card.querySelector(".project-links a:first-child");
-        if (!viewLink) return;
-
-        const linksDiv = card.querySelector(".project-links");
-        if (linksDiv) {
-            // Check if a case study link already exists (to avoid duplicates)
-            const existingCaseStudyLink = Array.from(linksDiv.querySelectorAll("a")).some(a => 
-                a.textContent.toLowerCase().includes("case study")
-            );
-            
-            // Only add dynamic case study button if one doesn't already exist
-            if (!existingCaseStudyLink) {
-                const caseBtn = document.createElement("a");
-                caseBtn.className = "btn-link";
-                caseBtn.style.cursor = "pointer";
-                caseBtn.innerHTML = `<i class="fa-solid fa-circle-info"></i> Case Study`;
-                
-                caseBtn.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    const key = titleEl.textContent.trim().toLowerCase();
-                    let data = null;
-                    for (let k in projectData) {
-                        if (key.includes(k) || k.includes(key)) {
-                            data = projectData[k];
-                            break;
-                        }
-                    }
-                    if (data) {
-                        openModal(data);
-                    } else {
-                        window.open(viewLink.getAttribute("href"), "_blank");
-                    }
-                });
-                
-                linksDiv.appendChild(caseBtn);
-            }
-        }
-    });
-
-    closeBtn.addEventListener("click", closeModal);
-    modal.addEventListener("click", (e) => {
-        if (e.target === modal) closeModal();
-    });
-
-    function openModal(data) {
-        document.getElementById("modalCategory").textContent = data.category;
-        document.getElementById("modalTitle").textContent = data.title;
-        document.getElementById("modalDesc").innerHTML = data.desc;
-        
-        const featuresEl = document.getElementById("modalFeatures");
-        featuresEl.innerHTML = "";
-        data.features.forEach(f => {
-            const li = document.createElement("li");
-            li.textContent = f;
-            featuresEl.appendChild(li);
-        });
-
-        document.getElementById("modalArchitecture").innerHTML = data.architecture.trim().replace(/\n/g, "<br>");
-
-        const tagsEl = document.getElementById("modalTags");
-        tagsEl.innerHTML = "";
-        data.tags.forEach(t => {
-            const span = document.createElement("span");
-            span.className = "chip";
-            span.textContent = t;
-            tagsEl.appendChild(span);
-        });
-
-        document.getElementById("modalLiveLink").setAttribute("href", data.live);
-        document.getElementById("modalCodeLink").setAttribute("href", data.code);
-
-        modal.classList.add("open");
-        document.body.style.overflow = "hidden";
-    }
-
-    function closeModal() {
-        modal.classList.remove("open");
-        document.body.style.overflow = "";
-    }
-
-    // Expose openAICaseStudy globally for onclick handler
-    window.openAICaseStudy = function() {
-        const aiData = projectData["ai portfolio assistant"];
-        if (aiData) {
-            openModal(aiData);
-        }
-    };
-})();
-
-// 5. GitHub API stats fetcher
-(function initGitHubFetcher() {
-    const avatarImg = document.getElementById("github-avatar");
-    const nameEl = document.getElementById("github-name");
-    const usernameLink = document.getElementById("github-username");
-    const bioEl = document.getElementById("github-bio");
-    const reposCountEl = document.getElementById("github-repos-count");
-    const followersEl = document.getElementById("github-followers");
-    const starsEl = document.getElementById("github-stars");
-    const reposGrid = document.getElementById("github-repos-grid");
-    const languagesListEl = document.getElementById("github-languages-list");
-
-    if (!reposGrid) return;
-
-    const CACHE_PREFIX = "github_cache_";
-    const CACHE_TTL = 12 * 60 * 60 * 1000; // 12 hours caching
-
-    function getCachedData(key) {
-        try {
-            const itemStr = localStorage.getItem(CACHE_PREFIX + key);
-            if (!itemStr) return null;
-            const item = JSON.parse(itemStr);
-            const now = Date.now();
-            if (now > item.expiry) {
-                localStorage.removeItem(CACHE_PREFIX + key);
-                return null;
-            }
-            return item.value;
-        } catch (e) {
-            return null;
-        }
-    }
-
-    function setCachedData(key, value) {
-        try {
-            const now = Date.now();
-            const item = {
-                value: value,
-                expiry: now + CACHE_TTL
-            };
-            localStorage.setItem(CACHE_PREFIX + key, JSON.stringify(item));
-        } catch (e) {
-            // localStorage is disabled or full
-        }
-    }
-
-    const fallbackProfile = {
-        name: "Milan Rathod",
-        bio: "Python / Django Developer. Building backend systems & computer-vision applications.",
-        public_repos: 4,
-        followers: 1,
-        stars: 4
-    };
-
-    const fallbackRepos = [
-        {
-            name: "SEM-06",
-            html_url: "https://github.com/Milan07xt/SEM-06",
-            description: "Face Recognition Attendance System using OpenCV and Django REST Framework API logging.",
-            language: "Python",
-            languages: { "Python": 82000, "HTML": 12000, "CSS": 8000, "JavaScript": 2000 },
-            stargazers_count: 2,
-            forks_count: 0
-        },
-        {
-            name: "Django-Gym-Management-System-Website",
-            html_url: "https://github.com/Milan07xt/Django-Gym-Management-System-Website",
-            description: "A comprehensive membership and payment management dashboard for gyms built with Django and SQLite.",
-            language: "Python",
-            languages: { "Python": 68000, "HTML": 18000, "CSS": 14000 },
-            stargazers_count: 1,
-            forks_count: 1
-        },
-        {
-            name: "Hotel-Website-Project",
-            html_url: "https://github.com/Milan07xt/Hotel-Website-Project",
-            description: "Responsive hotel booking reservation homepage built using HTML5, CSS3, and native JavaScript.",
-            language: "HTML",
-            languages: { "HTML": 45000, "CSS": 35000, "JavaScript": 20000 },
-            stargazers_count: 1,
-            forks_count: 0
-        }
-    ];
-
-    const langColors = {
-        "Python": "#3572A5",
-        "JavaScript": "#f1e05a",
-        "HTML": "#e34c26",
-        "CSS": "#563d7c",
-        "TypeScript": "#3178c6",
-        "Shell": "#89e051",
-        "C++": "#f34b7d",
-        "C": "#555555",
-        "Java": "#b07219",
-        "Jupyter Notebook": "#DA5B0B"
-    };
-
-    fetchProfile();
-    // fetchRepos(); // Disabled to use statically rendered HTML repos
-
-    async function fetchProfile() {
-        const cached = getCachedData("profile_Milan07xt");
-        if (cached) {
-            applyProfileData(cached);
-            return;
-        }
-
-        try {
-            const res = await fetch("https://api.github.com/users/Milan07xt");
-            if (res.ok) {
-                const data = await res.json();
-                setCachedData("profile_Milan07xt", data);
-                applyProfileData(data);
-            } else {
-                useProfileFallback();
-            }
-        } catch (err) {
-            console.warn("GitHub Profile Fetch failed, utilizing fallbacks", err);
-            useProfileFallback();
-        }
-    }
-
-    function applyProfileData(data) {
-        if (avatarImg) avatarImg.src = data.avatar_url;
-        if (nameEl) nameEl.textContent = data.name || "Milan Rathod";
-        if (bioEl) bioEl.textContent = data.bio || fallbackProfile.bio;
-        if (reposCountEl) reposCountEl.textContent = data.public_repos;
-        if (followersEl) followersEl.textContent = data.followers;
-        if (starsEl && !getCachedData("repos_Milan07xt")) {
-            starsEl.textContent = fallbackProfile.stars;
-        }
-    }
-
-    async function fetchRepos() {
-        const cached = getCachedData("repos_Milan07xt");
-        if (cached) {
-            const filtered = cached.filter(r => !r.fork).slice(0, 6);
-            if (filtered.length > 0) {
-                renderRepos(filtered);
-                calculateStars(cached);
-            } else {
-                renderRepos(fallbackRepos);
-            }
-            return;
-        }
-
-        try {
-            const res = await fetch("https://api.github.com/users/Milan07xt/repos?sort=updated");
-            if (res.ok) {
-                const repos = await res.json();
-                setCachedData("repos_Milan07xt", repos);
-                
-                const filtered = repos.filter(r => !r.fork).slice(0, 6);
-                if (filtered.length > 0) {
-                    renderRepos(filtered);
-                    calculateStars(repos);
-                } else {
-                    renderRepos(fallbackRepos);
-                }
-            } else {
-                renderRepos(fallbackRepos);
-            }
-        } catch (err) {
-            console.warn("GitHub Repos Fetch failed, utilizing offline cache list", err);
-            renderRepos(fallbackRepos);
-        }
-    }
-
-    async function fetchRepoLanguages(repoName, languagesUrl) {
-        const cached = getCachedData(`languages_${repoName}`);
-        if (cached) return cached;
-
-        try {
-            const res = await fetch(languagesUrl);
-            if (res.ok) {
-                const data = await res.json();
-                setCachedData(`languages_${repoName}`, data);
-                return data;
-            }
-        } catch (err) {
-            console.warn(`Failed to fetch languages for repo ${repoName}`, err);
-        }
-        return null;
-    }
-
-    function useProfileFallback() {
-        if (avatarImg) avatarImg.src = "images/gym.jpeg"; 
-        if (nameEl) nameEl.textContent = fallbackProfile.name;
-        if (bioEl) bioEl.textContent = fallbackProfile.bio;
-        if (reposCountEl) reposCountEl.textContent = fallbackProfile.public_repos;
-        if (followersEl) followersEl.textContent = fallbackProfile.followers;
-        if (starsEl) starsEl.textContent = fallbackProfile.stars;
-    }
-
-    function calculateStars(repos) {
-        if (!starsEl) return;
-        const total = repos.reduce((sum, r) => sum + r.stargazers_count, 0);
-        starsEl.textContent = total || fallbackProfile.stars;
-    }
-
-    function renderSingleLanguageHtml(lang) {
-        if (!lang) {
-            return `
-                <span class="repo-lang-item">
-                    <span class="repo-lang-dot" style="background: #8e8e8e;"></span>
-                    <span>Code</span>
-                </span>
-            `;
-        }
-        const color = langColors[lang] || "#8e8e8e";
-        return `
-            <span class="repo-lang-item">
-                <span class="repo-lang-dot" style="background: ${color};"></span>
-                <span>${lang}</span>
-            </span>
-        `;
-    }
-
-    function renderMultipleLanguagesHtml(languages) {
-        const total = Object.values(languages).reduce((a, b) => a + b, 0);
-        if (total === 0) return renderSingleLanguageHtml(null);
-
-        const sorted = Object.entries(languages)
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 3);
-
-        return sorted.map(([lang, bytes]) => {
-            const color = langColors[lang] || "#8e8e8e";
-            return `
-                <span class="repo-lang-item">
-                    <span class="repo-lang-dot" style="background: ${color};"></span>
-                    <span>${lang}</span>
-                </span>
-            `;
-        }).join("");
-    }
-
-    function updateTopLanguages(repos) {
-        if (!languagesListEl) return;
-
-        const totals = {};
-        let grandTotal = 0;
-
-        repos.forEach(repo => {
-            if (repo.languages) {
-                Object.entries(repo.languages).forEach(([lang, bytes]) => {
-                    totals[lang] = (totals[lang] || 0) + bytes;
-                    grandTotal += bytes;
-                });
-            } else if (repo.language) {
-                totals[repo.language] = (totals[repo.language] || 0) + 10000;
-                grandTotal += 10000;
-            }
-        });
-
-        if (grandTotal === 0) return;
-
-        const sorted = Object.entries(totals)
-            .sort((a, b) => b[1] - a[1]);
-
-        languagesListEl.innerHTML = "";
-
-        sorted.forEach(([lang, bytes]) => {
-            const pct = Math.round((bytes / grandTotal) * 100);
-            if (pct < 1) return;
-
-            const color = langColors[lang] || "#8e8e8e";
-
-            const langItem = document.createElement("div");
-            langItem.className = "lang-item";
-            langItem.innerHTML = `
-                <span class="lang-name">${lang}</span>
-                <div class="lang-bar-wrap"><div class="lang-bar" style="width: ${pct}%; background: ${color};"></div></div>
-                <span class="lang-pct">${pct}%</span>
-            `;
-            languagesListEl.appendChild(langItem);
-        });
-    }
-
-    const customDescriptions = {
-        "Milan_Portfolio_Website": "A sleek, interactive portfolio website showcasing my skills, projects, and professional experience with 3D animations.",
-        "Milan07xt": "My personal GitHub profile readme and configuration files.",
-        "Textbook-RAG-Assistant": "An AI-powered RAG assistant that answers queries based on textbook content using generative models.",
-        "ai-career-assistant": "An AI career assistant leveraging Python to provide career advice and resume analysis.",
-        "SEM-06": "Coursework and projects completed during Semester 6 of my IT degree.",
-        "Hemani_Portfolio_Template": "A modern, responsive portfolio template built with HTML, CSS, and JavaScript."
-    };
-
-    function renderRepos(repos) {
-        reposGrid.innerHTML = "";
-        
-        repos.forEach((repo, idx) => {
-            const card = document.createElement("div");
-            card.className = "repo-card";
-            
-            const desc = repo.description || customDescriptions[repo.name] || 'No description available for this project.';
-            
-            card.innerHTML = `
-                <div>
-                    <div class="repo-card-head">
-                        <h4><a href="${repo.html_url}" target="_blank">${repo.name}</a></h4>
-                        <i class="fab fa-github repo-icon-git"></i>
-                    </div>
-                    <p class="repo-desc">${desc}</p>
-                </div>
-                <div class="repo-footer">
-                    <div class="repo-lang" id="repo-lang-${idx}">
-                        ${renderSingleLanguageHtml(repo.language)}
-                    </div>
-                    <div class="repo-stats">
-                        <span><i class="fa-regular fa-star"></i> ${repo.stargazers_count}</span>
-                        <span><i class="fa-solid fa-code-fork"></i> ${repo.forks_count || 0}</span>
-                    </div>
-                </div>
-            `;
-            reposGrid.appendChild(card);
-            if (window.apply3DTiltToElement) {
-                window.apply3DTiltToElement(card);
-            }
-
-            if (repo.languages_url) {
-                fetchRepoLanguages(repo.name, repo.languages_url).then(languages => {
-                    if (languages && Object.keys(languages).length > 0) {
-                        repo.languages = languages;
-                        const langContainer = document.getElementById(`repo-lang-${idx}`);
-                        if (langContainer) {
-                            langContainer.innerHTML = renderMultipleLanguagesHtml(languages);
-                        }
-                        updateTopLanguages(repos);
-                    }
-                });
-            } else if (repo.languages) {
-                const langContainer = document.getElementById(`repo-lang-${idx}`);
-                if (langContainer) {
-                    langContainer.innerHTML = renderMultipleLanguagesHtml(repo.languages);
-                }
-            }
-        });
-
-        updateTopLanguages(repos);
-    }
-})();
-
-// ---------------------------------------------------------------
-// 6. Skills progress animation
-// ---------------------------------------------------------------
-(function initSkillsProgress() {
-    const fills = document.querySelectorAll(".skill-progress-fill");
-    if (!fills.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const fill = entry.target;
-                const progress = fill.getAttribute("data-progress");
-                fill.style.width = progress;
-                observer.unobserve(fill);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    fills.forEach(fill => observer.observe(fill));
-})();
-
-// ---------------------------------------------------------------
-// 7. Simulated GitHub contribution grid & tooltips
-// ---------------------------------------------------------------
-(async function initGitHubContributions() {
-    const grid = document.getElementById("contrib-grid");
-    if (!grid) return;
-
-    let tooltip = document.querySelector(".calendar-tooltip");
-    if (!tooltip) {
-        tooltip = document.createElement("div");
-        tooltip.className = "calendar-tooltip";
-        document.body.appendChild(tooltip);
-    }
-
-    try {
-        const username = "Milan07xt";
-        // Fetch the contribution JSON data from the unofficial API
-        const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`);
-        if (!res.ok) throw new Error("GitHub Contributions API returned an error");
-        
-        const data = await res.json();
-        if (!data || !data.contributions || !data.contributions.length) {
-            throw new Error("Invalid contributions data format");
-        }
-        
-        // Sort contributions chronologically
-        const sorted = data.contributions.sort((a, b) => new Date(a.date) - new Date(b.date));
-        
-        // Align ending date to the Saturday of the current week to keep a perfect 53x7 rectangular layout
-        const today = new Date();
-        const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
-        const saturday = new Date(today);
-        saturday.setDate(today.getDate() + (6 - dayOfWeek));
-        const saturdayStr = saturday.toISOString().split('T')[0];
-        
-        // Filter out any dates after the current week's Saturday
-        const pastContributions = sorted.filter(day => day.date <= saturdayStr);
-        
-        // Slice the last 371 days (53 weeks * 7 days)
-        const recent = pastContributions.slice(-371);
-        
-        grid.innerHTML = "";
-        recent.forEach(day => {
-            const cell = document.createElement("div");
-            cell.className = `contrib-cell lvl-${day.level}`;
-            
-            const cellDate = new Date(day.date);
-            const options = { month: 'short', day: 'numeric', year: 'numeric' };
-            const dateStr = cellDate.toLocaleDateString('en-US', options);
-            const commitsText = day.count === 0 ? "No contributions" : `${day.count} contribution${day.count > 1 ? 's' : ''}`;
-            
-            cell.addEventListener("mouseenter", (e) => {
-                tooltip.textContent = `${commitsText} on ${dateStr}`;
-                tooltip.classList.add("visible");
-                
-                const rect = cell.getBoundingClientRect();
-                tooltip.style.left = `${rect.left + window.scrollX - tooltip.offsetWidth / 2 + 5}px`;
-                tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 8}px`;
-            });
-
-            cell.addEventListener("mouseleave", () => {
-                tooltip.classList.remove("visible");
-            });
-
-            grid.appendChild(cell);
-        });
-        
-    } catch (err) {
-        console.warn("Failed to fetch real GitHub contribution graph. Utilizing fallback simulation.", err);
-        renderSimulatedContributions(grid, tooltip);
-    }
-    
-    function renderSimulatedContributions(grid, tooltip) {
-        const totalCells = 371; 
-        const now = new Date();
-        const startDate = new Date(now);
-        startDate.setDate(startDate.getDate() - totalCells + 1);
-
-        grid.innerHTML = "";
-        for (let i = 0; i < totalCells; i++) {
-            const cellDate = new Date(startDate);
-            cellDate.setDate(startDate.getDate() + i);
-
-            const rand = Math.random();
-            let level = 0;
-            let commits = 0;
-            
-            if (rand > 0.88) {
-                level = 4;
-                commits = Math.floor(Math.random() * 5) + 6;
-            } else if (rand > 0.74) {
-                level = 3;
-                commits = Math.floor(Math.random() * 3) + 3;
-            } else if (rand > 0.58) {
-                level = 2;
-                commits = Math.floor(Math.random() * 2) + 1;
-            } else if (rand > 0.38) {
-                level = 1;
-                commits = 1;
-            }
-
-            const cell = document.createElement("div");
-            cell.className = `contrib-cell lvl-${level}`;
-            
-            const options = { month: 'short', day: 'numeric', year: 'numeric' };
-            const dateStr = cellDate.toLocaleDateString('en-US', options);
-            const commitsText = commits === 0 ? "No contributions" : `${commits} contribution${commits > 1 ? 's' : ''}`;
-            
-            cell.addEventListener("mouseenter", (e) => {
-                tooltip.textContent = `${commitsText} on ${dateStr}`;
-                tooltip.classList.add("visible");
-                
-                const rect = cell.getBoundingClientRect();
-                tooltip.style.left = `${rect.left + window.scrollX - tooltip.offsetWidth / 2 + 5}px`;
-                tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 8}px`;
-            });
-
-            cell.addEventListener("mouseleave", () => {
-                tooltip.classList.remove("visible");
-            });
-
+        const weekStart = new Date(start);
+        weekStart.setDate(start.getDate() - start.getDay());
+
+        for (let d = new Date(weekStart); d <= today; d.setDate(d.getDate() + 1)) {
+            const dateStr = fmt(d);
+            const count   = activityData[dateStr] || 0;
+            const level   = getLevel(count);
+            const cell    = document.createElement('div');
+            cell.className= `contrib-cell level-${level}`;
+            cell.title    = `${dateStr}: ${count} contribution${count !== 1 ? 's' : ''}`;
             grid.appendChild(cell);
         }
-    }
-})();
 
-// ---------------------------------------------------------------
-// 8. Projects filtering tabs
-// ---------------------------------------------------------------
-(function initProjectFilters() {
-    const filters = document.querySelectorAll(".project-filters .filter-btn");
-    const cards = document.querySelectorAll(".project-grid .project-card");
-    if (!filters.length || !cards.length) return;
-
-    filters.forEach(btn => {
-        btn.addEventListener("click", () => {
-            filters.forEach(f => f.classList.remove("active"));
-            btn.classList.add("active");
-
-            const filterVal = btn.getAttribute("data-filter").toLowerCase();
-
-            cards.forEach(card => {
-                const chips = Array.from(card.querySelectorAll(".chip")).map(c => c.textContent.toLowerCase());
-                const title = card.querySelector("h3").textContent.toLowerCase();
-                const desc = card.querySelector("p").textContent.toLowerCase();
-
-                let isMatch = false;
-                if (filterVal === "all") {
-                    isMatch = true;
-                } else if (filterVal === "python") {
-                    isMatch = chips.includes("python") || title.includes("python");
-                } else if (filterVal === "django") {
-                    isMatch = chips.includes("django") || chips.includes("django rest framework") || title.includes("django");
-                } else if (filterVal === "opencv") {
-                    isMatch = chips.includes("opencv") || title.includes("opencv") || title.includes("face");
-                } else if (filterVal === "frontend") {
-                    isMatch = chips.includes("html5") || chips.includes("css3") || chips.includes("javascript") || chips.includes("ui/ux") || title.includes("hotel") || title.includes("web");
-                }
-
-                if (isMatch) {
-                    card.classList.remove("hide");
-                    card.style.opacity = "0";
-                    setTimeout(() => {
-                        card.style.opacity = "1";
-                    }, 50);
-                } else {
-                    card.classList.add("hide");
-                }
+        // Month labels
+        if (months) {
+            const labels = ['Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep'];
+            labels.forEach(m => {
+                const span = document.createElement('span');
+                span.textContent = m;
+                months.appendChild(span);
             });
-        });
-    });
-})();
-
-// ---------------------------------------------------------------
-// 9. Certificates filtering tabs
-// ---------------------------------------------------------------
-(function initCertificateFilters() {
-    const filters = document.querySelectorAll(".certificate-filters .cert-filter-btn");
-    const cards = document.querySelectorAll(".certificate-grid .certificate-card");
-    if (!filters.length || !cards.length) return;
-
-    filters.forEach(btn => {
-        btn.addEventListener("click", () => {
-            filters.forEach(f => f.classList.remove("active"));
-            btn.classList.add("active");
-
-            const filterVal = btn.getAttribute("data-filter").toLowerCase();
-
-            cards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-
-                let isMatch = false;
-                if (filterVal === "all") {
-                    isMatch = true;
-                } else if (filterVal === "nasscom") {
-                    isMatch = text.includes("nasscom");
-                } else if (filterVal === "forage") {
-                    isMatch = text.includes("forage");
-                } else if (filterVal === "udemy") {
-                    isMatch = text.includes("udemy");
-                } else if (filterVal === "unstop") {
-                    isMatch = text.includes("unstop") || text.includes("campuscrew");
-                }
-
-                if (isMatch) {
-                    card.classList.remove("hide");
-                    card.style.opacity = "0";
-                    setTimeout(() => {
-                        card.style.opacity = "1";
-                    }, 50);
-                } else {
-                    card.classList.add("hide");
-                }
-            });
-        });
-    });
-})();
-
-// ---------------------------------------------------------------
-// 10. Testimonials Slider Carousel
-// ---------------------------------------------------------------
-(function initTestimonialsCarousel() {
-    const slides = document.querySelectorAll(".testimonial-slide");
-    const dots = document.querySelectorAll(".testimonial-controls .dot");
-    const prevBtn = document.getElementById("prevTestimonial");
-    const nextBtn = document.getElementById("nextTestimonial");
-    if (!slides.length) return;
-
-    let currentIndex = 0;
-    let autoPlayTimer = null;
-
-    function showSlide(index) {
-        slides.forEach(s => s.classList.remove("active"));
-        dots.forEach(d => d.classList.remove("active"));
-
-        currentIndex = (index + slides.length) % slides.length;
-        slides[currentIndex].classList.add("active");
-        dots[currentIndex].classList.add("active");
-    }
-
-    if (prevBtn && nextBtn) {
-        prevBtn.addEventListener("click", () => {
-            showSlide(currentIndex - 1);
-            resetAutoplay();
-        });
-        nextBtn.addEventListener("click", () => {
-            showSlide(currentIndex + 1);
-            resetAutoplay();
-        });
-    }
-
-    dots.forEach(dot => {
-        dot.addEventListener("click", () => {
-            const idx = parseInt(dot.getAttribute("data-index"));
-            showSlide(idx);
-            resetAutoplay();
-        });
-    });
-
-    function startAutoplay() {
-        autoPlayTimer = setInterval(() => {
-            showSlide(currentIndex + 1);
-        }, 6000);
-    }
-
-    function resetAutoplay() {
-        clearInterval(autoPlayTimer);
-        startAutoplay();
-    }
-
-    startAutoplay();
-})();
-
-// ================================================================
-// 11. Professional 3D Hover Tilt & Viewport Scroll Reveal Animations
-// ================================================================
-window.apply3DTiltToElement = function(el) {
-    if (prefersReducedMotion) return;
-    
-    // Parent container perspective anchor
-    const parent = el.parentElement;
-    if (parent) {
-        parent.style.perspective = "1200px";
-    }
-    
-    el.style.transition = "transform 0.15s ease, box-shadow 0.15s ease";
-    el.style.transformStyle = "preserve-3d";
-    
-    let shine = el.querySelector(".card-shine-overlay");
-    if (!shine) {
-        shine = document.createElement("div");
-        shine.className = "card-shine-overlay";
-        el.appendChild(shine);
-    }
-
-    el.addEventListener("mousemove", (e) => {
-        const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const px = x / rect.width;
-        const py = y / rect.height;
-        
-        // Subtle max rotation of 5 degrees for sleek professional look
-        const maxRot = 5; 
-        const rotX = (0.5 - py) * maxRot;
-        const rotY = (px - 0.5) * maxRot;
-        
-        el.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.015, 1.015, 1.015)`;
-        
-        shine.style.opacity = "1";
-        shine.style.background = `radial-gradient(circle at ${px * 100}% ${py * 100}%, rgba(255,255,255,0.12) 0%, transparent 60%)`;
-        
-        // Dynamic nested pop-out parallax depth (translateZ)
-        const popElements = el.querySelectorAll(".chip, .btn-link, .badge, .project-links, .social-icons, .repo-icon-git, .service-icon, .profile-meta, h3, h4, .cgpa-ring-wrap, .card-icon, .timeline-badge, .timeline-time, .org");
-        popElements.forEach(pe => {
-            pe.style.transform = "translateZ(15px)";
-            pe.style.transition = "transform 0.15s ease";
-        });
-    });
-
-    el.addEventListener("mouseleave", () => {
-        el.style.transform = "rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
-        shine.style.opacity = "0";
-        
-        const popElements = el.querySelectorAll(".chip, .btn-link, .badge, .project-links, .social-icons, .repo-icon-git, .service-icon, .profile-meta, h3, h4, .cgpa-ring-wrap, .card-icon, .timeline-badge, .timeline-time, .org");
-        popElements.forEach(pe => {
-            pe.style.transform = "translateZ(0px)";
-        });
-    });
-};
-
-(function initProfessional3D() {
-    // 1. Initialize 3D tilt for static items
-    const staticElements = document.querySelectorAll(".project-card, .certificate-card, .service-card, .github-profile-card, .github-languages-card, .contact-card, .hero-terminal, .timeline-panel, .skill-group, .card-glass, .resume-image-wrapper");
-    staticElements.forEach(el => window.apply3DTiltToElement(el));
-
-    // 2. Global 3D perspective scroll reveal
-    if (prefersReducedMotion) return;
-
-    const revealTargets = document.querySelectorAll("section, .project-card, .certificate-card, .service-card, .github-dashboard, .github-contribution-wrapper, .timeline-panel, .skill-group, .card-glass, .resume-image-wrapper");
-    revealTargets.forEach(t => {
-        t.classList.add("reveal-3d");
-    });
-
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("in-view");
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.08,
-        rootMargin: "0px 0px -40px 0px"
-    });
-
-    revealTargets.forEach(t => revealObserver.observe(t));
-})();
-
-// ===============================================================
-// Project Case Study Modal
-// ===============================================================
-window.openAICaseStudy = function() {
-    const modal = document.getElementById('projectModal');
-    if(!modal) return;
-    
-    document.getElementById('modalCategory').textContent = 'Python / FastAPI / OpenAI';
-    document.getElementById('modalTitle').textContent = 'AI Portfolio Assistant';
-    document.getElementById('modalLiveLink').href = 'javascript:void(0)';
-    document.getElementById('modalLiveLink').onclick = function() { 
-        document.getElementById('ai-agent-btn').click(); 
-        modal.classList.remove('open'); 
-    };
-    document.getElementById('modalCodeLink').style.display = 'none';
-    
-    document.getElementById('modalDesc').innerHTML = 'A professional AI assistant built with FastAPI and OpenAI that understands the portfolio context and answers visitor questions dynamically. The backend serves an API that the frontend widget interacts with.';
-    
-    document.getElementById('modalFeatures').innerHTML = `
-        <li><strong>Context-Aware Responses:</strong> Uses a tailored system prompt and portfolio data to answer specific questions.</li>
-        <li><strong>Tool-Calling:</strong> Extracts data via custom tools in the backend.</li>
-        <li><strong>Vercel Serverless Fallback:</strong> In production, seamlessly transitions to Vercel Serverless Functions.</li>
-    `;
-    
-    document.getElementById('modalArchitecture').innerHTML = 'FastAPI acts as the local backend while Vercel Serverless Functions handle production requests. Both interface with the OpenAI-compatible Gemini API.';
-    
-    document.getElementById('modalTags').innerHTML = `
-        <span class="chip">Python</span>
-        <span class="chip">FastAPI</span>
-        <span class="chip">OpenAI</span>
-        <span class="chip">JavaScript</span>
-    `;
-    
-    modal.classList.add('open');
-};
-
-const modalCloseBtn = document.getElementById('modalCloseBtn');
-if (modalCloseBtn) {
-    modalCloseBtn.addEventListener('click', () => {
-        const modal = document.getElementById('projectModal');
-        if (modal) modal.classList.remove('open');
-    });
-}
-
-// ===============================================================
-// Contact Submissions Display & CSV Loader
-// ===============================================================
-(function initContactSubmissionsLoader() {
-    const loadBtn = document.getElementById('loadContactsBtn');
-    const statusEl = document.getElementById('contactsStatus');
-    const tableWrap = document.querySelector('.submissions-table-wrap');
-    const tableBody = document.getElementById('contactsTableBody');
-    const grid = document.getElementById('contactsGrid');
-
-    if (!loadBtn || !statusEl || !tableBody) return;
-
-    // Load submissions on page load
-    function loadSubmissions() {
-        statusEl.textContent = 'Loading...';
-        loadBtn.disabled = true;
-
-        fetch('contact.csv')
-            .then(response => response.text())
-            .then(csvText => {
-                const lines = csvText.trim().split('\n');
-                if (lines.length <= 1) {
-                    statusEl.textContent = 'No submissions yet.';
-                    return;
-                }
-
-                // Parse CSV headers
-                const headers = parseCSVLine(lines[0]);
-                const submissions = [];
-
-                for (let i = 1; i < lines.length; i++) {
-                    const line = lines[i].trim();
-                    if (!line) continue;
-                    
-                    const values = parseCSVLine(line);
-                    const submission = {};
-                    headers.forEach((header, idx) => {
-                        submission[header] = values[idx] || '';
-                    });
-                    submissions.push(submission);
-                }
-
-                displaySubmissions(submissions);
-                statusEl.textContent = `Loaded ${submissions.length} submission(s)`;
-                loadBtn.disabled = false;
-
-                if (tableWrap) {
-                    tableWrap.classList.add('show');
-                }
-            })
-            .catch(err => {
-                console.error('Error loading submissions:', err);
-                statusEl.textContent = 'Error loading submissions. Make sure server is running.';
-                loadBtn.disabled = false;
-            });
-    }
-
-    function parseCSVLine(line) {
-        const result = [];
-        let current = '';
-        let insideQuotes = false;
-
-        for (let i = 0; i < line.length; i++) {
-            const char = line[i];
-            const nextChar = line[i + 1];
-
-            if (char === '"') {
-                if (insideQuotes && nextChar === '"') {
-                    current += '"';
-                    i++;
-                } else {
-                    insideQuotes = !insideQuotes;
-                }
-            } else if (char === ',' && !insideQuotes) {
-                result.push(current);
-                current = '';
-            } else {
-                current += char;
-            }
         }
-        result.push(current);
-        return result.map(val => val.trim().replace(/^"|"$/g, ''));
-    }
+    })();
 
-    function displaySubmissions(submissions) {
-        // Clear existing rows
-        tableBody.innerHTML = '';
-        grid.innerHTML = '';
-
-        // Sort by timestamp (newest first)
-        submissions.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp));
-
-        submissions.forEach(sub => {
-            // Add to table
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${escapeHTML(sub.Name)}</td>
-                <td><a href="mailto:${sub.Mail}">${escapeHTML(sub.Mail)}</a></td>
-                <td>${escapeHTML(sub.Number)}</td>
-                <td>${escapeHTML(sub.Subject)}</td>
-                <td>${escapeHTML(sub.Message.substring(0, 50))}${sub.Message.length > 50 ? '...' : ''}</td>
-                <td>${formatDate(sub.Timestamp)}</td>
-                <td>${escapeHTML(sub.Device || 'Unknown')}</td>
-            `;
-            tableBody.appendChild(row);
-
-            // Add to grid (mobile)
-            const card = document.createElement('div');
-            card.className = 'contact-submission-card glass';
-            card.innerHTML = `
-                <div class="submission-card-header">
-                    <span class="submission-card-name">${escapeHTML(sub.Name)}</span>
-                    <span class="submission-card-device">${escapeHTML(sub.Device || 'Unknown')}</span>
-                </div>
-                <div class="submission-card-meta">
-                    <div class="submission-card-item">
-                        <span class="submission-card-label">Email:</span>
-                        <span class="submission-card-value"><a href="mailto:${sub.Mail}">${escapeHTML(sub.Mail)}</a></span>
-                    </div>
-                    <div class="submission-card-item">
-                        <span class="submission-card-label">Phone:</span>
-                        <span class="submission-card-value"><a href="tel:${sub.Number}">${escapeHTML(sub.Number)}</a></span>
-                    </div>
-                    <div class="submission-card-item">
-                        <span class="submission-card-label">Subject:</span>
-                        <span class="submission-card-value">${escapeHTML(sub.Subject)}</span>
-                    </div>
-                </div>
-                <div class="submission-card-message">
-                    <strong>Message:</strong><br>
-                    ${escapeHTML(sub.Message)}
-                </div>
-                <div class="submission-card-timestamp">${formatDate(sub.Timestamp)}</div>
-            `;
-            grid.appendChild(card);
-        });
-    }
-
-    function formatDate(dateStr) {
-        if (!dateStr) return 'N/A';
-        const date = new Date(dateStr);
-        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
-
-    function escapeHTML(str) {
-        if (!str) return '';
-        return str.replace(/&/g, '&amp;')
-                  .replace(/</g, '&lt;')
-                  .replace(/>/g, '&gt;')
-                  .replace(/"/g, '&quot;')
-                  .replace(/'/g, '&#039;');
-    }
-
-    // Load on page load
-    loadSubmissions();
-
-    // Refresh button handler
-    if (loadBtn) {
-        loadBtn.addEventListener('click', loadSubmissions);
-    }
-})();
-
-// ---------------------------------------------------------------
-// Reveal animations & CGPA Ring
-// ---------------------------------------------------------------
-document.addEventListener('DOMContentLoaded', () => {
-    const revealElements = document.querySelectorAll('.reveal-up');
-    
-    const revealCallback = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-                
-                // If this is the education card with the CGPA ring, animate the ring
-                const ringFill = entry.target.querySelector('.ring-fill');
-                if (ringFill) {
-                    const value = parseFloat(ringFill.getAttribute('data-value'));
-                    const max = parseFloat(ringFill.getAttribute('data-max'));
-                    const r = ringFill.getAttribute('r');
-                    const circumference = 2 * Math.PI * r;
-                    const offset = circumference - (value / max) * circumference;
-                    
-                    setTimeout(() => {
-                        ringFill.style.strokeDashoffset = offset;
-                    }, 500); // delay to sync with card reveal
-                }
-                
-                observer.unobserve(entry.target);
+    // ──────────────────────────────────────────────
+    // 17. Smooth scroll for anchor links
+    // ──────────────────────────────────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
-    };
-    
-    const revealOptions = {
-        threshold: 0.15,
-        rootMargin: "0px 0px -50px 0px"
-    };
-    
-    const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
-    
-    revealElements.forEach(el => {
-        revealObserver.observe(el);
     });
+
+    // ──────────────────────────────────────────────
+    // 18. Prefers Reduced Motion guard
+    // ──────────────────────────────────────────────
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.reveal-up, .reveal-fade').forEach(el => el.classList.add('revealed'));
+    }
+
+})();
+
+// ──────────────────────────────────────────────────
+// CSS for contribution calendar (injected)
+// ──────────────────────────────────────────────────
+(function injectContribStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+    .github-contribution-wrapper { display: none; }
+    .contrib-cell {
+        width: 11px; height: 11px;
+        border-radius: 2px;
+        background: #EBEDF0;
+        display: inline-block;
+        margin: 1px;
+        cursor: pointer;
+        transition: transform 0.15s;
+    }
+    .contrib-cell:hover { transform: scale(1.3); }
+    .contrib-cell.level-1 { background: #9BE9A8; }
+    .contrib-cell.level-2 { background: #40C463; }
+    .contrib-cell.level-3 { background: #30A14E; }
+    .contrib-cell.level-4 { background: #216E39; }
+    #contrib-grid {
+        display: grid;
+        grid-template-rows: repeat(7, 13px);
+        grid-auto-flow: column;
+        gap: 2px;
+    }
+    `;
+    document.head.appendChild(style);
+})();
+
+// Education Timeline Animations
+const eduObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("animate");
+            eduObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.2 });
+
+document.querySelectorAll(".cgpa-ring-fill, .sem-fill, .timeline-line").forEach(el => {
+    eduObserver.observe(el);
 });
 
-// ---------------------------------------------------------------
-// MacBook Terminal Window Controls
-// ---------------------------------------------------------------
-document.addEventListener('DOMContentLoaded', () => {
-    const terminal = document.querySelector('.hero-terminal');
-    const closeBtn = document.querySelector('.terminal-dots .dot.red');
-    const minBtn = document.querySelector('.terminal-dots .dot.amber');
-    const maxBtn = document.querySelector('.terminal-dots .dot.green');
-    
-    if (terminal) {
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                terminal.classList.add('closed');
-                console.log('Terminal closed. Refresh page to reopen.');
-            });
-        }
-        
-        if (minBtn) {
-            minBtn.addEventListener('click', () => {
-                terminal.classList.remove('maximized'); // Ensure it's not full screen when minimizing
-                terminal.classList.toggle('minimized');
-            });
-        }
-        
-        if (maxBtn) {
-            maxBtn.addEventListener('click', () => {
-                terminal.classList.remove('minimized'); // Ensure it's not minimized when maximizing
-                terminal.classList.toggle('maximized');
-            });
-        }
-    }
-});
