@@ -749,3 +749,20 @@ document.querySelectorAll(".cgpa-ring-fill, .sem-fill, .timeline-line").forEach(
     eduObserver.observe(el);
 });
 
+// Assign neon glow colors to glass-cards for the HD border lighting effect
+(function initNeonBorders() {
+    const neonColors = [
+        { color: 'rgba(0, 229, 255, 0.8)', shadow: 'rgba(0, 229, 255, 0.4)' }, // Cyan
+        { color: 'rgba(255, 234, 0, 0.8)', shadow: 'rgba(255, 234, 0, 0.4)' }, // Yellow
+        { color: 'rgba(176, 38, 255, 0.8)', shadow: 'rgba(176, 38, 255, 0.4)' }, // Purple
+        { color: 'rgba(0, 230, 118, 0.8)', shadow: 'rgba(0, 230, 118, 0.4)' }, // Green
+        { color: 'rgba(41, 121, 255, 0.8)', shadow: 'rgba(41, 121, 255, 0.4)' }  // Blue
+    ];
+    
+    document.querySelectorAll('.glass-card').forEach((card, index) => {
+        const neon = neonColors[index % neonColors.length];
+        card.style.setProperty('--glow-color', neon.color);
+        card.style.setProperty('--glow-shadow', neon.shadow);
+    });
+})();
+

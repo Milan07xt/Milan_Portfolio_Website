@@ -31,6 +31,7 @@
 
     <!-- Ambient Background -->
     <div class="ambient-bg" aria-hidden="true">
+        <div class="sweep-light"></div>
         <div class="ambient-orb orb-1"></div>
         <div class="ambient-orb orb-2"></div>
         <div class="ambient-orb orb-3"></div>
@@ -44,1382 +45,1373 @@
     <!-- Mouse Glow -->
     <div class="mouse-glow" id="mouseGlow"></div>
 
-    <!-- Main Portfolio Frame -->
-    <div class="portfolio-frame">
 
-        <!-- ═══════════════════════════════════════
+
+    <!-- ═══════════════════════════════════════
              NAVBAR
         ═══════════════════════════════════════ -->
-        <header class="nav-header" id="navHeader">
-            <nav class="navbar-pill" role="navigation" aria-label="Main navigation">
-                <div class="nav-logo">
-                    <span class="nav-logo-icon">⟨/⟩</span>
-                    <span class="nav-logo-text">Milan</span>
-                </div>
+    <header class="nav-header" id="navHeader">
+        <nav class="navbar-pill" role="navigation" aria-label="Main navigation">
+            <div class="nav-logo">
+                <span class="nav-logo-icon">⟨/⟩</span>
+                <span class="nav-logo-text">Milan</span>
+            </div>
 
-                <ul class="nav-links" id="navLinks" role="list">
-                    <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
-                    <li><a href="#about" class="nav-link" data-section="about">About</a></li>
-                    <li><a href="#skills" class="nav-link" data-section="skills">Skills</a></li>
-                    <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
-                    <li><a href="#experience" class="nav-link" data-section="experience">Experience</a></li>
-                    <li><a href="#education" class="nav-link" data-section="education">Education</a></li>
-                    <li><a href="#certificates" class="nav-link" data-section="certificates">Certificates</a></li>
-                    <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
-                </ul>
+            <ul class="nav-links" id="navLinks" role="list">
+                <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+                <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+                <li><a href="#skills" class="nav-link" data-section="skills">Skills</a></li>
+                <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
+                <li><a href="#experience" class="nav-link" data-section="experience">Experience</a></li>
+                <li><a href="#education" class="nav-link" data-section="education">Education</a></li>
+                <li><a href="#certificates" class="nav-link" data-section="certificates">Certificates</a></li>
+                <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+            </ul>
 
-                <div class="nav-actions">
-                    <button class="theme-toggle" id="themeToggleBtn" aria-label="Toggle Dark Mode">
-                        <i class="fa-solid fa-moon"></i>
-                    </button>
-                    <button class="recruiter-mode-btn btn-liquid" id="recruiterModeBtn"
-                        aria-label="Toggle Recruiter Mode">
-                        <i class="fa-solid fa-briefcase"></i>
-                        <span>Recruiter Mode</span>
-                    </button>
-                    <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu"
-                        aria-expanded="false">
-                        <span></span><span></span><span></span>
-                    </button>
-                </div>
-            </nav>
-
-            <!-- Scroll Progress Bar -->
-            <div class="scroll-progress-bar" id="scrollProgressBar" aria-hidden="true"></div>
-        </header>
-
-        <!-- Mobile Nav Drawer -->
-        <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
-            <div class="mobile-drawer-inner">
-                <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close navigation">
-                    <i class="fa-solid fa-xmark"></i>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggleBtn" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
                 </button>
-                <ul class="mobile-nav-list" role="list">
-                    <li><a href="#home" class="mobile-nav-link"><i class="fa-solid fa-house"></i> Home</a></li>
-                    <li><a href="#about" class="mobile-nav-link"><i class="fa-solid fa-user"></i> About</a></li>
-                    <li><a href="#skills" class="mobile-nav-link"><i class="fa-solid fa-code"></i> Skills</a></li>
-                    <li><a href="#projects" class="mobile-nav-link"><i class="fa-solid fa-laptop-code"></i> Projects</a>
-                    </li>
-                    <li><a href="#experience" class="mobile-nav-link"><i class="fa-solid fa-timeline"></i>
-                            Experience</a></li>
-                    <li><a href="#education" class="mobile-nav-link"><i class="fa-solid fa-graduation-cap"></i>
-                            Education</a></li>
-                    <li><a href="#certificates" class="mobile-nav-link"><i class="fa-solid fa-award"></i>
-                            Certificates</a></li>
-                    <li><a href="#contact" class="mobile-nav-link"><i class="fa-solid fa-envelope"></i> Contact</a></li>
-                </ul>
-                <div class="mobile-social-links">
-                    <a href="https://github.com/Milan07xt" target="_blank" aria-label="GitHub"><i
-                            class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" aria-label="LinkedIn"><i
-                            class="fab fa-linkedin-in"></i></a>
-                    <a href="mailto:rathodmilan216@gmail.com" aria-label="Email"><i
-                            class="fa-solid fa-envelope"></i></a>
+                <button class="recruiter-mode-btn btn-liquid" id="recruiterModeBtn" aria-label="Toggle Recruiter Mode">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Recruiter Mode</span>
+                </button>
+                <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Scroll Progress Bar -->
+        <div class="scroll-progress-bar" id="scrollProgressBar" aria-hidden="true"></div>
+    </header>
+
+    <!-- Mobile Nav Drawer -->
+    <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+        <div class="mobile-drawer-inner">
+            <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close navigation">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <ul class="mobile-nav-list" role="list">
+                <li><a href="#home" class="mobile-nav-link"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="#about" class="mobile-nav-link"><i class="fa-solid fa-user"></i> About</a></li>
+                <li><a href="#skills" class="mobile-nav-link"><i class="fa-solid fa-code"></i> Skills</a></li>
+                <li><a href="#projects" class="mobile-nav-link"><i class="fa-solid fa-laptop-code"></i> Projects</a>
+                </li>
+                <li><a href="#experience" class="mobile-nav-link"><i class="fa-solid fa-timeline"></i>
+                        Experience</a></li>
+                <li><a href="#education" class="mobile-nav-link"><i class="fa-solid fa-graduation-cap"></i>
+                        Education</a></li>
+                <li><a href="#certificates" class="mobile-nav-link"><i class="fa-solid fa-award"></i>
+                        Certificates</a></li>
+                <li><a href="#contact" class="mobile-nav-link"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+            </ul>
+            <div class="mobile-social-links">
+                <a href="https://github.com/Milan07xt" target="_blank" aria-label="GitHub"><i
+                        class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" aria-label="LinkedIn"><i
+                        class="fab fa-linkedin-in"></i></a>
+                <a href="mailto:rathodmilan216@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+             HERO SECTION
+        ═══════════════════════════════════════ -->
+    <section id="home" class="hero-section">
+        <div class="hero-grid">
+
+            <!-- LEFT: Text Content -->
+            <div class="hero-content">
+                <div class="hero-badge reveal-fade" style="--delay:0.1s">
+                    <span class="badge-dot"></span>
+                    PYTHON DEVELOPER
+                </div>
+
+                <h1 class="hero-title reveal-fade" style="--delay:0.2s">
+                    Hi, I'm <span class="gradient-name">Milan Rathod</span>
+                </h1>
+
+                <p class="hero-headline reveal-fade" style="--delay:0.3s">
+                    Python Developer building <em>clean, scalable</em> &amp; intelligent digital solutions.
+                </p>
+
+                <p class="hero-bio reveal-fade" style="--delay:0.4s">
+                    I build reliable web applications, automation tools, APIs and software solutions using Python
+                    and modern development technologies.
+                </p>
+
+                <div class="hero-actions reveal-fade" style="--delay:0.5s">
+                    <a href="#projects" class="btn-primary-pill">
+                        <i class="fa-solid fa-rocket"></i>
+                        View My Projects
+                    </a>
+                    <a href="resume/Milankumar_Rathod_Resume.pdf" class="btn-glass-pill" download>
+                        <i class="fa-solid fa-download"></i>
+                        Download Resume
+                    </a>
+                </div>
+
+                <div class="hero-social reveal-fade" style="--delay:0.6s">
+                    <a href="https://github.com/Milan07xt" target="_blank" class="social-btn" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" class="social-btn"
+                        aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="mailto:rathodmilan216@gmail.com" class="social-btn" aria-label="Email">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                    <a href="https://wa.me/919327599254" target="_blank" class="social-btn" aria-label="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- RIGHT: Visual -->
+            <div class="hero-visual reveal-fade" style="--delay:0.3s">
+                <div class="hero-visual-container">
+                    <!-- Glow ring behind image -->
+                    <div class="hero-glow-ring"></div>
+
+                    <!-- Profile image -->
+                    <div class="hero-image-wrap">
+                        <img src="images/profile-transparent.png" alt="Milan Rathod - Python Developer"
+                            class="hero-profile-img" loading="lazy">
+                    </div>
+
+                    <!-- Floating Python logo -->
+                    <div class="floating-badge badge-python" aria-hidden="true">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                            alt="Python" width="28" height="28">
+                        <span>Python</span>
+                    </div>
+
+                    <!-- Floating tech badges -->
+                    <div class="floating-badge badge-django" aria-hidden="true">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg"
+                            alt="Django" width="22" height="22"
+                            style="filter:invert(1) sepia(1) saturate(5) hue-rotate(100deg)">
+                        <span>Django</span>
+                    </div>
+
+                    <div class="floating-badge badge-flask" aria-hidden="true">
+                        <i class="fa-solid fa-flask" style="color:#3776AB;font-size:18px"></i>
+                        <span>Flask</span>
+                    </div>
+
+                    <div class="floating-badge badge-fastapi" aria-hidden="true">
+                        <i class="fa-solid fa-bolt" style="color:#009688;font-size:16px"></i>
+                        <span>FastAPI</span>
+                    </div>
+
+                    <div class="floating-badge badge-sql" aria-hidden="true">
+                        <i class="fa-solid fa-database" style="color:#FFD43B;font-size:16px"></i>
+                        <span>SQLite3</span>
+                    </div>
+
+                    <div class="floating-badge badge-git" aria-hidden="true">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"
+                            width="20" height="20">
+                        <span>Git</span>
+                    </div>
+
+                    <div class="floating-badge badge-api" aria-hidden="true">
+                        <i class="fa-solid fa-plug" style="color:#3776AB;font-size:15px"></i>
+                        <span>REST API</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- ═══════════════════════════════════════
-             HERO SECTION
-        ═══════════════════════════════════════ -->
-        <section id="home" class="hero-section">
-            <div class="hero-grid">
-
-                <!-- LEFT: Text Content -->
-                <div class="hero-content">
-                    <div class="hero-badge reveal-fade" style="--delay:0.1s">
-                        <span class="badge-dot"></span>
-                        PYTHON DEVELOPER
-                    </div>
-
-                    <h1 class="hero-title reveal-fade" style="--delay:0.2s">
-                        Hi, I'm <span class="gradient-name">Milan Rathod</span>
-                    </h1>
-
-                    <p class="hero-headline reveal-fade" style="--delay:0.3s">
-                        Python Developer building <em>clean, scalable</em> &amp; intelligent digital solutions.
-                    </p>
-
-                    <p class="hero-bio reveal-fade" style="--delay:0.4s">
-                        I build reliable web applications, automation tools, APIs and software solutions using Python
-                        and modern development technologies.
-                    </p>
-
-                    <div class="hero-actions reveal-fade" style="--delay:0.5s">
-                        <a href="#projects" class="btn-primary-pill">
-                            <i class="fa-solid fa-rocket"></i>
-                            View My Projects
-                        </a>
-                        <a href="resume/Milankumar_Rathod_Resume.pdf" class="btn-glass-pill" download>
-                            <i class="fa-solid fa-download"></i>
-                            Download Resume
-                        </a>
-                    </div>
-
-                    <div class="hero-social reveal-fade" style="--delay:0.6s">
-                        <a href="https://github.com/Milan07xt" target="_blank" class="social-btn" aria-label="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" class="social-btn"
-                            aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="mailto:rathodmilan216@gmail.com" class="social-btn" aria-label="Email">
-                            <i class="fa-solid fa-envelope"></i>
-                        </a>
-                        <a href="https://wa.me/919327599254" target="_blank" class="social-btn" aria-label="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- RIGHT: Visual -->
-                <div class="hero-visual reveal-fade" style="--delay:0.3s">
-                    <div class="hero-visual-container">
-                        <!-- Glow ring behind image -->
-                        <div class="hero-glow-ring"></div>
-
-                        <!-- Profile image -->
-                        <div class="hero-image-wrap">
-                            <img src="images/profile-transparent.png" alt="Milan Rathod - Python Developer"
-                                class="hero-profile-img" loading="lazy">
-                        </div>
-
-                        <!-- Floating Python logo -->
-                        <div class="floating-badge badge-python" aria-hidden="true">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
-                                alt="Python" width="28" height="28">
-                            <span>Python</span>
-                        </div>
-
-                        <!-- Floating tech badges -->
-                        <div class="floating-badge badge-django" aria-hidden="true">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg"
-                                alt="Django" width="22" height="22"
-                                style="filter:invert(1) sepia(1) saturate(5) hue-rotate(100deg)">
-                            <span>Django</span>
-                        </div>
-
-                        <div class="floating-badge badge-flask" aria-hidden="true">
-                            <i class="fa-solid fa-flask" style="color:#3776AB;font-size:18px"></i>
-                            <span>Flask</span>
-                        </div>
-
-                        <div class="floating-badge badge-fastapi" aria-hidden="true">
-                            <i class="fa-solid fa-bolt" style="color:#009688;font-size:16px"></i>
-                            <span>FastAPI</span>
-                        </div>
-
-                        <div class="floating-badge badge-sql" aria-hidden="true">
-                            <i class="fa-solid fa-database" style="color:#FFD43B;font-size:16px"></i>
-                            <span>SQLite3</span>
-                        </div>
-
-                        <div class="floating-badge badge-git" aria-hidden="true">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"
-                                width="20" height="20">
-                            <span>Git</span>
-                        </div>
-
-                        <div class="floating-badge badge-api" aria-hidden="true">
-                            <i class="fa-solid fa-plug" style="color:#3776AB;font-size:15px"></i>
-                            <span>REST API</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Hero bottom stats -->
+        <div class="hero-stats reveal-fade" style="--delay:0.7s">
+            <div class="hero-stat">
+                <span class="hero-stat-num stat-num" data-count="5">0</span>
+                <span class="hero-stat-plus">+</span>
+                <span class="hero-stat-label">Projects</span>
             </div>
-
-            <!-- Hero bottom stats -->
-            <div class="hero-stats reveal-fade" style="--delay:0.7s">
-                <div class="hero-stat">
-                    <span class="hero-stat-num stat-num" data-count="5">0</span>
-                    <span class="hero-stat-plus">+</span>
-                    <span class="hero-stat-label">Projects</span>
-                </div>
-                <div class="hero-stat-divider"></div>
-                <div class="hero-stat">
-                    <span class="hero-stat-num stat-num" data-count="9">0</span><span class="hero-stat-plus">+</span>
-                    <span class="hero-stat-label">Certificates</span>
-                </div>
-                <div class="hero-stat-divider"></div>
-                <div class="hero-stat">
-                    <span class="hero-stat-num stat-num" data-count="10">0</span><span class="hero-stat-plus">+</span>
-                    <span class="hero-stat-label">Technologies</span>
-                </div>
-                <div class="hero-stat-divider"></div>
-                <div class="hero-stat">
-                    <span class="hero-stat-num" style="font-size:1.6rem;font-weight:800;color:#3776AB">6.35</span>
-                    <span class="hero-stat-label">CGPA</span>
-                </div>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat">
+                <span class="hero-stat-num stat-num" data-count="9">0</span><span class="hero-stat-plus">+</span>
+                <span class="hero-stat-label">Certificates</span>
             </div>
-        </section>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat">
+                <span class="hero-stat-num stat-num" data-count="10">0</span><span class="hero-stat-plus">+</span>
+                <span class="hero-stat-label">Technologies</span>
+            </div>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat">
+                <span class="hero-stat-num" style="font-size:1.6rem;font-weight:800;color:#3776AB">6.35</span>
+                <span class="hero-stat-label">CGPA</span>
+            </div>
+        </div>
+    </section>
 
-        <!-- ═══════════════════════════════════════
+    <!-- ═══════════════════════════════════════
              ABOUT SECTION
         ═══════════════════════════════════════ -->
-        <section id="about" class="section about-section">
-            <div class="section-eyebrow reveal-up">About Me</div>
-            <h2 class="section-title reveal-up">Passionate Python Developer <span class="title-accent">from India</span>
-            </h2>
+    <section id="about" class="section about-section">
+        <div class="section-eyebrow reveal-up">About Me</div>
+        <h2 class="section-title reveal-up">Passionate Python Developer <span class="title-accent">from India</span>
+        </h2>
 
-            <div class="about-grid">
-                <!-- Left: Bio -->
-                <div class="about-bio reveal-up" style="--delay:0.1s">
-                    <p>
-                        I'm <strong>Milan Rathod</strong>, a B.Sc. IT graduate from Noble University, Junagadh. I
-                        specialize in
-                        Python backend development with a strong focus on <strong>Django, REST APIs, and backend
-                            architecture</strong>.
-                    </p>
-                    <p>
-                        My project experience includes a <strong>Face Recognition Attendance System</strong>, a
-                        <strong>Gym Management System</strong>,
-                        a <strong>Hotel Management Website</strong>, and an <strong>AI Portfolio Assistant</strong>
-                        built with FastAPI and OpenAI.
-                    </p>
-                    <p>
-                        I'm particularly passionate about <strong>Backend Development, REST APIs, and AI/ML
-                            applications</strong>.
-                        I believe in writing clean, maintainable code and solving real-world problems through practical
-                        software development.
-                    </p>
-                    <p>
-                        Currently looking for opportunities to <strong>apply my technical skills, work on real-world
-                            projects,
-                            and grow as a professional software developer</strong>.
-                    </p>
-                    <div class="about-cta">
-                        <a href="#contact" class="btn-primary-pill">
-                            <i class="fa-solid fa-paper-plane"></i> Get in Touch
-                        </a>
-                        <a href="resume/Milankumar_Rathod_Resume.pdf" class="btn-glass-pill" download>
-                            <i class="fa-solid fa-file-pdf"></i> Resume
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Right: Info cards -->
-                <div class="about-cards reveal-up" style="--delay:0.2s">
-                    <div class="about-info-card glass-card">
-                        <div class="info-card-icon" style="--icon-color:#3776AB"><i
-                                class="fa-solid fa-graduation-cap"></i></div>
-                        <div>
-                            <div class="info-card-label">Education</div>
-                            <div class="info-card-value">B.Sc. IT</div>
-                            <div class="info-card-sub">Noble University, 2023–2026</div>
-                        </div>
-                    </div>
-
-                    <div class="about-info-card glass-card">
-                        <div class="info-card-icon" style="--icon-color:#FFD43B"><i class="fa-solid fa-code"></i></div>
-                        <div>
-                            <div class="info-card-label">Role</div>
-                            <div class="info-card-value">Python Developer</div>
-                            <div class="info-card-sub">Django · FastAPI · REST</div>
-                        </div>
-                    </div>
-
-                    <div class="about-info-card glass-card">
-                        <div class="info-card-icon" style="--icon-color:#3776AB"><i class="fa-solid fa-server"></i>
-                        </div>
-                        <div>
-                            <div class="info-card-label">Focus</div>
-                            <div class="info-card-value">Backend Development</div>
-                            <div class="info-card-sub">APIs · Databases · Systems</div>
-                        </div>
-                    </div>
-
-                    <div class="about-info-card glass-card">
-                        <div class="info-card-icon" style="--icon-color:#4CAF50"><i class="fa-solid fa-lightbulb"></i>
-                        </div>
-                        <div>
-                            <div class="info-card-label">Mindset</div>
-                            <div class="info-card-value">Problem Solving</div>
-                            <div class="info-card-sub">Clean code · Continuous learning</div>
-                        </div>
-                    </div>
-
-                    <!-- Profile quick-info -->
-                    <div class="about-profile-card glass-card full-width">
-                        <ul class="profile-kv-list">
-                            <li><span class="kv-key"><i class="fa-solid fa-user"></i> Name</span><span
-                                    class="kv-val">Milan Rathod</span></li>
-                            <li><span class="kv-key"><i class="fa-solid fa-location-dot"></i> Location</span><span
-                                    class="kv-val">Gujarat, India</span></li>
-                            <li><span class="kv-key"><i class="fa-solid fa-envelope"></i> Email</span><a
-                                    href="mailto:rathodmilan216@gmail.com"
-                                    class="kv-val kv-link">rathodmilan216@gmail.com</a></li>
-                            <li><span class="kv-key"><i class="fa-brands fa-github"></i> GitHub</span><a
-                                    href="https://github.com/Milan07xt" target="_blank"
-                                    class="kv-val kv-link">@Milan07xt</a></li>
-                            <li><span class="kv-key"><i class="fa-brands fa-linkedin"></i> LinkedIn</span><a
-                                    href="https://linkedin.com/in/milan-rathod07/" target="_blank"
-                                    class="kv-val kv-link">milan-rathod07</a></li>
-                        </ul>
-                    </div>
+        <div class="about-grid">
+            <!-- Left: Bio -->
+            <div class="about-bio reveal-up" style="--delay:0.1s">
+                <p>
+                    I'm <strong>Milan Rathod</strong>, a B.Sc. IT graduate from Noble University, Junagadh. I
+                    specialize in
+                    Python backend development with a strong focus on <strong>Django, REST APIs, and backend
+                        architecture</strong>.
+                </p>
+                <p>
+                    My project experience includes a <strong>Face Recognition Attendance System</strong>, a
+                    <strong>Gym Management System</strong>,
+                    a <strong>Hotel Management Website</strong>, and an <strong>AI Portfolio Assistant</strong>
+                    built with FastAPI and OpenAI.
+                </p>
+                <p>
+                    I'm particularly passionate about <strong>Backend Development, REST APIs, and AI/ML
+                        applications</strong>.
+                    I believe in writing clean, maintainable code and solving real-world problems through practical
+                    software development.
+                </p>
+                <p>
+                    Currently looking for opportunities to <strong>apply my technical skills, work on real-world
+                        projects,
+                        and grow as a professional software developer</strong>.
+                </p>
+                <div class="about-cta">
+                    <a href="#contact" class="btn-primary-pill">
+                        <i class="fa-solid fa-paper-plane"></i> Get in Touch
+                    </a>
+                    <a href="resume/Milankumar_Rathod_Resume.pdf" class="btn-glass-pill" download>
+                        <i class="fa-solid fa-file-pdf"></i> Resume
+                    </a>
                 </div>
             </div>
-        </section>
 
-        <!-- ═══════════════════════════════════════
+            <!-- Right: Info cards -->
+            <div class="about-cards reveal-up" style="--delay:0.2s">
+                <div class="about-info-card glass-card">
+                    <div class="info-card-icon" style="--icon-color:#3776AB"><i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <div class="info-card-label">Education</div>
+                        <div class="info-card-value">B.Sc. IT</div>
+                        <div class="info-card-sub">Noble University, 2023–2026</div>
+                    </div>
+                </div>
+
+                <div class="about-info-card glass-card">
+                    <div class="info-card-icon" style="--icon-color:#FFD43B"><i class="fa-solid fa-code"></i></div>
+                    <div>
+                        <div class="info-card-label">Role</div>
+                        <div class="info-card-value">Python Developer</div>
+                        <div class="info-card-sub">Django · FastAPI · REST</div>
+                    </div>
+                </div>
+
+                <div class="about-info-card glass-card">
+                    <div class="info-card-icon" style="--icon-color:#3776AB"><i class="fa-solid fa-server"></i>
+                    </div>
+                    <div>
+                        <div class="info-card-label">Focus</div>
+                        <div class="info-card-value">Backend Development</div>
+                        <div class="info-card-sub">APIs · Databases · Systems</div>
+                    </div>
+                </div>
+
+                <div class="about-info-card glass-card">
+                    <div class="info-card-icon" style="--icon-color:#4CAF50"><i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <div>
+                        <div class="info-card-label">Mindset</div>
+                        <div class="info-card-value">Problem Solving</div>
+                        <div class="info-card-sub">Clean code · Continuous learning</div>
+                    </div>
+                </div>
+
+                <!-- Profile quick-info -->
+                <div class="about-profile-card glass-card full-width">
+                    <ul class="profile-kv-list">
+                        <li><span class="kv-key"><i class="fa-solid fa-user"></i> Name</span><span class="kv-val">Milan
+                                Rathod</span></li>
+                        <li><span class="kv-key"><i class="fa-solid fa-location-dot"></i> Location</span><span
+                                class="kv-val">Gujarat, India</span></li>
+                        <li><span class="kv-key"><i class="fa-solid fa-envelope"></i> Email</span><a
+                                href="mailto:rathodmilan216@gmail.com"
+                                class="kv-val kv-link">rathodmilan216@gmail.com</a></li>
+                        <li><span class="kv-key"><i class="fa-brands fa-github"></i> GitHub</span><a
+                                href="https://github.com/Milan07xt" target="_blank"
+                                class="kv-val kv-link">@Milan07xt</a></li>
+                        <li><span class="kv-key"><i class="fa-brands fa-linkedin"></i> LinkedIn</span><a
+                                href="https://linkedin.com/in/milan-rathod07/" target="_blank"
+                                class="kv-val kv-link">milan-rathod07</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
              SKILLS SECTION — Python Galaxy
         ═══════════════════════════════════════ -->
-        <section id="skills" class="section skills-section">
-            <div class="section-eyebrow reveal-up">Technical Expertise</div>
-            <h2 class="section-title reveal-up">Python <span class="title-accent">Skills Galaxy</span></h2>
-            <p class="section-subtitle reveal-up">Hover over any technology to explore my proficiency</p>
+    <section id="skills" class="section skills-section">
+        <div class="section-eyebrow reveal-up">Technical Expertise</div>
+        <h2 class="section-title reveal-up">Python <span class="title-accent">Skills Galaxy</span></h2>
+        <p class="section-subtitle reveal-up">Hover over any technology to explore my proficiency</p>
 
-            <!-- Galaxy orbit visualization -->
-            <div class="skills-galaxy reveal-up" id="skillsGalaxy">
-                <!-- Center nucleus -->
-                <div class="galaxy-center">
-                    <div class="galaxy-nucleus">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
-                            alt="Python" width="52" height="52">
-                        <span>PYTHON</span>
-                    </div>
-                    <!-- Orbit rings (decorative) -->
-                    <div class="orbit-ring orbit-ring-1"></div>
-                    <div class="orbit-ring orbit-ring-2"></div>
-                    <div class="orbit-ring orbit-ring-3"></div>
+        <!-- Galaxy orbit visualization -->
+        <div class="skills-galaxy reveal-up" id="skillsGalaxy">
+            <!-- Center nucleus -->
+            <div class="galaxy-center">
+                <div class="galaxy-nucleus">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                        alt="Python" width="52" height="52">
+                    <span>PYTHON</span>
                 </div>
-
-                <!-- Orbit nodes -->
-                <div class="skill-node sn-1" data-skill="Django" data-level="85%" data-desc="Full-stack web framework">
-                    <div class="node-inner">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg"
-                            alt="Django" width="28" height="28">
-                        <span>Django</span>
-                    </div>
-                    <div class="node-tooltip">Django — 85% · Web Framework</div>
-                </div>
-
-
-
-                <div class="skill-node sn-2" data-skill="SQL" data-level="80%" data-desc="Relational database design">
-                    <div class="node-inner">
-                        <i class="fa-solid fa-database" style="font-size:22px;color:#336791"></i>
-                        <span>SQL</span>
-                    </div>
-                    <div class="node-tooltip">SQL/SQLite — 80% · Databases</div>
-                </div>
-
-                <div class="skill-node sn-3" data-skill="Git" data-level="85%"
-                    data-desc="Version control & collaboration">
-                    <div class="node-inner">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"
-                            width="28" height="28">
-                        <span>Git</span>
-                    </div>
-                    <div class="node-tooltip">Git/GitHub — 85% · Version Control</div>
-                </div>
-
-                <div class="skill-node sn-4" data-skill="OpenCV" data-level="75%" data-desc="Computer vision & AI">
-                    <div class="node-inner">
-                        <i class="fa-solid fa-eye" style="font-size:22px;color:#5C3EE8"></i>
-                        <span>OpenCV</span>
-                    </div>
-                    <div class="node-tooltip">OpenCV — 75% · Computer Vision</div>
-                </div>
-
-                <div class="skill-node sn-5" data-skill="JavaScript" data-level="75%"
-                    data-desc="Frontend scripting & logic">
-                    <div class="node-inner">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                            alt="JavaScript" width="26" height="26">
-                        <span>JS</span>
-                    </div>
-                    <div class="node-tooltip">JavaScript — 75% · Frontend Logic</div>
-                </div>
-
-                <div class="skill-node sn-6" data-skill="HTML/CSS" data-level="85%" data-desc="Web structure & styling">
-                    <div class="node-inner">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-                            alt="HTML" width="26" height="26">
-                        <span>HTML/CSS</span>
-                    </div>
-                    <div class="node-tooltip">HTML/CSS — 85% · Web Markup</div>
-                </div>
-
-
-
-                <div class="skill-node sn-7" data-skill="Pandas" data-level="70%"
-                    data-desc="Data analysis & manipulation">
-                    <div class="node-inner">
-                        <i class="fa-solid fa-chart-bar" style="font-size:20px;color:#130754"></i>
-                        <span>Pandas</span>
-                    </div>
-                    <div class="node-tooltip">Pandas — 70% · Data Analysis</div>
-                </div>
-
-                <div class="skill-node sn-8" data-skill="SQLite3" data-level="72%" data-desc="Relational database">
-                    <div class="node-inner">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg"
-                            alt="SQLite3" width="26" height="26">
-                        <span>SQLite3</span>
-                    </div>
-                    <div class="node-tooltip">SQLite3 — 72% · Database</div>
-                </div>
-
-                <div class="skill-node sn-9" data-skill="Automation" data-level="80%"
-                    data-desc="Python scripting & automation">
-                    <div class="node-inner">
-                        <i class="fa-solid fa-robot" style="font-size:20px;color:#FFD43B"></i>
-                        <span>Automation</span>
-                    </div>
-                    <div class="node-tooltip">Automation — 80% · Scripting</div>
-                </div>
+                <!-- Orbit rings (decorative) -->
+                <div class="orbit-ring orbit-ring-1"></div>
+                <div class="orbit-ring orbit-ring-2"></div>
+                <div class="orbit-ring orbit-ring-3"></div>
             </div>
 
-            <!-- Skills grid fallback / supplementary list -->
-            <div class="skills-chips-row reveal-up" style="--delay:0.2s">
-                <span class="skill-chip"><img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="16"
-                        height="16" alt=""> Python</span>
-                <span class="skill-chip"><img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" width="16"
-                        height="16" alt="" style="filter:invert(1) sepia(1) saturate(5) hue-rotate(100deg)">
-                    Django</span>
-
-                <span class="skill-chip"><i class="fa-solid fa-database"></i> SQL</span>
-                <span class="skill-chip"><img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" width="16"
-                        height="16" alt=""> SQLite3</span>
-                <span class="skill-chip"><img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="16"
-                        height="16" alt=""> Git</span>
-
-                <span class="skill-chip"><i class="fa-solid fa-eye" style="color:#5C3EE8"></i> OpenCV</span>
-                <span class="skill-chip"><img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                        width="16" height="16" alt=""> JavaScript</span>
-                <span class="skill-chip"><img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="16"
-                        height="16" alt=""> HTML/CSS</span>
-                <span class="skill-chip"><i class="fa-solid fa-chart-bar" style="color:#130754"></i> Pandas</span>
+            <!-- Orbit nodes -->
+            <div class="skill-node sn-1" data-skill="Django" data-level="85%" data-desc="Full-stack web framework">
+                <div class="node-inner">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django"
+                        width="28" height="28">
+                    <span>Django</span>
+                </div>
+                <div class="node-tooltip">Django — 85% · Web Framework</div>
             </div>
-        </section>
 
-        <!-- ═══════════════════════════════════════
+
+
+            <div class="skill-node sn-2" data-skill="SQL" data-level="80%" data-desc="Relational database design">
+                <div class="node-inner">
+                    <i class="fa-solid fa-database" style="font-size:22px;color:#336791"></i>
+                    <span>SQL</span>
+                </div>
+                <div class="node-tooltip">SQL/SQLite — 80% · Databases</div>
+            </div>
+
+            <div class="skill-node sn-3" data-skill="Git" data-level="85%" data-desc="Version control & collaboration">
+                <div class="node-inner">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"
+                        width="28" height="28">
+                    <span>Git</span>
+                </div>
+                <div class="node-tooltip">Git/GitHub — 85% · Version Control</div>
+            </div>
+
+            <div class="skill-node sn-4" data-skill="OpenCV" data-level="75%" data-desc="Computer vision & AI">
+                <div class="node-inner">
+                    <i class="fa-solid fa-eye" style="font-size:22px;color:#5C3EE8"></i>
+                    <span>OpenCV</span>
+                </div>
+                <div class="node-tooltip">OpenCV — 75% · Computer Vision</div>
+            </div>
+
+            <div class="skill-node sn-5" data-skill="JavaScript" data-level="75%"
+                data-desc="Frontend scripting & logic">
+                <div class="node-inner">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                        alt="JavaScript" width="26" height="26">
+                    <span>JS</span>
+                </div>
+                <div class="node-tooltip">JavaScript — 75% · Frontend Logic</div>
+            </div>
+
+            <div class="skill-node sn-6" data-skill="HTML/CSS" data-level="85%" data-desc="Web structure & styling">
+                <div class="node-inner">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML"
+                        width="26" height="26">
+                    <span>HTML/CSS</span>
+                </div>
+                <div class="node-tooltip">HTML/CSS — 85% · Web Markup</div>
+            </div>
+
+
+
+            <div class="skill-node sn-7" data-skill="Pandas" data-level="70%" data-desc="Data analysis & manipulation">
+                <div class="node-inner">
+                    <i class="fa-solid fa-chart-bar" style="font-size:20px;color:#130754"></i>
+                    <span>Pandas</span>
+                </div>
+                <div class="node-tooltip">Pandas — 70% · Data Analysis</div>
+            </div>
+
+            <div class="skill-node sn-8" data-skill="SQLite3" data-level="72%" data-desc="Relational database">
+                <div class="node-inner">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg"
+                        alt="SQLite3" width="26" height="26">
+                    <span>SQLite3</span>
+                </div>
+                <div class="node-tooltip">SQLite3 — 72% · Database</div>
+            </div>
+
+            <div class="skill-node sn-9" data-skill="Automation" data-level="80%"
+                data-desc="Python scripting & automation">
+                <div class="node-inner">
+                    <i class="fa-solid fa-robot" style="font-size:20px;color:#FFD43B"></i>
+                    <span>Automation</span>
+                </div>
+                <div class="node-tooltip">Automation — 80% · Scripting</div>
+            </div>
+        </div>
+
+        <!-- Skills grid fallback / supplementary list -->
+        <div class="skills-chips-row reveal-up" style="--delay:0.2s">
+            <span class="skill-chip"><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="16"
+                    height="16" alt=""> Python</span>
+            <span class="skill-chip"><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" width="16"
+                    height="16" alt="" style="filter:invert(1) sepia(1) saturate(5) hue-rotate(100deg)">
+                Django</span>
+
+            <span class="skill-chip"><i class="fa-solid fa-database"></i> SQL</span>
+            <span class="skill-chip"><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" width="16"
+                    height="16" alt=""> SQLite3</span>
+            <span class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+                    width="16" height="16" alt=""> Git</span>
+
+            <span class="skill-chip"><i class="fa-solid fa-eye" style="color:#5C3EE8"></i> OpenCV</span>
+            <span class="skill-chip"><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    width="16" height="16" alt=""> JavaScript</span>
+            <span class="skill-chip"><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="16"
+                    height="16" alt=""> HTML/CSS</span>
+            <span class="skill-chip"><i class="fa-solid fa-chart-bar" style="color:#130754"></i> Pandas</span>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
              PROJECTS SECTION
         ═══════════════════════════════════════ -->
-        <section id="projects" class="section projects-section">
-            <div class="section-eyebrow reveal-up">Portfolio</div>
-            <h2 class="section-title reveal-up">Featured <span class="title-accent">Projects</span></h2>
+    <section id="projects" class="section projects-section">
+        <div class="section-eyebrow reveal-up">Portfolio</div>
+        <h2 class="section-title reveal-up">Featured <span class="title-accent">Projects</span></h2>
 
-            <!-- Filter buttons -->
-            <div class="project-filters reveal-up" style="--delay:0.1s">
-                <button class="filter-pill active" data-filter="all" id="filter-all">All</button>
-                <button class="filter-pill" data-filter="python">Python</button>
-                <button class="filter-pill" data-filter="django">Django</button>
-                <button class="filter-pill" data-filter="opencv">OpenCV</button>
-                <button class="filter-pill" data-filter="frontend">Frontend</button>
+        <!-- Filter buttons -->
+        <div class="project-filters reveal-up" style="--delay:0.1s">
+            <button class="filter-pill active" data-filter="all" id="filter-all">All</button>
+            <button class="filter-pill" data-filter="python">Python</button>
+            <button class="filter-pill" data-filter="django">Django</button>
+            <button class="filter-pill" data-filter="opencv">OpenCV</button>
+            <button class="filter-pill" data-filter="frontend">Frontend</button>
+        </div>
+
+        <div class="project-grid" id="projectGrid">
+
+            <!-- Project 1: AI Portfolio Assistant -->
+            <div class="project-card reveal-up tilt-card" data-tags="python fastapi" style="--delay:0.1s">
+                <div class="project-card-image-wrap">
+                    <div class="project-placeholder-img"
+                        style="background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%);">
+                        <i class="fa-solid fa-robot" style="font-size:3.5rem;color:rgba(255,255,255,0.9)"></i>
+                    </div>
+                    <div class="project-image-overlay"></div>
+                    <span class="project-live-badge"><span class="pulse-dot"></span> LIVE</span>
+                </div>
+                <div class="project-card-body">
+                    <div class="project-card-tags">
+                        <span class="ptag">Python</span>
+                        <span class="ptag">FastAPI</span>
+                        <span class="ptag">OpenAI</span>
+                        <span class="ptag">JS</span>
+                    </div>
+                    <h3 class="project-card-title">AI Portfolio Assistant</h3>
+                    <p class="project-card-desc">A professional AI assistant built with FastAPI and OpenAI that
+                        understands portfolio context and answers visitor questions dynamically.</p>
+                    <div class="project-card-actions">
+                        <button class="proj-btn proj-btn-primary"
+                            onclick="document.getElementById('ai-agent-btn') && document.getElementById('ai-agent-btn').click()">
+                            <i class="fa-solid fa-comment-dots"></i> Try it now
+                        </button>
+                        <button class="proj-btn proj-btn-ghost"
+                            onclick="window.openAICaseStudy && window.openAICaseStudy()">
+                            <i class="fa-solid fa-circle-info"></i> Details
+                        </button>
+                    </div>
+                </div>
             </div>
 
-            <div class="project-grid" id="projectGrid">
-
-                <!-- Project 1: AI Portfolio Assistant -->
-                <div class="project-card reveal-up tilt-card" data-tags="python fastapi" style="--delay:0.1s">
-                    <div class="project-card-image-wrap">
-                        <div class="project-placeholder-img"
-                            style="background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%);">
-                            <i class="fa-solid fa-robot" style="font-size:3.5rem;color:rgba(255,255,255,0.9)"></i>
-                        </div>
-                        <div class="project-image-overlay"></div>
-                        <span class="project-live-badge"><span class="pulse-dot"></span> LIVE</span>
+            <!-- Project 2: Face Recognition Attendance -->
+            <div class="project-card reveal-up tilt-card" data-tags="python django opencv" style="--delay:0.15s">
+                <div class="project-card-image-wrap">
+                    <img src="images/face-attendance.png" alt="Face Recognition Attendance System"
+                        class="project-card-img" loading="lazy">
+                    <div class="project-image-overlay"></div>
+                    <span class="project-live-badge"><span class="pulse-dot"></span> LIVE</span>
+                </div>
+                <div class="project-card-body">
+                    <div class="project-card-tags">
+                        <span class="ptag">Python</span>
+                        <span class="ptag">Django</span>
+                        <span class="ptag">OpenCV</span>
+                        <span class="ptag">REST API</span>
                     </div>
-                    <div class="project-card-body">
-                        <div class="project-card-tags">
-                            <span class="ptag">Python</span>
-                            <span class="ptag">FastAPI</span>
-                            <span class="ptag">OpenAI</span>
-                            <span class="ptag">JS</span>
-                        </div>
-                        <h3 class="project-card-title">AI Portfolio Assistant</h3>
-                        <p class="project-card-desc">A professional AI assistant built with FastAPI and OpenAI that
-                            understands portfolio context and answers visitor questions dynamically.</p>
-                        <div class="project-card-actions">
-                            <button class="proj-btn proj-btn-primary"
-                                onclick="document.getElementById('ai-agent-btn') && document.getElementById('ai-agent-btn').click()">
-                                <i class="fa-solid fa-comment-dots"></i> Try it now
-                            </button>
-                            <button class="proj-btn proj-btn-ghost"
-                                onclick="window.openAICaseStudy && window.openAICaseStudy()">
-                                <i class="fa-solid fa-circle-info"></i> Details
-                            </button>
-                        </div>
+                    <h3 class="project-card-title">Face Recognition Attendance System</h3>
+                    <p class="project-card-desc">Real-time face recognition attendance tracking system with Django
+                        REST API backend and automated log recording.</p>
+                    <div class="project-card-actions">
+                        <a href="https://face-detection-attendance-woad.vercel.app/home/" target="_blank"
+                            class="proj-btn proj-btn-primary">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/Milan07xt/SEM-06" target="_blank" class="proj-btn proj-btn-ghost">
+                            <i class="fab fa-github"></i> Code
+                        </a>
                     </div>
                 </div>
-
-                <!-- Project 2: Face Recognition Attendance -->
-                <div class="project-card reveal-up tilt-card" data-tags="python django opencv" style="--delay:0.15s">
-                    <div class="project-card-image-wrap">
-                        <img src="images/face-attendance.png" alt="Face Recognition Attendance System"
-                            class="project-card-img" loading="lazy">
-                        <div class="project-image-overlay"></div>
-                        <span class="project-live-badge"><span class="pulse-dot"></span> LIVE</span>
-                    </div>
-                    <div class="project-card-body">
-                        <div class="project-card-tags">
-                            <span class="ptag">Python</span>
-                            <span class="ptag">Django</span>
-                            <span class="ptag">OpenCV</span>
-                            <span class="ptag">REST API</span>
-                        </div>
-                        <h3 class="project-card-title">Face Recognition Attendance System</h3>
-                        <p class="project-card-desc">Real-time face recognition attendance tracking system with Django
-                            REST API backend and automated log recording.</p>
-                        <div class="project-card-actions">
-                            <a href="https://face-detection-attendance-woad.vercel.app/home/" target="_blank"
-                                class="proj-btn proj-btn-primary">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
-                            </a>
-                            <a href="https://github.com/Milan07xt/SEM-06" target="_blank"
-                                class="proj-btn proj-btn-ghost">
-                                <i class="fab fa-github"></i> Code
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3: Gym Management System -->
-                <div class="project-card reveal-up tilt-card" data-tags="python django" style="--delay:0.2s">
-                    <div class="project-card-image-wrap">
-                        <img src="images/gym.jpeg" alt="Gym Management System" class="project-card-img" loading="lazy">
-                        <div class="project-image-overlay"></div>
-                        <span class="project-live-badge"><span class="pulse-dot"></span> LIVE</span>
-                    </div>
-                    <div class="project-card-body">
-                        <div class="project-card-tags">
-                            <span class="ptag">Python</span>
-                            <span class="ptag">Django</span>
-                            <span class="ptag">SQLite3</span>
-                        </div>
-                        <h3 class="project-card-title">Gym Management System</h3>
-                        <p class="project-card-desc">Comprehensive Django-based system for managing gym memberships,
-                            subscription plans, and payment tracking with an admin dashboard.</p>
-                        <div class="project-card-actions">
-                            <a href="https://django-gym-management-system-websit-one.vercel.app/" target="_blank"
-                                class="proj-btn proj-btn-primary">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
-                            </a>
-                            <a href="https://github.com/Milan07xt/Django-Gym-Management-System-Website" target="_blank"
-                                class="proj-btn proj-btn-ghost">
-                                <i class="fab fa-github"></i> Code
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 4: Hotel Management Website -->
-                <div class="project-card reveal-up tilt-card" data-tags="frontend" style="--delay:0.25s">
-                    <div class="project-card-image-wrap">
-                        <img src="images/hotel.jpeg" alt="Hotel Management Website" class="project-card-img"
-                            loading="lazy">
-                        <div class="project-image-overlay"></div>
-                        <span class="project-live-badge"><span class="pulse-dot"></span> LIVE</span>
-                    </div>
-                    <div class="project-card-body">
-                        <div class="project-card-tags">
-                            <span class="ptag">HTML5</span>
-                            <span class="ptag">CSS3</span>
-                            <span class="ptag">JavaScript</span>
-                        </div>
-                        <h3 class="project-card-title">Hotel Management Website</h3>
-                        <p class="project-card-desc">Responsive hotel booking website with modern UI design, interactive
-                            booking flow, and optimized mobile experience.</p>
-                        <div class="project-card-actions">
-                            <a href="https://hotel-website-project-kappa.vercel.app/index.html" target="_blank"
-                                class="proj-btn proj-btn-primary">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
-                            </a>
-                            <a href="https://github.com/Milan07xt/Hotel-Website-Project" target="_blank"
-                                class="proj-btn proj-btn-ghost">
-                                <i class="fab fa-github"></i> Code
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 5: Textbook RAG Assistant -->
-                <div class="project-card reveal-up tilt-card" data-tags="python" style="--delay:0.3s">
-                    <div class="project-card-image-wrap">
-                        <div class="project-placeholder-img"
-                            style="background: linear-gradient(135deg, #1e3a5f 0%, #3776AB 100%);">
-                            <i class="fa-solid fa-book-open" style="font-size:3.5rem;color:rgba(255,255,255,0.9)"></i>
-                        </div>
-                        <div class="project-image-overlay"></div>
-                        <span class="project-live-badge" style="background:rgba(55,118,171,0.9)">RAG</span>
-                    </div>
-                    <div class="project-card-body">
-                        <div class="project-card-tags">
-                            <span class="ptag">Python</span>
-                            <span class="ptag">RAG</span>
-                            <span class="ptag">LLM</span>
-                            <span class="ptag">NLP</span>
-                        </div>
-                        <h3 class="project-card-title">Textbook RAG Assistant</h3>
-                        <p class="project-card-desc">Retrieval-Augmented Generation assistant built with Python for
-                            semantic textbook queries and intelligent Q&A responses.</p>
-                        <div class="project-card-actions">
-                            <a href="https://github.com/Milan07xt/Textbook-RAG-Assistant" target="_blank"
-                                class="proj-btn proj-btn-primary">
-                                <i class="fab fa-github"></i> View on GitHub
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-        </section>
 
-        <!-- ═══════════════════════════════════════
+            <!-- Project 3: Gym Management System -->
+            <div class="project-card reveal-up tilt-card" data-tags="python django" style="--delay:0.2s">
+                <div class="project-card-image-wrap">
+                    <img src="images/gym.jpeg" alt="Gym Management System" class="project-card-img" loading="lazy">
+                    <div class="project-image-overlay"></div>
+                    <span class="project-live-badge"><span class="pulse-dot"></span> LIVE</span>
+                </div>
+                <div class="project-card-body">
+                    <div class="project-card-tags">
+                        <span class="ptag">Python</span>
+                        <span class="ptag">Django</span>
+                        <span class="ptag">SQLite3</span>
+                    </div>
+                    <h3 class="project-card-title">Gym Management System</h3>
+                    <p class="project-card-desc">Comprehensive Django-based system for managing gym memberships,
+                        subscription plans, and payment tracking with an admin dashboard.</p>
+                    <div class="project-card-actions">
+                        <a href="https://django-gym-management-system-websit-one.vercel.app/" target="_blank"
+                            class="proj-btn proj-btn-primary">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/Milan07xt/Django-Gym-Management-System-Website" target="_blank"
+                            class="proj-btn proj-btn-ghost">
+                            <i class="fab fa-github"></i> Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4: Hotel Management Website -->
+            <div class="project-card reveal-up tilt-card" data-tags="frontend" style="--delay:0.25s">
+                <div class="project-card-image-wrap">
+                    <img src="images/hotel.jpeg" alt="Hotel Management Website" class="project-card-img" loading="lazy">
+                    <div class="project-image-overlay"></div>
+                    <span class="project-live-badge"><span class="pulse-dot"></span> LIVE</span>
+                </div>
+                <div class="project-card-body">
+                    <div class="project-card-tags">
+                        <span class="ptag">HTML5</span>
+                        <span class="ptag">CSS3</span>
+                        <span class="ptag">JavaScript</span>
+                    </div>
+                    <h3 class="project-card-title">Hotel Management Website</h3>
+                    <p class="project-card-desc">Responsive hotel booking website with modern UI design, interactive
+                        booking flow, and optimized mobile experience.</p>
+                    <div class="project-card-actions">
+                        <a href="https://hotel-website-project-kappa.vercel.app/index.html" target="_blank"
+                            class="proj-btn proj-btn-primary">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/Milan07xt/Hotel-Website-Project" target="_blank"
+                            class="proj-btn proj-btn-ghost">
+                            <i class="fab fa-github"></i> Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5: Textbook RAG Assistant -->
+            <div class="project-card reveal-up tilt-card" data-tags="python" style="--delay:0.3s">
+                <div class="project-card-image-wrap">
+                    <div class="project-placeholder-img"
+                        style="background: linear-gradient(135deg, #1e3a5f 0%, #3776AB 100%);">
+                        <i class="fa-solid fa-book-open" style="font-size:3.5rem;color:rgba(255,255,255,0.9)"></i>
+                    </div>
+                    <div class="project-image-overlay"></div>
+                    <span class="project-live-badge" style="background:rgba(55,118,171,0.9)">RAG</span>
+                </div>
+                <div class="project-card-body">
+                    <div class="project-card-tags">
+                        <span class="ptag">Python</span>
+                        <span class="ptag">RAG</span>
+                        <span class="ptag">LLM</span>
+                        <span class="ptag">NLP</span>
+                    </div>
+                    <h3 class="project-card-title">Textbook RAG Assistant</h3>
+                    <p class="project-card-desc">Retrieval-Augmented Generation assistant built with Python for
+                        semantic textbook queries and intelligent Q&A responses.</p>
+                    <div class="project-card-actions">
+                        <a href="https://github.com/Milan07xt/Textbook-RAG-Assistant" target="_blank"
+                            class="proj-btn proj-btn-primary">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
              DEVELOPER DASHBOARD
         ═══════════════════════════════════════ -->
-        <section id="dashboard" class="section dashboard-section">
-            <div class="section-eyebrow reveal-up">Overview</div>
-            <h2 class="section-title reveal-up">Developer <span class="title-accent">Dashboard</span></h2>
+    <section id="dashboard" class="section dashboard-section">
+        <div class="section-eyebrow reveal-up">Overview</div>
+        <h2 class="section-title reveal-up">Developer <span class="title-accent">Dashboard</span></h2>
 
-            <div class="dashboard-grid">
-                <!-- Stat cards -->
-                <div class="dash-stat-card glass-card reveal-up" style="--delay:0.1s">
-                    <div class="dash-stat-icon" style="--c:#3776AB"><i class="fa-solid fa-laptop-code"></i></div>
-                    <div class="dash-stat-num stat-num" data-count="5">0</div>
-                    <div class="dash-stat-label">Projects Built</div>
+        <div class="dashboard-grid">
+            <!-- Stat cards -->
+            <div class="dash-stat-card glass-card reveal-up" style="--delay:0.1s">
+                <div class="dash-stat-icon" style="--c:#3776AB"><i class="fa-solid fa-laptop-code"></i></div>
+                <div class="dash-stat-num stat-num" data-count="5">0</div>
+                <div class="dash-stat-label">Projects Built</div>
+            </div>
+
+            <div class="dash-stat-card glass-card reveal-up" style="--delay:0.15s">
+                <div class="dash-stat-icon" style="--c:#FFD43B"><i class="fa-solid fa-microchip"></i></div>
+                <div class="dash-stat-num stat-num" data-count="10">0</div>
+                <div class="dash-stat-label">Technologies</div>
+            </div>
+
+            <div class="dash-stat-card glass-card reveal-up" style="--delay:0.2s">
+                <div class="dash-stat-icon" style="--c:#4CAF50"><i class="fa-solid fa-award"></i></div>
+                <div class="dash-stat-num stat-num" data-count="9">0</div>
+                <div class="dash-stat-label">Certifications</div>
+            </div>
+
+            <div class="dash-stat-card glass-card reveal-up" style="--delay:0.25s">
+                <div class="dash-stat-icon" style="--c:#9C27B0"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="dash-stat-num" style="font-size:2rem;font-weight:800;color:#111827">B.Sc. IT</div>
+                <div class="dash-stat-label">Degree</div>
+            </div>
+
+            <!-- Current Focus card -->
+            <div class="dash-focus-card glass-card reveal-up" style="--delay:0.3s">
+                <div class="dash-card-header">
+                    <span class="dash-card-dot" style="background:#4CAF50"></span>
+                    <span>Current Focus</span>
                 </div>
-
-                <div class="dash-stat-card glass-card reveal-up" style="--delay:0.15s">
-                    <div class="dash-stat-icon" style="--c:#FFD43B"><i class="fa-solid fa-microchip"></i></div>
-                    <div class="dash-stat-num stat-num" data-count="10">0</div>
-                    <div class="dash-stat-label">Technologies</div>
-                </div>
-
-                <div class="dash-stat-card glass-card reveal-up" style="--delay:0.2s">
-                    <div class="dash-stat-icon" style="--c:#4CAF50"><i class="fa-solid fa-award"></i></div>
-                    <div class="dash-stat-num stat-num" data-count="9">0</div>
-                    <div class="dash-stat-label">Certifications</div>
-                </div>
-
-                <div class="dash-stat-card glass-card reveal-up" style="--delay:0.25s">
-                    <div class="dash-stat-icon" style="--c:#9C27B0"><i class="fa-solid fa-graduation-cap"></i></div>
-                    <div class="dash-stat-num" style="font-size:2rem;font-weight:800;color:#111827">B.Sc. IT</div>
-                    <div class="dash-stat-label">Degree</div>
-                </div>
-
-                <!-- Current Focus card -->
-                <div class="dash-focus-card glass-card reveal-up" style="--delay:0.3s">
-                    <div class="dash-card-header">
-                        <span class="dash-card-dot" style="background:#4CAF50"></span>
-                        <span>Current Focus</span>
-                    </div>
-                    <div class="dash-focus-list">
-                        <div class="focus-item"><i class="fa-solid fa-arrow-right" style="color:#3776AB"></i> Django
-                            REST Framework APIs</div>
-                        <div class="focus-item"><i class="fa-solid fa-arrow-right" style="color:#3776AB"></i> FastAPI
-                            Microservices</div>
-                        <div class="focus-item"><i class="fa-solid fa-arrow-right" style="color:#3776AB"></i> AI/ML with
-                            Python</div>
-                        <div class="focus-item"><i class="fa-solid fa-arrow-right" style="color:#3776AB"></i> SQLite3
-                            & Advanced SQL</div>
-                    </div>
-                </div>
-
-                <!-- GitHub Activity -->
-                <div class="dash-github-card glass-card reveal-up" style="--delay:0.35s">
-                    <div class="dash-card-header">
-                        <i class="fab fa-github"></i>
-                        <span>GitHub — @Milan07xt</span>
-                    </div>
-                    <!-- GitHub Profile Photo -->
-                    <div class="dash-github-profile">
-                        <a href="https://github.com/Milan07xt" target="_blank" class="dash-github-avatar-link">
-                            <img src="https://github.com/Milan07xt.png" alt="Milan07xt GitHub Avatar"
-                                class="dash-github-avatar" loading="lazy" onerror="this.style.display='none'">
-                        </a>
-                        <div class="dash-github-meta">
-                            <span class="dash-github-name">Milan Rathod</span>
-                            <span class="dash-github-handle">@Milan07xt</span>
-                        </div>
-                    </div>
-                    <div class="github-lang-bars">
-                        <div class="glb-item">
-                            <span>Python</span>
-                            <div class="glb-bar">
-                                <div class="glb-fill" style="--w:72%;background:#3572A5"></div>
-                            </div>
-                            <span>72%</span>
-                        </div>
-                        <div class="glb-item">
-                            <span>JavaScript</span>
-                            <div class="glb-bar">
-                                <div class="glb-fill" style="--w:16%;background:#f1e05a"></div>
-                            </div>
-                            <span>16%</span>
-                        </div>
-                        <div class="glb-item">
-                            <span>HTML/CSS</span>
-                            <div class="glb-bar">
-                                <div class="glb-fill" style="--w:12%;background:#e34c26"></div>
-                            </div>
-                            <span>12%</span>
-                        </div>
-                    </div>
-                    <a href="https://github.com/Milan07xt" target="_blank" class="dash-github-link">
-                        <i class="fab fa-github"></i> View Profile
-                    </a>
-                </div>
-
-                <!-- Tech Stack -->
-                <div class="dash-stack-card glass-card reveal-up" style="--delay:0.4s">
-                    <div class="dash-card-header">
-                        <i class="fa-solid fa-layer-group" style="color:#3776AB"></i>
-                        <span>Technical Stack</span>
-                    </div>
-                    <div class="stack-chips">
-                        <span class="stack-chip python">Python</span>
-                        <span class="stack-chip django">Django</span>
-                        <span class="stack-chip fastapi">FastAPI</span>
-                        <span class="stack-chip">REST API</span>
-                        <span class="stack-chip">SQLite</span>
-                        <span class="stack-chip">OpenCV</span>
-                        <span class="stack-chip">Git</span>
-                        <span class="stack-chip">JavaScript</span>
-                        <span class="stack-chip">HTML/CSS</span>
-                    </div>
+                <div class="dash-focus-list">
+                    <div class="focus-item"><i class="fa-solid fa-arrow-right" style="color:#3776AB"></i> Django
+                        REST Framework APIs</div>
+                    <div class="focus-item"><i class="fa-solid fa-arrow-right" style="color:#3776AB"></i> FastAPI
+                        Microservices</div>
+                    <div class="focus-item"><i class="fa-solid fa-arrow-right" style="color:#3776AB"></i> AI/ML with
+                        Python</div>
+                    <div class="focus-item"><i class="fa-solid fa-arrow-right" style="color:#3776AB"></i> SQLite3
+                        & Advanced SQL</div>
                 </div>
             </div>
-        </section>
 
-        <!-- ═══════════════════════════════════════
+            <!-- GitHub Activity -->
+            <div class="dash-github-card glass-card reveal-up" style="--delay:0.35s">
+                <div class="dash-card-header">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub — @Milan07xt</span>
+                </div>
+                <!-- GitHub Profile Photo -->
+                <div class="dash-github-profile">
+                    <a href="https://github.com/Milan07xt" target="_blank" class="dash-github-avatar-link">
+                        <img src="https://github.com/Milan07xt.png" alt="Milan07xt GitHub Avatar"
+                            class="dash-github-avatar" loading="lazy" onerror="this.style.display='none'">
+                    </a>
+                    <div class="dash-github-meta">
+                        <span class="dash-github-name">Milan Rathod</span>
+                        <span class="dash-github-handle">@Milan07xt</span>
+                    </div>
+                </div>
+                <div class="github-lang-bars">
+                    <div class="glb-item">
+                        <span>Python</span>
+                        <div class="glb-bar">
+                            <div class="glb-fill" style="--w:72%;background:#3572A5"></div>
+                        </div>
+                        <span>72%</span>
+                    </div>
+                    <div class="glb-item">
+                        <span>JavaScript</span>
+                        <div class="glb-bar">
+                            <div class="glb-fill" style="--w:16%;background:#f1e05a"></div>
+                        </div>
+                        <span>16%</span>
+                    </div>
+                    <div class="glb-item">
+                        <span>HTML/CSS</span>
+                        <div class="glb-bar">
+                            <div class="glb-fill" style="--w:12%;background:#e34c26"></div>
+                        </div>
+                        <span>12%</span>
+                    </div>
+                </div>
+                <a href="https://github.com/Milan07xt" target="_blank" class="dash-github-link">
+                    <i class="fab fa-github"></i> View Profile
+                </a>
+            </div>
+
+            <!-- Tech Stack -->
+            <div class="dash-stack-card glass-card reveal-up" style="--delay:0.4s">
+                <div class="dash-card-header">
+                    <i class="fa-solid fa-layer-group" style="color:#3776AB"></i>
+                    <span>Technical Stack</span>
+                </div>
+                <div class="stack-chips">
+                    <span class="stack-chip python">Python</span>
+                    <span class="stack-chip django">Django</span>
+                    <span class="stack-chip fastapi">FastAPI</span>
+                    <span class="stack-chip">REST API</span>
+                    <span class="stack-chip">SQLite</span>
+                    <span class="stack-chip">OpenCV</span>
+                    <span class="stack-chip">Git</span>
+                    <span class="stack-chip">JavaScript</span>
+                    <span class="stack-chip">HTML/CSS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
              EXPERIENCE SECTION
         ═══════════════════════════════════════ -->
-        <section id="experience" class="section experience-section">
-            <div class="section-eyebrow reveal-up">Journey</div>
-            <h2 class="section-title reveal-up">Professional <span class="title-accent">Experience</span></h2>
+    <section id="experience" class="section experience-section">
+        <div class="section-eyebrow reveal-up">Journey</div>
+        <h2 class="section-title reveal-up">Professional <span class="title-accent">Experience</span></h2>
 
-            <div class="timeline">
-                <div class="timeline-track"></div>
+        <div class="timeline">
+            <div class="timeline-track"></div>
 
-                <div class="timeline-item reveal-up" style="--delay:0.1s">
-                    <div class="timeline-dot">
-                        <i class="fa-solid fa-code"></i>
+            <div class="timeline-item reveal-up" style="--delay:0.1s">
+                <div class="timeline-dot">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <div class="timeline-content glass-card">
+                    <div class="timeline-header">
+                        <span class="timeline-period">2024 — Present</span>
+                        <span class="timeline-type freelance">Freelance</span>
                     </div>
-                    <div class="timeline-content glass-card">
-                        <div class="timeline-header">
-                            <span class="timeline-period">2024 — Present</span>
-                            <span class="timeline-type freelance">Freelance</span>
-                        </div>
-                        <h3 class="timeline-role">Python / Django Developer</h3>
-                        <h4 class="timeline-org">Freelance &amp; Projects</h4>
-                        <p class="timeline-desc">Developing real-world applications including Gym Management Systems,
-                            Hotel Booking Websites, and AI-powered utilities. Handling end-to-end development from
-                            database design to API deployment.</p>
-                        <div class="timeline-tech">
-                            <span>Python</span><span>Django</span><span>FastAPI</span><span>REST
-                                API</span><span>SQLite</span>
-                        </div>
+                    <h3 class="timeline-role">Python / Django Developer</h3>
+                    <h4 class="timeline-org">Freelance &amp; Projects</h4>
+                    <p class="timeline-desc">Developing real-world applications including Gym Management Systems,
+                        Hotel Booking Websites, and AI-powered utilities. Handling end-to-end development from
+                        database design to API deployment.</p>
+                    <div class="timeline-tech">
+                        <span>Python</span><span>Django</span><span>FastAPI</span><span>REST
+                            API</span><span>SQLite</span>
                     </div>
                 </div>
-
-                <div class="timeline-item reveal-up" style="--delay:0.2s">
-                    <div class="timeline-dot">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                    </div>
-                    <div class="timeline-content glass-card">
-                        <div class="timeline-header">
-                            <span class="timeline-period">2023 — 2026</span>
-                            <span class="timeline-type academic">Academic</span>
-                        </div>
-                        <h3 class="timeline-role">B.Sc. Information Technology</h3>
-                        <h4 class="timeline-org">Noble University, Junagadh</h4>
-                        <p class="timeline-desc">Focusing on advanced computing concepts, relational databases (SQL,
-                            SQLite3), and practical application of Computer Vision for attendance and security
-                            systems. CGPA: 6.35</p>
-                        <div class="timeline-tech">
-                            <span>Data
-                                Structures</span><span>DBMS</span><span>Networking</span><span>AI/ML</span><span>Web
-                                Dev</span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-        </section>
 
-        <!-- ═══════════════════════════════════════
+            <div class="timeline-item reveal-up" style="--delay:0.2s">
+                <div class="timeline-dot">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="timeline-content glass-card">
+                    <div class="timeline-header">
+                        <span class="timeline-period">2023 — 2026</span>
+                        <span class="timeline-type academic">Academic</span>
+                    </div>
+                    <h3 class="timeline-role">B.Sc. Information Technology</h3>
+                    <h4 class="timeline-org">Noble University, Junagadh</h4>
+                    <p class="timeline-desc">Focusing on advanced computing concepts, relational databases (SQL,
+                        SQLite3), and practical application of Computer Vision for attendance and security
+                        systems. CGPA: 6.35</p>
+                    <div class="timeline-tech">
+                        <span>Data
+                            Structures</span><span>DBMS</span><span>Networking</span><span>AI/ML</span><span>Web
+                            Dev</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
              EDUCATION SECTION
         ═══════════════════════════════════════ -->
-        <section id="education" class="section education-section">
-            <div class="section-eyebrow reveal-up">Academic</div>
-            <h2 class="section-title reveal-up">Education <span class="title-accent">&amp; Qualifications</span></h2>
+    <section id="education" class="section education-section">
+        <div class="section-eyebrow reveal-up">Academic</div>
+        <h2 class="section-title reveal-up">Education <span class="title-accent">&amp; Qualifications</span></h2>
 
-            <div class="timeline-container">
-                <div class="timeline-line"></div>
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
 
-                <!-- 01: M.Sc. IT (Pursuing) -->
-                <div class="timeline-item reveal-up" style="--delay:0.1s; --theme-color: #8B5CF6;">
-                    <div class="timeline-node">01</div>
-                    <div class="edu-card glass-card">
-                        <div class="edu-card-left">
-                            <div class="edu-card-badge purple">
-                                <i class="fa-solid fa-graduation-cap"></i>
-                                <div class="badge-time"><i class="fa-regular fa-clock"></i></div>
-                            </div>
-                            <div class="edu-card-year">2024 — Present</div>
-                            <div class="edu-status-badge pursuing">PURSUING</div>
-                            <div class="edu-label">Post Graduation</div>
+            <!-- 01: M.Sc. IT (Pursuing) -->
+            <div class="timeline-item reveal-up" style="--delay:0.1s; --theme-color: #8B5CF6;">
+                <div class="timeline-node">01</div>
+                <div class="edu-card glass-card">
+                    <div class="edu-card-left">
+                        <div class="edu-card-badge purple">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <div class="badge-time"><i class="fa-regular fa-clock"></i></div>
                         </div>
-                        <div class="edu-card-middle">
-                            <h3 class="edu-card-degree">Master of Science in Information Technology</h3>
-                            <div class="edu-card-school">
-                                <i class="fa-solid fa-building-columns"></i>
-                                <span>Dr. Babasaheb Ambedkar Open University (BAOU) - Ahmedabad <br><small>(Government
-                                        University)</small></span>
-                            </div>
-                            <div class="edu-mode-badge">External Mode</div>
-                            <p class="edu-desc">Advanced study in computer science, software engineering, and
-                                information technology.</p>
-
-                            <div class="edu-details-row">
-                                <div class="detail-item"><i class="fa-regular fa-calendar"></i>
-                                    <div><span>Duration</span><strong>2 Years</strong></div>
-                                </div>
-                                <div class="detail-item"><i class="fa-solid fa-book-open"></i>
-                                    <div><span>Mode</span><strong>External</strong></div>
-                                </div>
-                                <div class="detail-item"><i class="fa-solid fa-graduation-cap"></i>
-                                    <div><span>Status</span><strong>Pursuing</strong></div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="edu-card-year">2026 — Present</div>
+                        <div class="edu-status-badge pursuing">PURSUING</div>
+                        <div class="edu-label">Post Graduation</div>
                     </div>
-                </div>
+                    <div class="edu-card-middle">
+                        <h3 class="edu-card-degree">Master of Science in Information Technology</h3>
+                        <div class="edu-card-school">
+                            <i class="fa-solid fa-building-columns"></i>
+                            <span>Dr. Babasaheb Ambedkar Open University (BAOU) - Ahmedabad <br><small>(Government
+                                    University)</small></span>
+                        </div>
+                        <div class="edu-mode-badge">External Mode</div>
+                        <p class="edu-desc">Advanced study in computer science, software engineering, and
+                            information technology.</p>
 
-                <!-- 02: B.Sc. IT (Completed) -->
-                <div class="timeline-item reveal-up" style="--delay:0.2s; --theme-color: #3B82F6;">
-                    <div class="timeline-node">02</div>
-                    <div class="edu-card glass-card">
-                        <div class="edu-card-left">
-                            <div class="edu-card-badge blue">
-                                <i class="fa-solid fa-graduation-cap"></i>
-                                <div class="badge-time"><i class="fa-solid fa-circle-check"></i></div>
+                        <div class="edu-details-row">
+                            <div class="detail-item"><i class="fa-regular fa-calendar"></i>
+                                <div><span>Duration</span><strong>2 Years</strong></div>
                             </div>
-                            <div class="edu-card-year">2023 — 2026</div>
-                            <div class="edu-status-badge completed">COMPLETED</div>
-                            <div class="edu-label">Graduation</div>
-                        </div>
-                        <div class="edu-card-middle">
-                            <div class="top-badge-row">
-                                <h3 class="edu-card-degree">Bachelor of Science in Information Technology</h3>
-                                <div class="top-status-badge green"><i class="fa-solid fa-check"></i> Graduation
-                                    Completed</div>
+                            <div class="detail-item"><i class="fa-solid fa-book-open"></i>
+                                <div><span>Mode</span><strong>External</strong></div>
                             </div>
-                            <div class="edu-card-school">Noble University, Junagadh</div>
-                            <p class="edu-desc">Focused on software development, programming, data structures, database
-                                systems, and emerging technologies.</p>
-
-                            <div class="edu-details-row">
-                                <div class="detail-item"><i class="fa-regular fa-calendar"></i>
-                                    <div><span>Duration</span><strong>3 Years</strong></div>
-                                </div>
-                                <div class="detail-item"><i class="fa-solid fa-award"></i>
-                                    <div><span>Result</span><strong>6.35 CGPA</strong></div>
-                                </div>
-                                <div class="detail-item"><i class="fa-solid fa-trophy"
-                                        style="color:var(--edu-orange)"></i>
-                                    <div><span>Status</span><strong>Completed</strong></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 03: HSC (Completed) -->
-                <div class="timeline-item reveal-up" style="--delay:0.3s; --theme-color: #F59E0B;">
-                    <div class="timeline-node">03</div>
-                    <div class="edu-card glass-card">
-                        <div class="edu-card-left">
-                            <div class="edu-card-badge orange">
-                                <i class="fa-solid fa-book-open"></i>
-                                <div class="badge-time"><i class="fa-solid fa-circle-check"></i></div>
-                            </div>
-                            <div class="edu-card-year">2023</div>
-                            <div class="edu-status-badge completed">COMPLETED</div>
-                            <div class="edu-label">Higher Secondary</div>
-                        </div>
-                        <div class="edu-card-middle">
-                            <h3 class="edu-card-degree">Higher Secondary (HSC)</h3>
-                            <div class="edu-card-school">Commerce Stream — GSEB</div>
-                            <p class="edu-desc">Commerce with Mathematics</p>
-
-                            <div class="edu-details-row">
-                                <div class="detail-item"><i class="fa-solid fa-award"
-                                        style="color:var(--edu-orange)"></i>
-                                    <div><span>Board</span><strong>GSEB</strong></div>
-                                </div>
-                                <div class="detail-item"><i class="fa-regular fa-calendar"></i>
-                                    <div><span>Year</span><strong>2023</strong></div>
-                                </div>
-                                <div class="detail-item"><i class="fa-solid fa-file-lines"></i>
-                                    <div><span>Result</span><strong>78.41%</strong></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="edu-card-right">
-                            <div class="score-display">
-                                <div class="score-circle orange">
-                                    <div class="score-text">
-                                        <span class="num">78.41<span class="pct">%</span></span>
-                                        <span class="lbl">Percentage</span>
-                                    </div>
-                                </div>
-                                <div class="score-graph">
-                                    <div class="graph-header">Performance Trend <span class="tag orange">Great
-                                            Performance! <i class="fa-solid fa-star"></i></span></div>
-                                    <!-- A decorative SVG line graph -->
-                                    <svg viewBox="0 0 200 60" class="trend-line orange">
-                                        <path d="M10,40 Q30,20 50,30 T90,50 T130,20 T170,10 T190,20" fill="none"
-                                            stroke="var(--edu-orange)" stroke-width="2" />
-                                        <circle cx="10" cy="40" r="3" fill="var(--edu-orange)" />
-                                        <circle cx="50" cy="30" r="3" fill="var(--edu-orange)" />
-                                        <circle cx="90" cy="50" r="3" fill="var(--edu-orange)" />
-                                        <circle cx="130" cy="20" r="3" fill="var(--edu-orange)" />
-                                        <circle cx="170" cy="10" r="3" fill="var(--edu-orange)" />
-                                        <circle cx="190" cy="20" r="3" fill="var(--edu-orange)" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 04: SSC (Completed) -->
-                <div class="timeline-item reveal-up" style="--delay:0.4s; --theme-color: #10B981;">
-                    <div class="timeline-node">04</div>
-                    <div class="edu-card glass-card">
-                        <div class="edu-card-left">
-                            <div class="edu-card-badge green">
-                                <i class="fa-solid fa-file-contract"></i>
-                                <div class="badge-time"><i class="fa-solid fa-circle-check"></i></div>
-                            </div>
-                            <div class="edu-card-year">2021</div>
-                            <div class="edu-status-badge completed">COMPLETED</div>
-                            <div class="edu-label">Secondary School</div>
-                        </div>
-                        <div class="edu-card-middle">
-                            <h3 class="edu-card-degree">Secondary School Certificate (SSC)</h3>
-                            <div class="edu-card-school">Gujarat Secondary Education Board (GSEB)</div>
-                            <p class="edu-desc">Completed secondary education with strong academic foundation.</p>
-
-                            <div class="edu-details-row">
-                                <div class="detail-item"><i class="fa-solid fa-award"
-                                        style="color:var(--edu-green)"></i>
-                                    <div><span>Board</span><strong>GSEB</strong></div>
-                                </div>
-                                <div class="detail-item"><i class="fa-regular fa-calendar"></i>
-                                    <div><span>Year</span><strong>2021</strong></div>
-                                </div>
-                                <div class="detail-item"><i class="fa-solid fa-file-lines"></i>
-                                    <div><span>Result</span><strong>67.49%</strong></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="edu-card-right">
-                            <div class="score-display">
-                                <div class="score-circle green">
-                                    <div class="score-text">
-                                        <span class="num">67.49<span class="pct">%</span></span>
-                                        <span class="lbl">Percentage</span>
-                                    </div>
-                                </div>
-                                <div class="score-graph">
-                                    <div class="graph-header">Performance Trend <span class="tag green">Keep Growing! <i
-                                                class="fa-solid fa-seedling"></i></span></div>
-                                    <svg viewBox="0 0 200 60" class="trend-line green">
-                                        <path d="M10,50 Q40,30 70,40 T130,20 T160,30 T190,10" fill="none"
-                                            stroke="var(--edu-green)" stroke-width="2" />
-                                        <circle cx="10" cy="50" r="3" fill="var(--edu-green)" />
-                                        <circle cx="70" cy="40" r="3" fill="var(--edu-green)" />
-                                        <circle cx="130" cy="20" r="3" fill="var(--edu-green)" />
-                                        <circle cx="160" cy="30" r="3" fill="var(--edu-green)" />
-                                        <circle cx="190" cy="10" r="3" fill="var(--edu-green)" />
-                                    </svg>
-                                </div>
+                            <div class="detail-item"><i class="fa-solid fa-graduation-cap"></i>
+                                <div><span>Status</span><strong>Pursuing</strong></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Academic Summary Footer -->
-            <div class="academic-summary reveal-up glass-card" style="--delay:0.5s">
-                <div class="summary-item">
-                    <div class="sum-icon purple"><i class="fa-solid fa-graduation-cap"></i></div>
-                    <div class="sum-text">
-                        <strong>2 <span>Degrees</span></strong>
-                        <span>1 Completed</span>
-                        <span class="purple-text">1 Pursuing</span>
+            <!-- 02: B.Sc. IT (Completed) -->
+            <div class="timeline-item reveal-up" style="--delay:0.2s; --theme-color: #3B82F6;">
+                <div class="timeline-node">02</div>
+                <div class="edu-card glass-card">
+                    <div class="edu-card-left">
+                        <div class="edu-card-badge blue">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <div class="badge-time"><i class="fa-solid fa-circle-check"></i></div>
+                        </div>
+                        <div class="edu-card-year">2023 — 2026</div>
+                        <div class="edu-status-badge completed">COMPLETED</div>
+                        <div class="edu-label">Graduation</div>
                     </div>
-                </div>
-                <div class="summary-item">
-                    <div class="sum-icon orange"><i class="fa-solid fa-file-contract"></i></div>
-                    <div class="sum-text">
-                        <strong>3 <span>Academic Levels</span></strong>
-                        <span>10th, 12th, Graduation,</span>
-                        <span>Post Graduation</span>
-                    </div>
-                </div>
-                <div class="summary-item">
-                    <div class="sum-icon blue"><i class="fa-solid fa-book-open"></i></div>
-                    <div class="sum-text">
-                        <strong>External Mode</strong>
-                        <span>Post Graduation</span>
-                        <span>Flexible learning with career preparation</span>
-                    </div>
-                </div>
-                <div class="summary-item">
-                    <div class="sum-icon green"><i class="fa-solid fa-bullseye"></i></div>
-                    <div class="sum-text">
-                        <strong>Focused Goals</strong>
-                        <span>Continuous learning</span>
-                        <span>and skill development</span>
+                    <div class="edu-card-middle">
+                        <div class="top-badge-row">
+                            <h3 class="edu-card-degree">Bachelor of Science in Information Technology</h3>
+                            <div class="top-status-badge green"><i class="fa-solid fa-check"></i> Graduation
+                                Completed</div>
+                        </div>
+                        <div class="edu-card-school">Noble University, Junagadh</div>
+                        <p class="edu-desc">Focused on software development, programming, data structures, database
+                            systems, and emerging technologies.</p>
+
+                        <div class="edu-details-row">
+                            <div class="detail-item"><i class="fa-regular fa-calendar"></i>
+                                <div><span>Duration</span><strong>3 Years</strong></div>
+                            </div>
+                            <div class="detail-item"><i class="fa-solid fa-award"></i>
+                                <div><span>Result</span><strong>6.35 CGPA</strong></div>
+                            </div>
+                            <div class="detail-item"><i class="fa-solid fa-trophy" style="color:var(--edu-orange)"></i>
+                                <div><span>Status</span><strong>Completed</strong></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="academic-footer-msg reveal-up" style="--delay:0.6s">
-                <p><i class="fa-solid fa-star"></i> Continuing the journey of learning, growing, and achieving
-                    excellence. <i class="fa-solid fa-heart" style="color:var(--edu-purple)"></i></p>
-            </div>
-        </section>
+            <!-- 03: HSC (Completed) -->
+            <div class="timeline-item reveal-up" style="--delay:0.3s; --theme-color: #F59E0B;">
+                <div class="timeline-node">03</div>
+                <div class="edu-card glass-card">
+                    <div class="edu-card-left">
+                        <div class="edu-card-badge orange">
+                            <i class="fa-solid fa-book-open"></i>
+                            <div class="badge-time"><i class="fa-solid fa-circle-check"></i></div>
+                        </div>
+                        <div class="edu-card-year">2023</div>
+                        <div class="edu-status-badge completed">COMPLETED</div>
+                        <div class="edu-label">Higher Secondary</div>
+                    </div>
+                    <div class="edu-card-middle">
+                        <h3 class="edu-card-degree">Higher Secondary (HSC)</h3>
+                        <div class="edu-card-school">Commerce Stream — GSEB</div>
+                        <p class="edu-desc">Commerce with Mathematics</p>
 
-        <!-- ═══════════════════════════════════════
+                        <div class="edu-details-row">
+                            <div class="detail-item"><i class="fa-solid fa-award" style="color:var(--edu-orange)"></i>
+                                <div><span>Board</span><strong>GSEB</strong></div>
+                            </div>
+                            <div class="detail-item"><i class="fa-regular fa-calendar"></i>
+                                <div><span>Year</span><strong>2023</strong></div>
+                            </div>
+                            <div class="detail-item"><i class="fa-solid fa-file-lines"></i>
+                                <div><span>Result</span><strong>78.41%</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="edu-card-right">
+                        <div class="score-display">
+                            <div class="score-circle orange">
+                                <div class="score-text">
+                                    <span class="num">78.41<span class="pct">%</span></span>
+                                    <span class="lbl">Percentage</span>
+                                </div>
+                            </div>
+                            <div class="score-graph">
+                                <div class="graph-header">Performance Trend <span class="tag orange">Great
+                                        Performance! <i class="fa-solid fa-star"></i></span></div>
+                                <!-- A decorative SVG line graph -->
+                                <svg viewBox="0 0 200 60" class="trend-line orange">
+                                    <path d="M10,40 Q30,20 50,30 T90,50 T130,20 T170,10 T190,20" fill="none"
+                                        stroke="var(--edu-orange)" stroke-width="2" />
+                                    <circle cx="10" cy="40" r="3" fill="var(--edu-orange)" />
+                                    <circle cx="50" cy="30" r="3" fill="var(--edu-orange)" />
+                                    <circle cx="90" cy="50" r="3" fill="var(--edu-orange)" />
+                                    <circle cx="130" cy="20" r="3" fill="var(--edu-orange)" />
+                                    <circle cx="170" cy="10" r="3" fill="var(--edu-orange)" />
+                                    <circle cx="190" cy="20" r="3" fill="var(--edu-orange)" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 04: SSC (Completed) -->
+            <div class="timeline-item reveal-up" style="--delay:0.4s; --theme-color: #10B981;">
+                <div class="timeline-node">04</div>
+                <div class="edu-card glass-card">
+                    <div class="edu-card-left">
+                        <div class="edu-card-badge green">
+                            <i class="fa-solid fa-file-contract"></i>
+                            <div class="badge-time"><i class="fa-solid fa-circle-check"></i></div>
+                        </div>
+                        <div class="edu-card-year">2021</div>
+                        <div class="edu-status-badge completed">COMPLETED</div>
+                        <div class="edu-label">Secondary School</div>
+                    </div>
+                    <div class="edu-card-middle">
+                        <h3 class="edu-card-degree">Secondary School Certificate (SSC)</h3>
+                        <div class="edu-card-school">Gujarat Secondary Education Board (GSEB)</div>
+                        <p class="edu-desc">Completed secondary education with strong academic foundation.</p>
+
+                        <div class="edu-details-row">
+                            <div class="detail-item"><i class="fa-solid fa-award" style="color:var(--edu-green)"></i>
+                                <div><span>Board</span><strong>GSEB</strong></div>
+                            </div>
+                            <div class="detail-item"><i class="fa-regular fa-calendar"></i>
+                                <div><span>Year</span><strong>2021</strong></div>
+                            </div>
+                            <div class="detail-item"><i class="fa-solid fa-file-lines"></i>
+                                <div><span>Result</span><strong>67.49%</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="edu-card-right">
+                        <div class="score-display">
+                            <div class="score-circle green">
+                                <div class="score-text">
+                                    <span class="num">67.49<span class="pct">%</span></span>
+                                    <span class="lbl">Percentage</span>
+                                </div>
+                            </div>
+                            <div class="score-graph">
+                                <div class="graph-header">Performance Trend <span class="tag green">Keep Growing! <i
+                                            class="fa-solid fa-seedling"></i></span></div>
+                                <svg viewBox="0 0 200 60" class="trend-line green">
+                                    <path d="M10,50 Q40,30 70,40 T130,20 T160,30 T190,10" fill="none"
+                                        stroke="var(--edu-green)" stroke-width="2" />
+                                    <circle cx="10" cy="50" r="3" fill="var(--edu-green)" />
+                                    <circle cx="70" cy="40" r="3" fill="var(--edu-green)" />
+                                    <circle cx="130" cy="20" r="3" fill="var(--edu-green)" />
+                                    <circle cx="160" cy="30" r="3" fill="var(--edu-green)" />
+                                    <circle cx="190" cy="10" r="3" fill="var(--edu-green)" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Academic Summary Footer -->
+        <div class="academic-summary reveal-up glass-card" style="--delay:0.5s">
+            <div class="summary-item">
+                <div class="sum-icon purple"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="sum-text">
+                    <strong>2 <span>Degrees</span></strong>
+                    <span>1 Completed</span>
+                    <span class="purple-text">1 Pursuing</span>
+                </div>
+            </div>
+            <div class="summary-item">
+                <div class="sum-icon orange"><i class="fa-solid fa-file-contract"></i></div>
+                <div class="sum-text">
+                    <strong>3 <span>Academic Levels</span></strong>
+                    <span>10th, 12th, Graduation,</span>
+                    <span>Post Graduation</span>
+                </div>
+            </div>
+            <div class="summary-item">
+                <div class="sum-icon blue"><i class="fa-solid fa-book-open"></i></div>
+                <div class="sum-text">
+                    <strong>External Mode</strong>
+                    <span>Post Graduation</span>
+                    <span>Flexible learning with career preparation</span>
+                </div>
+            </div>
+            <div class="summary-item">
+                <div class="sum-icon green"><i class="fa-solid fa-bullseye"></i></div>
+                <div class="sum-text">
+                    <strong>Focused Goals</strong>
+                    <span>Continuous learning</span>
+                    <span>and skill development</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="academic-footer-msg reveal-up" style="--delay:0.6s">
+            <p><i class="fa-solid fa-star"></i> Continuing the journey of learning, growing, and achieving
+                excellence. <i class="fa-solid fa-heart" style="color:var(--edu-purple)"></i></p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
              CERTIFICATES SECTION
         ═══════════════════════════════════════ -->
-        <section id="certificates" class="section certificates-section">
-            <div class="section-eyebrow reveal-up">Credentials</div>
-            <h2 class="section-title reveal-up">Certifications <span class="title-accent">&amp; Achievements</span></h2>
+    <section id="certificates" class="section certificates-section">
+        <div class="section-eyebrow reveal-up">Credentials</div>
+        <h2 class="section-title reveal-up">Certifications <span class="title-accent">&amp; Achievements</span></h2>
 
-            <!-- Filter -->
-            <div class="cert-filters reveal-up" style="--delay:0.1s">
-                <button class="filter-pill active" data-cert-filter="all">All</button>
-                <button class="filter-pill" data-cert-filter="nasscom">NASSCOM</button>
-                <button class="filter-pill" data-cert-filter="forage">Forage</button>
-                <button class="filter-pill" data-cert-filter="udemy">Udemy</button>
-                <button class="filter-pill" data-cert-filter="unstop">Unstop</button>
+        <!-- Filter -->
+        <div class="cert-filters reveal-up" style="--delay:0.1s">
+            <button class="filter-pill active" data-cert-filter="all">All</button>
+            <button class="filter-pill" data-cert-filter="nasscom">NASSCOM</button>
+            <button class="filter-pill" data-cert-filter="forage">Forage</button>
+            <button class="filter-pill" data-cert-filter="udemy">Udemy</button>
+            <button class="filter-pill" data-cert-filter="unstop">Unstop</button>
+        </div>
+
+        <div class="cert-grid" id="certGrid">
+
+            <!-- Certificate: QuizOff 2026 -->
+            <div class="cert-card glass-card reveal-up" data-cert-tags="unstop" style="--delay:0.05s">
+                <div class="cert-img-wrap">
+                    <img src="images/certificates/quizoff-2026.png" alt="QuizOff 2026" loading="lazy">
+                    <div class="cert-img-overlay"></div>
+                </div>
+                <div class="cert-card-body">
+                    <div class="cert-issuer-row">
+                        <span class="cert-org">Unstop · CampusCrew</span>
+                        <span class="cert-badge unstop">Unstop</span>
+                    </div>
+                    <h3 class="cert-name">QuizOff 2026: India's Biggest AI Quiz</h3>
+                    <div class="cert-tags-row"><span>AI Quiz</span><span>CampusCrew</span></div>
+                    <a href="images/certificates/quizoff-2026.png" target="_blank" class="cert-view-btn">
+                        <i class="fa-solid fa-external-link-alt"></i> View Certificate
+                    </a>
+                </div>
             </div>
 
-            <div class="cert-grid" id="certGrid">
-
-                <!-- Certificate: QuizOff 2026 -->
-                <div class="cert-card glass-card reveal-up" data-cert-tags="unstop" style="--delay:0.05s">
-                    <div class="cert-img-wrap">
-                        <img src="images/certificates/quizoff-2026.png" alt="QuizOff 2026" loading="lazy">
-                        <div class="cert-img-overlay"></div>
-                    </div>
-                    <div class="cert-card-body">
-                        <div class="cert-issuer-row">
-                            <span class="cert-org">Unstop · CampusCrew</span>
-                            <span class="cert-badge unstop">Unstop</span>
-                        </div>
-                        <h3 class="cert-name">QuizOff 2026: India's Biggest AI Quiz</h3>
-                        <div class="cert-tags-row"><span>AI Quiz</span><span>CampusCrew</span></div>
-                        <a href="images/certificates/quizoff-2026.png" target="_blank" class="cert-view-btn">
-                            <i class="fa-solid fa-external-link-alt"></i> View Certificate
-                        </a>
-                    </div>
+            <!-- Certificate: ChatGPT -->
+            <div class="cert-card glass-card reveal-up" data-cert-tags="udemy" style="--delay:0.1s">
+                <div class="cert-img-wrap">
+                    <img src="images/certificates/udemy-chatgpt.jpg" alt="AI For Brand Storytelling" loading="lazy">
+                    <div class="cert-img-overlay"></div>
                 </div>
-
-                <!-- Certificate: ChatGPT -->
-                <div class="cert-card glass-card reveal-up" data-cert-tags="udemy" style="--delay:0.1s">
-                    <div class="cert-img-wrap">
-                        <img src="images/certificates/udemy-chatgpt.jpg" alt="AI For Brand Storytelling" loading="lazy">
-                        <div class="cert-img-overlay"></div>
+                <div class="cert-card-body">
+                    <div class="cert-issuer-row">
+                        <span class="cert-org">Udemy</span>
+                        <span class="cert-badge udemy">Udemy</span>
                     </div>
-                    <div class="cert-card-body">
-                        <div class="cert-issuer-row">
-                            <span class="cert-org">Udemy</span>
-                            <span class="cert-badge udemy">Udemy</span>
-                        </div>
-                        <h3 class="cert-name">AI For Brand Storytelling Using ChatGPT</h3>
-                        <div class="cert-tags-row"><span>AI</span><span>ChatGPT</span><span>Marketing</span></div>
-                        <a href="images/certificates/udemy-chatgpt.jpg" target="_blank" class="cert-view-btn">
-                            <i class="fa-solid fa-external-link-alt"></i> View Certificate
-                        </a>
-                    </div>
+                    <h3 class="cert-name">AI For Brand Storytelling Using ChatGPT</h3>
+                    <div class="cert-tags-row"><span>AI</span><span>ChatGPT</span><span>Marketing</span></div>
+                    <a href="images/certificates/udemy-chatgpt.jpg" target="_blank" class="cert-view-btn">
+                        <i class="fa-solid fa-external-link-alt"></i> View Certificate
+                    </a>
                 </div>
-
-                <!-- Certificate: Microsoft Copilot -->
-                <div class="cert-card glass-card reveal-up" data-cert-tags="forage" style="--delay:0.15s">
-                    <div class="cert-img-wrap">
-                        <img src="images/certificates/copilot.jpg" alt="Microsoft Copilot" loading="lazy">
-                        <div class="cert-img-overlay"></div>
-                    </div>
-                    <div class="cert-card-body">
-                        <div class="cert-issuer-row">
-                            <span class="cert-org">Microsoft</span>
-                            <span class="cert-badge forage">Forage</span>
-                        </div>
-                        <h3 class="cert-name">Microsoft Copilot — AI Tools</h3>
-                        <div class="cert-tags-row"><span>Microsoft</span><span>AI Copilot</span></div>
-                        <a href="images/certificates/copilot.jpg" target="_blank" class="cert-view-btn">
-                            <i class="fa-solid fa-external-link-alt"></i> View Certificate
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Certificate: Tata Cybersecurity -->
-                <div class="cert-card glass-card reveal-up" data-cert-tags="forage" style="--delay:0.2s">
-                    <div class="cert-img-wrap">
-                        <img src="images/certificates/tata-cybersecurity.jpg" alt="Tata Cybersecurity" loading="lazy">
-                        <div class="cert-img-overlay"></div>
-                    </div>
-                    <div class="cert-card-body">
-                        <div class="cert-issuer-row">
-                            <span class="cert-org">Tata · Forage</span>
-                            <span class="cert-badge forage">Forage</span>
-                        </div>
-                        <h3 class="cert-name">Cyber Security Analyst — Tata</h3>
-                        <div class="cert-tags-row"><span>Cybersecurity</span><span>Tata</span></div>
-                        <a href="images/certificates/tata-cybersecurity.jpg" target="_blank" class="cert-view-btn">
-                            <i class="fa-solid fa-external-link-alt"></i> View Certificate
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Certificate: Windows Command Mastery -->
-                <div class="cert-card glass-card reveal-up" data-cert-tags="nasscom" style="--delay:0.25s">
-                    <div class="cert-img-wrap">
-                        <img src="images/certificates/Windows Command Mastery.jpg" alt="Windows Command Mastery"
-                            loading="lazy">
-                        <div class="cert-img-overlay"></div>
-                    </div>
-                    <div class="cert-card-body">
-                        <div class="cert-issuer-row">
-                            <span class="cert-org">Skill India · NASSCOM</span>
-                            <span class="cert-badge nasscom">NASSCOM</span>
-                        </div>
-                        <h3 class="cert-name">Windows Command Mastery</h3>
-                        <div class="cert-tags-row"><span>Windows</span><span>CLI</span><span>NASSCOM</span></div>
-                        <a href="images/certificates/Windows Command Mastery.jpg" target="_blank" class="cert-view-btn">
-                            <i class="fa-solid fa-external-link-alt"></i> View Certificate
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Certificate: Information Security Analyst -->
-                <div class="cert-card glass-card reveal-up" data-cert-tags="nasscom" style="--delay:0.3s">
-                    <div class="cert-img-wrap">
-                        <img src="images/certificates/Information Security Analyst.jpg"
-                            alt="Information Security Analyst" loading="lazy">
-                        <div class="cert-img-overlay"></div>
-                    </div>
-                    <div class="cert-card-body">
-                        <div class="cert-issuer-row">
-                            <span class="cert-org">Skill India · NASSCOM</span>
-                            <span class="cert-badge nasscom">NASSCOM</span>
-                        </div>
-                        <h3 class="cert-name">Information Security Analyst</h3>
-                        <div class="cert-tags-row"><span>Cyber Security</span><span>NASSCOM</span></div>
-                        <a href="images/certificates/Information Security Analyst.jpg" target="_blank"
-                            class="cert-view-btn">
-                            <i class="fa-solid fa-external-link-alt"></i> View Certificate
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Certificate: Network Security Engineer -->
-                <div class="cert-card glass-card reveal-up" data-cert-tags="nasscom" style="--delay:0.35s">
-                    <div class="cert-img-wrap">
-                        <img src="images/certificates/Network Security Engineer.jpg" alt="Network Security Engineer"
-                            loading="lazy">
-                        <div class="cert-img-overlay"></div>
-                    </div>
-                    <div class="cert-card-body">
-                        <div class="cert-issuer-row">
-                            <span class="cert-org">Skill India · NASSCOM</span>
-                            <span class="cert-badge nasscom">NASSCOM</span>
-                        </div>
-                        <h3 class="cert-name">Network Security Engineer</h3>
-                        <div class="cert-tags-row"><span>Networking</span><span>Cybersecurity</span></div>
-                        <a href="images/certificates/Network Security Engineer.jpg" target="_blank"
-                            class="cert-view-btn">
-                            <i class="fa-solid fa-external-link-alt"></i> View Certificate
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Certificate: IoT Security Analyst -->
-                <div class="cert-card glass-card reveal-up" data-cert-tags="nasscom" style="--delay:0.4s">
-                    <div class="cert-img-wrap">
-                        <img src="images/certificates/IoT Security Analyst.jpg" alt="IoT Security Analyst"
-                            loading="lazy">
-                        <div class="cert-img-overlay"></div>
-                    </div>
-                    <div class="cert-card-body">
-                        <div class="cert-issuer-row">
-                            <span class="cert-org">Skill India · NASSCOM</span>
-                            <span class="cert-badge nasscom">NASSCOM</span>
-                        </div>
-                        <h3 class="cert-name">IoT Security Analyst</h3>
-                        <div class="cert-tags-row"><span>IoT</span><span>Security</span><span>NASSCOM</span></div>
-                        <a href="images/certificates/IoT Security Analyst.jpg" target="_blank" class="cert-view-btn">
-                            <i class="fa-solid fa-external-link-alt"></i> View Certificate
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Certificate: AI DevOps Analyst -->
-                <div class="cert-card glass-card reveal-up" data-cert-tags="nasscom" style="--delay:0.45s">
-                    <div class="cert-img-wrap">
-                        <img src="images/certificates/AI Devops Analyst.jpg" alt="AI DevOps Analyst" loading="lazy">
-                        <div class="cert-img-overlay"></div>
-                    </div>
-                    <div class="cert-card-body">
-                        <div class="cert-issuer-row">
-                            <span class="cert-org">Skill India · NASSCOM</span>
-                            <span class="cert-badge nasscom">NASSCOM</span>
-                        </div>
-                        <h3 class="cert-name">AI DevOps Analyst</h3>
-                        <div class="cert-tags-row"><span>AI</span><span>DevOps</span><span>NASSCOM</span></div>
-                        <a href="images/certificates/AI Devops Analyst.jpg" target="_blank" class="cert-view-btn">
-                            <i class="fa-solid fa-external-link-alt"></i> View Certificate
-                        </a>
-                    </div>
-                </div>
-
             </div>
-        </section>
 
-        <!-- ═══════════════════════════════════════
+            <!-- Certificate: Microsoft Copilot -->
+            <div class="cert-card glass-card reveal-up" data-cert-tags="forage" style="--delay:0.15s">
+                <div class="cert-img-wrap">
+                    <img src="images/certificates/copilot.jpg" alt="Microsoft Copilot" loading="lazy">
+                    <div class="cert-img-overlay"></div>
+                </div>
+                <div class="cert-card-body">
+                    <div class="cert-issuer-row">
+                        <span class="cert-org">Microsoft</span>
+                        <span class="cert-badge forage">Forage</span>
+                    </div>
+                    <h3 class="cert-name">Microsoft Copilot — AI Tools</h3>
+                    <div class="cert-tags-row"><span>Microsoft</span><span>AI Copilot</span></div>
+                    <a href="images/certificates/copilot.jpg" target="_blank" class="cert-view-btn">
+                        <i class="fa-solid fa-external-link-alt"></i> View Certificate
+                    </a>
+                </div>
+            </div>
+
+            <!-- Certificate: Tata Cybersecurity -->
+            <div class="cert-card glass-card reveal-up" data-cert-tags="forage" style="--delay:0.2s">
+                <div class="cert-img-wrap">
+                    <img src="images/certificates/tata-cybersecurity.jpg" alt="Tata Cybersecurity" loading="lazy">
+                    <div class="cert-img-overlay"></div>
+                </div>
+                <div class="cert-card-body">
+                    <div class="cert-issuer-row">
+                        <span class="cert-org">Tata · Forage</span>
+                        <span class="cert-badge forage">Forage</span>
+                    </div>
+                    <h3 class="cert-name">Cyber Security Analyst — Tata</h3>
+                    <div class="cert-tags-row"><span>Cybersecurity</span><span>Tata</span></div>
+                    <a href="images/certificates/tata-cybersecurity.jpg" target="_blank" class="cert-view-btn">
+                        <i class="fa-solid fa-external-link-alt"></i> View Certificate
+                    </a>
+                </div>
+            </div>
+
+            <!-- Certificate: Windows Command Mastery -->
+            <div class="cert-card glass-card reveal-up" data-cert-tags="nasscom" style="--delay:0.25s">
+                <div class="cert-img-wrap">
+                    <img src="images/certificates/Windows Command Mastery.jpg" alt="Windows Command Mastery"
+                        loading="lazy">
+                    <div class="cert-img-overlay"></div>
+                </div>
+                <div class="cert-card-body">
+                    <div class="cert-issuer-row">
+                        <span class="cert-org">Skill India · NASSCOM</span>
+                        <span class="cert-badge nasscom">NASSCOM</span>
+                    </div>
+                    <h3 class="cert-name">Windows Command Mastery</h3>
+                    <div class="cert-tags-row"><span>Windows</span><span>CLI</span><span>NASSCOM</span></div>
+                    <a href="images/certificates/Windows Command Mastery.jpg" target="_blank" class="cert-view-btn">
+                        <i class="fa-solid fa-external-link-alt"></i> View Certificate
+                    </a>
+                </div>
+            </div>
+
+            <!-- Certificate: Information Security Analyst -->
+            <div class="cert-card glass-card reveal-up" data-cert-tags="nasscom" style="--delay:0.3s">
+                <div class="cert-img-wrap">
+                    <img src="images/certificates/Information Security Analyst.jpg" alt="Information Security Analyst"
+                        loading="lazy">
+                    <div class="cert-img-overlay"></div>
+                </div>
+                <div class="cert-card-body">
+                    <div class="cert-issuer-row">
+                        <span class="cert-org">Skill India · NASSCOM</span>
+                        <span class="cert-badge nasscom">NASSCOM</span>
+                    </div>
+                    <h3 class="cert-name">Information Security Analyst</h3>
+                    <div class="cert-tags-row"><span>Cyber Security</span><span>NASSCOM</span></div>
+                    <a href="images/certificates/Information Security Analyst.jpg" target="_blank"
+                        class="cert-view-btn">
+                        <i class="fa-solid fa-external-link-alt"></i> View Certificate
+                    </a>
+                </div>
+            </div>
+
+            <!-- Certificate: Network Security Engineer -->
+            <div class="cert-card glass-card reveal-up" data-cert-tags="nasscom" style="--delay:0.35s">
+                <div class="cert-img-wrap">
+                    <img src="images/certificates/Network Security Engineer.jpg" alt="Network Security Engineer"
+                        loading="lazy">
+                    <div class="cert-img-overlay"></div>
+                </div>
+                <div class="cert-card-body">
+                    <div class="cert-issuer-row">
+                        <span class="cert-org">Skill India · NASSCOM</span>
+                        <span class="cert-badge nasscom">NASSCOM</span>
+                    </div>
+                    <h3 class="cert-name">Network Security Engineer</h3>
+                    <div class="cert-tags-row"><span>Networking</span><span>Cybersecurity</span></div>
+                    <a href="images/certificates/Network Security Engineer.jpg" target="_blank" class="cert-view-btn">
+                        <i class="fa-solid fa-external-link-alt"></i> View Certificate
+                    </a>
+                </div>
+            </div>
+
+            <!-- Certificate: IoT Security Analyst -->
+            <div class="cert-card glass-card reveal-up" data-cert-tags="nasscom" style="--delay:0.4s">
+                <div class="cert-img-wrap">
+                    <img src="images/certificates/IoT Security Analyst.jpg" alt="IoT Security Analyst" loading="lazy">
+                    <div class="cert-img-overlay"></div>
+                </div>
+                <div class="cert-card-body">
+                    <div class="cert-issuer-row">
+                        <span class="cert-org">Skill India · NASSCOM</span>
+                        <span class="cert-badge nasscom">NASSCOM</span>
+                    </div>
+                    <h3 class="cert-name">IoT Security Analyst</h3>
+                    <div class="cert-tags-row"><span>IoT</span><span>Security</span><span>NASSCOM</span></div>
+                    <a href="images/certificates/IoT Security Analyst.jpg" target="_blank" class="cert-view-btn">
+                        <i class="fa-solid fa-external-link-alt"></i> View Certificate
+                    </a>
+                </div>
+            </div>
+
+            <!-- Certificate: AI DevOps Analyst -->
+            <div class="cert-card glass-card reveal-up" data-cert-tags="nasscom" style="--delay:0.45s">
+                <div class="cert-img-wrap">
+                    <img src="images/certificates/AI Devops Analyst.jpg" alt="AI DevOps Analyst" loading="lazy">
+                    <div class="cert-img-overlay"></div>
+                </div>
+                <div class="cert-card-body">
+                    <div class="cert-issuer-row">
+                        <span class="cert-org">Skill India · NASSCOM</span>
+                        <span class="cert-badge nasscom">NASSCOM</span>
+                    </div>
+                    <h3 class="cert-name">AI DevOps Analyst</h3>
+                    <div class="cert-tags-row"><span>AI</span><span>DevOps</span><span>NASSCOM</span></div>
+                    <a href="images/certificates/AI Devops Analyst.jpg" target="_blank" class="cert-view-btn">
+                        <i class="fa-solid fa-external-link-alt"></i> View Certificate
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
              CONTACT SECTION
         ═══════════════════════════════════════ -->
-        <section id="contact" class="section contact-section">
-            <div class="contact-cta-wrap reveal-up">
-                <div class="contact-cta-badge">Let's Connect</div>
-                <h2 class="contact-cta-title">Let's Build Something <span class="title-accent">Great Together.</span>
-                </h2>
-                <p class="contact-cta-sub">Have a project, opportunity, or collaboration in mind? Let's connect.</p>
-                <div class="contact-quick-links">
-                    <a href="mailto:rathodmilan216@gmail.com" class="contact-quick-btn">
-                        <i class="fa-solid fa-envelope"></i> Email Me
-                    </a>
-                    <a href="https://wa.me/919327599254" target="_blank" class="contact-quick-btn whatsapp">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
-                    <a href="https://linkedin.com/in/milan-rathod07/" target="_blank"
-                        class="contact-quick-btn linkedin">
-                        <i class="fab fa-linkedin-in"></i> LinkedIn
-                    </a>
-                    <a href="https://github.com/Milan07xt" target="_blank" class="contact-quick-btn github">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                </div>
+    <section id="contact" class="section contact-section">
+        <div class="contact-cta-wrap reveal-up">
+            <div class="contact-cta-badge">Let's Connect</div>
+            <h2 class="contact-cta-title">Let's Build Something <span class="title-accent">Great Together.</span>
+            </h2>
+            <p class="contact-cta-sub">Have a project, opportunity, or collaboration in mind? Let's connect.</p>
+            <div class="contact-quick-links">
+                <a href="mailto:rathodmilan216@gmail.com" class="contact-quick-btn">
+                    <i class="fa-solid fa-envelope"></i> Email Me
+                </a>
+                <a href="https://wa.me/919327599254" target="_blank" class="contact-quick-btn whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" class="contact-quick-btn linkedin">
+                    <i class="fab fa-linkedin-in"></i> LinkedIn
+                </a>
+                <a href="https://github.com/Milan07xt" target="_blank" class="contact-quick-btn github">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+        </div>
+
+        <div class="contact-main-grid">
+            <!-- Contact Form -->
+            <div class="contact-form-card glass-card reveal-up" style="--delay:0.1s">
+                <h3 class="contact-form-title">Send a Message</h3>
+                <form id="contactForm" class="contact-form" novalidate>
+                    <div class="form-field">
+                        <label for="contact-name">Your Name</label>
+                        <input id="contact-name" name="name" type="text" placeholder="Milan Rathod" required
+                            autocomplete="name">
+                    </div>
+                    <div class="form-field">
+                        <label for="contact-email">Email Address</label>
+                        <input id="contact-email" name="email" type="email" placeholder="hello@example.com" required
+                            autocomplete="email">
+                    </div>
+                    <div class="form-field">
+                        <label for="contact-number">Phone (Optional)</label>
+                        <input id="contact-number" name="number" type="tel" placeholder="+91 98765 43210"
+                            autocomplete="tel">
+                    </div>
+                    <div class="form-field">
+                        <label for="contact-subject">Subject</label>
+                        <input id="contact-subject" name="subject" type="text"
+                            placeholder="Project inquiry / Collaboration">
+                    </div>
+                    <div class="form-field">
+                        <label for="contact-message">Message</label>
+                        <textarea id="contact-message" name="message" rows="5"
+                            placeholder="Tell me about your project or opportunity..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary-pill full-w" id="contactSubmitBtn">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        Send Message
+                    </button>
+                    <span id="formStatus" class="form-status" aria-live="polite"></span>
+                </form>
             </div>
 
-            <div class="contact-main-grid">
-                <!-- Contact Form -->
-                <div class="contact-form-card glass-card reveal-up" style="--delay:0.1s">
-                    <h3 class="contact-form-title">Send a Message</h3>
-                    <form id="contactForm" class="contact-form" novalidate>
-                        <div class="form-field">
-                            <label for="contact-name">Your Name</label>
-                            <input id="contact-name" name="name" type="text" placeholder="Milan Rathod" required
-                                autocomplete="name">
+            <!-- Contact Info -->
+            <div class="contact-info-col reveal-up" style="--delay:0.2s">
+                <div class="contact-info-card glass-card">
+                    <a href="mailto:rathodmilan216@gmail.com" class="contact-info-item">
+                        <div class="contact-info-icon" style="--c:#3776AB"><i class="fa-solid fa-envelope"></i>
                         </div>
-                        <div class="form-field">
-                            <label for="contact-email">Email Address</label>
-                            <input id="contact-email" name="email" type="email" placeholder="hello@example.com" required
-                                autocomplete="email">
-                        </div>
-                        <div class="form-field">
-                            <label for="contact-number">Phone (Optional)</label>
-                            <input id="contact-number" name="number" type="tel" placeholder="+91 98765 43210"
-                                autocomplete="tel">
-                        </div>
-                        <div class="form-field">
-                            <label for="contact-subject">Subject</label>
-                            <input id="contact-subject" name="subject" type="text"
-                                placeholder="Project inquiry / Collaboration">
-                        </div>
-                        <div class="form-field">
-                            <label for="contact-message">Message</label>
-                            <textarea id="contact-message" name="message" rows="5"
-                                placeholder="Tell me about your project or opportunity..."></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary-pill full-w" id="contactSubmitBtn">
-                            <i class="fa-solid fa-paper-plane"></i>
-                            Send Message
-                        </button>
-                        <span id="formStatus" class="form-status" aria-live="polite"></span>
-                    </form>
-                </div>
-
-                <!-- Contact Info -->
-                <div class="contact-info-col reveal-up" style="--delay:0.2s">
-                    <div class="contact-info-card glass-card">
-                        <a href="mailto:rathodmilan216@gmail.com" class="contact-info-item">
-                            <div class="contact-info-icon" style="--c:#3776AB"><i class="fa-solid fa-envelope"></i>
-                            </div>
-                            <div>
-                                <div class="contact-info-label">Email</div>
-                                <div class="contact-info-value">rathodmilan216@gmail.com</div>
-                            </div>
-                        </a>
-                        <a href="tel:+919327599254" class="contact-info-item">
-                            <div class="contact-info-icon" style="--c:#4CAF50"><i class="fa-solid fa-phone"></i></div>
-                            <div>
-                                <div class="contact-info-label">Phone</div>
-                                <div class="contact-info-value">+91 9327599254</div>
-                            </div>
-                        </a>
-                        <a href="https://maps.app.goo.gl/B167LYB5MMnmZZpU7" target="_blank" class="contact-info-item">
-                            <div class="contact-info-icon" style="--c:#FF5722"><i class="fa-solid fa-location-dot"></i>
-                            </div>
-                            <div>
-                                <div class="contact-info-label">Location</div>
-                                <div class="contact-info-value">Mandva, Junagadh, Gujarat</div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- Notice Banner -->
-                    <div class="contact-notice glass-card">
-                        <div class="notice-icon-wrap"><i class="fa-solid fa-check-circle"></i></div>
                         <div>
-                            <p class="notice-title"><i class="fa-solid fa-paper-plane"></i> All messages are
-                                automatically redirected to:</p>
-                            <p class="notice-detail"><strong>Email:</strong> rathodmilan216@gmail.com</p>
-                            <p class="notice-detail"><strong>Phone:</strong> +91 9327599254</p>
-                            <p class="notice-sub">Every submission triggers instant notifications via email and SMS.</p>
+                            <div class="contact-info-label">Email</div>
+                            <div class="contact-info-value">rathodmilan216@gmail.com</div>
                         </div>
+                    </a>
+                    <a href="tel:+919327599254" class="contact-info-item">
+                        <div class="contact-info-icon" style="--c:#4CAF50"><i class="fa-solid fa-phone"></i></div>
+                        <div>
+                            <div class="contact-info-label">Phone</div>
+                            <div class="contact-info-value">+91 9327599254</div>
+                        </div>
+                    </a>
+                    <a href="https://maps.app.goo.gl/B167LYB5MMnmZZpU7" target="_blank" class="contact-info-item">
+                        <div class="contact-info-icon" style="--c:#FF5722"><i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <div class="contact-info-label">Location</div>
+                            <div class="contact-info-value">Mandva, Junagadh, Gujarat</div>
+                        </div>
+                    </a>
+                    <div class="contact-map"
+                        style="border-radius: 12px; overflow: hidden; display: flex; width: 100%; height: 200px; margin-top: 10px;">
+                        <iframe
+                            src="https://maps.google.com/maps?q=Mandva,%20Junagadh,%20Gujarat&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+
+                <!-- Notice Banner -->
+                <div class="contact-notice glass-card">
+                    <div class="notice-icon-wrap"><i class="fa-solid fa-check-circle"></i></div>
+                    <div>
+                        <p class="notice-title"><i class="fa-solid fa-paper-plane"></i> All messages are
+                            automatically redirected to:</p>
+                        <p class="notice-detail"><strong>Email:</strong> rathodmilan216@gmail.com</p>
+                        <p class="notice-detail"><strong>Phone:</strong> +91 9327599254</p>
+                        <p class="notice-sub">Every submission triggers instant notifications via email and SMS.</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- ═══════════════════════════════════════
+    <!-- ═══════════════════════════════════════
              FOOTER
         ═══════════════════════════════════════ -->
-        <footer class="site-footer">
-            <div class="footer-inner">
-                <div class="footer-brand">
-                    <span class="footer-logo">⟨/⟩ Milan Rathod</span>
-                    <span class="footer-tagline">Python Developer</span>
-                </div>
-                <div class="footer-social">
-                    <a href="https://github.com/Milan07xt" target="_blank" aria-label="GitHub"><i
-                            class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" aria-label="LinkedIn"><i
-                            class="fab fa-linkedin-in"></i></a>
-                    <a href="mailto:rathodmilan216@gmail.com" aria-label="Email"><i
-                            class="fa-solid fa-envelope"></i></a>
-                </div>
-                <div class="footer-copy">
-                    &copy; 2026 Milan Rathod. All Rights Reserved.
-                </div>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">⟨/⟩ Milan Rathod</span>
+                <span class="footer-tagline">Python Developer</span>
             </div>
-        </footer>
+            <div class="footer-social">
+                <a href="https://github.com/Milan07xt" target="_blank" aria-label="GitHub"><i
+                        class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" aria-label="LinkedIn"><i
+                        class="fab fa-linkedin-in"></i></a>
+                <a href="mailto:rathodmilan216@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 Milan Rathod. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
 
     </div><!-- /.portfolio-frame -->
 
