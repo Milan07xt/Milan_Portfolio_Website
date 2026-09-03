@@ -1,15 +1,7 @@
 /**
  * Vercel Serverless Function for Contact Submissions
- * This function handles the contact form submission in production on Vercel.
- * It saves data to Supabase Postgres and sends an email notification using Formsubmit.co.
+ * Handles contact form submissions on Vercel gracefully.
  */
-const { Pool } = require('pg');
-
-const connectionUrl = process.env.POSTGRES_URL ? process.env.POSTGRES_URL.split('?')[0] : '';
-const pool = new Pool({
-  connectionString: connectionUrl,
-  ssl: { rejectUnauthorized: false }
-});
 
 async function handler(req, res) {
   // Enable CORS
@@ -38,28 +30,33 @@ async function handler(req, res) {
 
     const timestamp = new Date().toISOString();
 
-    // Insert into PostgreSQL
-    let dbStatus = "Database OK";
-    try {
+    // If POSTGRES_URL is configured, try database insertion safely
+    if (process.env.POSTGRES_URL) {
+      try {
+        const { Pool } = require('pg');
+        const connectionUrl = process.env.POSTGRES_URL.split('?')[0];
+        const pool = new Pool({
+          connectionString: connectionUrl,
+          ssl: { rejectUnauthorized: false }
+        });
         await pool.query(
-            `INSERT INTO contacts (name, email, number, subject, message, timestamp) 
-             VALUES ($1, $2, $3, $4, $5, $6)`,
-            [name, email, number || '', subject || '', message || '', timestamp]
+          `INSERT INTO contacts (name, email, number, subject, message, timestamp) 
+           VALUES ($1, $2, $3, $4, $5, $6)`,
+          [name, email, number || '', subject || '', message || '', timestamp]
         );
-    } catch (dbError) {
-        console.error('Database insertion error:', dbError);
-        dbStatus = "DB Error: " + dbError.message;
+        await pool.end();
+      } catch (dbError) {
+        console.warn('Postgres insertion warning (skipped):', dbError.message);
+      }
     }
-
-    // Send email logic has been moved to the frontend (script.js) 
-    // to bypass Cloudflare's serverless bot protection.
 
     return res.status(200).send('Saved');
 
   } catch (error) {
     console.error('Contact API Error:', error);
-    return res.status(500).send(`Failed to send message: ${error.message}`);
+    return res.status(500).send(`Failed to process message: ${error.message}`);
   }
 }
 
 module.exports = handler;
+

@@ -324,50 +324,70 @@ body.dark-mode .mouse-glow {
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 2px;
+    height: 3px;
     width: 0%;
-    background: linear-gradient(90deg, var(--py-blue), var(--py-yellow));
+    background: linear-gradient(90deg, #3776AB, #2563EB, #FFD43B);
     border-radius: var(--radius-pill);
-    transition: width 0.1s linear;
+    transition: width 0.15s ease-out;
+    box-shadow: 0 0 10px rgba(55, 118, 171, 0.5);
+    z-index: 10;
 }
 
 /* ═══════════════════════════════════════
-   NAVBAR
+   NAVBAR & TASKBAR DESIGN SYSTEM
 ═══════════════════════════════════════ */
 .nav-header {
     position: sticky;
     top: 0;
-    z-index: 100;
-    padding: 12px 24px;
+    z-index: 10000;
+    padding: 14px 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid transparent;
-    transition: border-color var(--transition), background var(--transition);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .nav-header {
+    background: rgba(15, 23, 42, 0.92);
+    border-bottom-color: rgba(51, 65, 85, 0.8);
 }
 
 .nav-header.scrolled {
-    background: var(--bg-glass);
-    border-bottom-color: var(--border);
+    background: rgba(255, 255, 255, 0.97);
+    border-bottom-color: rgba(229, 231, 235, 0.9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+body.dark-mode .nav-header.scrolled {
+    background: rgba(15, 23, 42, 0.97);
+    border-bottom-color: rgba(51, 65, 85, 0.9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .navbar-pill {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: var(--bg-glass-2);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--border-glass);
+    background: var(--white);
+    border: 1px solid rgba(229, 231, 235, 0.8);
     border-radius: var(--radius-pill);
-    padding: 8px 8px 8px 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05), 0 10px 30px rgba(55, 118, 171, 0.1), inset 0 1px 1px rgba(255,255,255,0.8);
-    max-width: 920px;
+    padding: 6px 8px 6px 18px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02);
+    max-width: 960px;
     width: 100%;
     position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .navbar-pill {
+    background: #1E293B;
+    border-color: rgba(51, 65, 85, 0.8);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .nav-logo {
@@ -376,99 +396,76 @@ body.dark-mode .mouse-glow {
     gap: 8px;
     margin-right: 12px;
     flex-shrink: 0;
+    transition: transform 0.25s ease;
+}
+
+.nav-logo:hover {
+    transform: scale(1.03);
 }
 
 .nav-logo-icon {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 800;
     color: var(--py-blue);
     background: var(--py-blue-light);
-    padding: 4px 8px;
-    border-radius: var(--radius-sm);
+    padding: 5px 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .nav-logo-text {
-    font-weight: 700;
+    font-weight: 800;
     font-size: 0.95rem;
     color: var(--text-primary);
+    letter-spacing: -0.01em;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
     flex: 1;
 }
 
+/* ── New Sleek Nav Links ─────────────── */
 .nav-link {
     position: relative;
-    padding: 7px 14px;
+    padding: 8px 16px;
     border-radius: var(--radius-pill);
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.84rem;
+    font-weight: 600;
     color: var(--text-sec);
-    transition: color var(--transition), transform var(--transition);
+    transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1), background 0.25s ease, transform 0.25s ease;
     white-space: nowrap;
-    overflow: hidden;
     z-index: 1;
-}
-
-.nav-link::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(circle at var(--lx, 50%) var(--ly, 50%), rgba(235, 244, 255, 0.8) 0%, transparent 80%);
-    opacity: 0;
-    transition: opacity var(--transition);
-    z-index: -1;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-    transform: skewX(-20deg);
-    z-index: -1;
-}
-
-body.dark-mode .nav-link::before {
-    background: radial-gradient(circle at var(--lx, 50%) var(--ly, 50%), rgba(55, 118, 171, 0.3) 0%, transparent 80%);
 }
 
 .nav-link:hover {
     color: var(--py-blue);
-}
-
-.nav-link:hover::before {
-    opacity: 1;
-}
-
-.nav-link:hover::after {
-    animation: navSweep 0.8s ease-out;
-}
-
-@keyframes navSweep {
-    0% { left: -100%; }
-    100% { left: 200%; }
-}
-
-.nav-link.active {
-    color: var(--white);
-    background: var(--py-blue);
-    box-shadow: 0 2px 10px rgba(55, 118, 171, 0.35);
-}
-
-.nav-link.active::before {
-    display: none;
-}
-
-.nav-link:hover {
+    background: var(--py-blue-light);
     transform: translateY(-1px);
+}
+
+body.dark-mode .nav-link:hover {
+    color: #60A5FA;
+    background: rgba(55, 118, 171, 0.2);
+}
+
+/* ── Active Link Animation & Glowing Pill ── */
+.nav-link.active {
+    color: var(--white) !important;
+    background: linear-gradient(135deg, #3776AB, #2563EB);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
+    font-weight: 700;
+    animation: navPillPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes navPillPop {
+    0%   { transform: scale(0.92); opacity: 0.8; }
+    60%  { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 .nav-actions {
@@ -481,21 +478,28 @@ body.dark-mode .nav-link::before {
 .recruiter-mode-btn {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
-    background: linear-gradient(135deg, var(--py-blue), #2563EB);
+    gap: 7px;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, #2563EB, #1D4ED8);
     color: var(--white);
     border-radius: var(--radius-pill);
     font-size: 0.8rem;
-    font-weight: 600;
-    transition: all var(--transition);
-    box-shadow: 0 2px 10px rgba(55, 118, 171, 0.3);
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
     white-space: nowrap;
+    animation: recruiterBtnGlow 4s ease-in-out infinite;
+}
+
+@keyframes recruiterBtnGlow {
+    0%, 100% { box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3); }
+    50%      { box-shadow: 0 4px 22px rgba(37, 99, 235, 0.55); }
 }
 
 .recruiter-mode-btn:hover {
     transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 6px 20px rgba(55, 118, 171, 0.45);
+    background: linear-gradient(135deg, #1D4ED8, #1E40AF);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.45);
 }
 
 .recruiter-mode-btn i {
