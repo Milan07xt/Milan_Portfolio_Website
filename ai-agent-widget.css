@@ -372,12 +372,28 @@
     background: white;
     color: var(--ai-text-muted);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.header-actions button:hover {
-    background: #F1F5F9;
-    color: var(--ai-text-main);
+.header-actions button#chat-minimize:hover {
+    background: #FEF9C3;
+    color: #EAB308;
+    border-color: #FEF08A;
+    transform: scale(1.1);
+}
+
+.header-actions button#chat-expand:hover {
+    background: #DBEAFE;
+    color: #3B82F6;
+    border-color: #BFDBFE;
+    transform: scale(1.1);
+}
+
+.header-actions button#chat-close:hover {
+    background: #FEE2E2;
+    color: #EF4444;
+    border-color: #FECACA;
+    transform: scale(1.1);
 }
 
 /* CHAT BODY */
