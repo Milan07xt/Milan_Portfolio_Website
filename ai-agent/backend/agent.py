@@ -22,15 +22,15 @@ Rules:
 """
 
 DEFAULT_MODELS = [
+    "gemini-3.6-flash",
     "gemini-2.5-flash",
     "gemini-2.0-flash",
     "gemini-2.0-flash-lite",
-    "gemini-1.5-flash",
     "gemini-flash-latest"
 ]
 
 def get_candidate_models():
-    primary = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    primary = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
     models = [primary]
     for m in DEFAULT_MODELS:
         if m not in models:
