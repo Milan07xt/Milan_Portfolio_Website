@@ -4252,9 +4252,15 @@ body.dark-mode .project-card::before {
     }
 
     .hero-stats {
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 16px;
         padding: 20px;
+    }
+
+    .hero-stat {
+        justify-content: flex-start;
+        padding: 8px 12px;
     }
 
     .hero-stat-divider {
@@ -4365,6 +4371,35 @@ body.dark-mode .project-card::before {
 }
 
 @media (max-width: 480px) {
+    .hero-stats {
+        gap: 12px;
+        padding: 16px 12px;
+    }
+
+    .hero-stat {
+        gap: 10px;
+        padding: 8px 6px;
+    }
+
+    .hero-stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.05rem;
+        border-radius: 11px;
+    }
+
+    .hero-stat-num {
+        font-size: 1.65rem;
+    }
+
+    .hero-stat-plus {
+        font-size: 1.15rem;
+    }
+
+    .hero-stat-label {
+        font-size: 0.68rem;
+    }
+
     .hero-visual-container {
         width: 240px;
         height: 260px;
