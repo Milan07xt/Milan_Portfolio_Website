@@ -310,7 +310,7 @@ body.dark-mode .mouse-glow {
 .nav-header {
     position: sticky;
     top: 0;
-    z-index: 10000;
+    z-index: 1000;
     padding: 14px 24px;
     display: flex;
     align-items: center;
@@ -3754,7 +3754,7 @@ body.dark-mode .project-card::before {
 .modal-overlay {
     position: fixed;
     inset: 0;
-    z-index: 200;
+    z-index: 99998;
     background: rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(6px);
     display: flex;
@@ -3976,16 +3976,18 @@ body.dark-mode .project-card::before {
 .recruiter-overlay {
     position: fixed;
     inset: 0;
-    z-index: 300;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
+    z-index: 99999;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 30px 20px;
     opacity: 0;
     visibility: hidden;
-    transition: all var(--transition-slow);
+    transition: opacity var(--transition-slow), visibility var(--transition-slow);
+    overflow-y: auto;
 }
 
 .recruiter-overlay:not([hidden]) {
@@ -3994,15 +3996,17 @@ body.dark-mode .project-card::before {
 }
 
 .recruiter-panel {
-    width: min(800px, 94vw);
-    max-height: min(88vh, 660px);
+    width: min(780px, 94vw);
+    max-height: min(85vh, 640px);
+    height: auto;
+    margin: auto;
     overflow-y: auto;
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
     padding: 32px 36px;
     position: relative;
-    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.25),
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35),
                 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
     transform: scale(0.95);
     transition: transform var(--transition-slow);
@@ -4038,21 +4042,40 @@ body.dark-mode .recruiter-panel {
     position: absolute;
     top: 20px;
     right: 20px;
-    width: 36px;
-    height: 36px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background: var(--bg-sec);
-    color: var(--text-sec);
-    font-size: 1rem;
+    border: 1.5px solid var(--border);
+    color: var(--text-primary);
+    font-size: 1.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--transition);
+    cursor: pointer;
+    z-index: 50;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .recruiter-close:hover {
-    background: #FEE2E2;
-    color: #DC2626;
+    background: #EF4444;
+    color: #FFFFFF;
+    border-color: #EF4444;
+    transform: rotate(90deg) scale(1.08);
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+}
+
+body.dark-mode .recruiter-close {
+    background: #1E293B;
+    border-color: #475569;
+    color: #F8FAFC;
+}
+
+body.dark-mode .recruiter-close:hover {
+    background: #EF4444;
+    color: #FFFFFF;
+    border-color: #EF4444;
 }
 
 .recruiter-header {
