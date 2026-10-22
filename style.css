@@ -3994,17 +3994,40 @@ body.dark-mode .project-card::before {
 }
 
 .recruiter-panel {
-    max-width: 820px;
-    width: 100%;
-    max-height: 90vh;
+    width: min(800px, 94vw);
+    max-height: min(88vh, 660px);
     overflow-y: auto;
     background: var(--white);
+    border: 1px solid var(--border);
     border-radius: var(--radius-xl);
-    padding: 40px;
+    padding: 32px 36px;
     position: relative;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.6) inset;
     transform: scale(0.95);
     transition: transform var(--transition-slow);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+}
+
+body.dark-mode .recruiter-panel {
+    background: var(--bg-sec);
+    border-color: var(--border);
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+.recruiter-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.recruiter-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.recruiter-panel::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
 }
 
 .recruiter-overlay:not([hidden]) .recruiter-panel {
@@ -4036,14 +4059,14 @@ body.dark-mode .project-card::before {
     display: flex;
     gap: 20px;
     align-items: center;
-    margin-bottom: 32px;
-    padding-bottom: 24px;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
     border-bottom: 1px solid var(--border);
 }
 
 .recruiter-avatar {
-    width: 80px;
-    height: 80px;
+    width: 76px;
+    height: 76px;
     border-radius: 50%;
     overflow: hidden;
     border: 3px solid var(--py-blue-light);
@@ -4056,6 +4079,7 @@ body.dark-mode .project-card::before {
     height: 100%;
     object-fit: cover;
     object-position: top;
+    display: block;
 }
 
 .recruiter-badge {
@@ -4088,12 +4112,12 @@ body.dark-mode .project-card::before {
 .recruiter-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 28px;
+    gap: 18px;
+    margin-bottom: 22px;
 }
 
 .recruiter-block {
-    padding: 20px;
+    padding: 16px 20px;
     background: var(--bg-sec);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border);
