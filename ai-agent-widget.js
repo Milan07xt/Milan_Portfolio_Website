@@ -71,7 +71,7 @@ function initAIAgent() {
                         <!-- Welcome Card -->
                         <div class="welcome-card">
                             <h4>👋 Hi! I'm Milan's AI Portfolio Assistant.</h4>
-                            <p>Ask me anything about Milan's skills, projects, AI journey, data analytics experience, education, certificates, resume, GitHub, LinkedIn, or career interests.</p>
+                            <p>Ask me anything about Milan's skills, projects, AI journey, data analytics experience, education, certificates, resume, GitHub, LinkedIn, Instagram, or career interests.</p>
                             <div class="welcome-bg-graphic"></div>
                         </div>
                         <div class="time-stamp">Just now</div>
@@ -181,7 +181,9 @@ function initAIAgent() {
         "Career Goals": "I am actively seeking roles as a Python Developer, AI Engineer, or Data Analyst in Gujarat, India, or remote positions where I can build intelligent, data-driven solutions.",
         "Gujarat": "I am based in Gujarat, India, and I am highly interested in contributing to the growing tech ecosystem here, whether on-site or hybrid.",
         "Show Projects": "Navigating to Projects! Please check the main portfolio page.",
-        "Gujarat Opportunities": "I'm open to opportunities in Gujarat! Feel free to reach out via the contact form."
+        "Gujarat Opportunities": "I'm open to opportunities in Gujarat! Feel free to reach out via the contact form.",
+        "Instagram": "Milan's Instagram account is [@code.withmilan](https://www.instagram.com/code.withmilan/). Follow him for Python tips, project walkthroughs, and developer content!",
+        "Contact": "You can connect with Milan directly through:\n- **Instagram**: [@code.withmilan](https://www.instagram.com/code.withmilan/)\n- **LinkedIn**: [milan-rathod07](https://linkedin.com/in/milan-rathod07/)\n- **GitHub**: [Milan07xt](https://github.com/Milan07xt)\n- **Email**: [rathodmilan216@gmail.com](mailto:rathodmilan216@gmail.com)\n- **WhatsApp**: [+91 9327599254](https://wa.me/919327599254)"
     };
 
     // Send Message
