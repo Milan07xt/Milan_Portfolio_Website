@@ -84,7 +84,7 @@ app.post('/submit-contact', async (req, res) => {
   try {
     const { name, email, number, subject, message } = req.body || {};
     if (!name || !email) {
-      return res.status(400).send('Name and email are required');
+      return res.status(400).json({ success: false, message: 'Name and email are required' });
     }
 
     // Capture metadata
@@ -180,7 +180,7 @@ app.post('/submit-contact', async (req, res) => {
       // Silently fail if SMS is not configured
     });
 
-    res.status(200).send('Saved');
+    res.status(200).json({ success: true, message: 'Saved' });
   } catch (err) {
     console.error('Unexpected error in /submit-contact', err);
     res.status(500).send('Server error');

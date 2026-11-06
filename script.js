@@ -530,51 +530,146 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            const nameInput    = form.querySelector('[name="name"]');
+            const emailInput   = form.querySelector('[name="email"]');
+            const numberInput  = form.querySelector('[name="number"]');
+            const subjectInput = form.querySelector('[name="subject"]');
+            const messageInput = form.querySelector('[name="message"]');
+
+            const name    = (nameInput?.value || '').trim();
+            const email   = (emailInput?.value || '').trim();
+            const number  = (numberInput?.value || '').trim();
+            const subject = (subjectInput?.value || '').trim();
+            const message = (messageInput?.value || '').trim();
+
+            // Client-side Validation with specific feedback
+            if (!name) {
+                if (status) {
+                    status.textContent = '✗ Please enter your name.';
+                    status.className = 'form-status error';
+                }
+                nameInput?.focus();
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                if (status) {
+                    status.textContent = '✗ Please enter a valid email address.';
+                    status.className = 'form-status error';
+                }
+                emailInput?.focus();
+                return;
+            }
+
+            if (!message) {
+                if (status) {
+                    status.textContent = '✗ Please enter your message.';
+                    status.className = 'form-status error';
+                }
+                messageInput?.focus();
+                return;
+            }
+
             if (submitBtn) {
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
             }
-            if (status) { status.textContent = ''; status.className = 'form-status'; }
+            if (status) { 
+                status.textContent = 'Sending message...'; 
+                status.className = 'form-status'; 
+            }
 
             const data = {
-                name:    form.querySelector('[name="name"]')?.value    || '',
-                email:   form.querySelector('[name="email"]')?.value   || '',
-                number:  form.querySelector('[name="number"]')?.value  || '',
-                subject: form.querySelector('[name="subject"]')?.value || '',
-                message: form.querySelector('[name="message"]')?.value || '',
-                device:  navigator.userAgent,
+                name,
+                email,
+                number,
+                subject: subject || 'Portfolio Contact Inquiry',
+                message,
+                device: navigator.userAgent,
             };
 
-            try {
-                const res = await fetch('/submit-contact', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
-                });
-                const json = await res.json().catch(() => ({}));
+            let delivered = false;
 
-                if (res.ok) {
-                    form.reset();
-                    if (successModal) {
-                        successModal.classList.add('open');
-                        document.body.style.overflow = 'hidden';
-                    } else if (status) {
-                        status.textContent = '✓ Message sent successfully!';
-                        status.className = 'form-status success';
-                    }
-                } else {
-                    throw new Error(json.message || 'Server error');
+            // 1. Direct FormSubmit Email Service (Delivers directly to rathodmilan216@gmail.com)
+            try {
+                const emailPromise = fetch('https://formsubmit.co/ajax/rathodmilan216@gmail.com', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: data.name,
+                        email: data.email,
+                        phone: data.number || 'Not provided',
+                        subject: data.subject,
+                        message: data.message,
+                        _subject: `New Portfolio Message from ${data.name}: ${data.subject}`,
+                        _template: 'table',
+                        _captcha: 'false'
+                    })
+                });
+
+                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 7000));
+                const emailRes = await Promise.race([emailPromise, timeoutPromise]);
+                if (emailRes && emailRes.ok) {
+                    delivered = true;
                 }
-            } catch (err) {
+            } catch (emailErr) {
+                console.warn('FormSubmit email service notice:', emailErr);
+            }
+
+            // 2. Backup Delivery & Database Recording
+            // Try current host, local backend, and /api/contact
+            const isLocal = ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
+            const candidateUrls = isLocal
+                ? [
+                    window.location.origin + '/submit-contact',
+                    'http://localhost:3000/submit-contact',
+                    'http://localhost:8000/submit-contact'
+                  ]
+                : [
+                    '/api/contact',
+                    '/submit-contact'
+                  ];
+
+            for (const url of candidateUrls) {
+                try {
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+                    if (res.ok) {
+                        delivered = true;
+                        break;
+                    }
+                } catch (bErr) {
+                    // Try next endpoint candidate
+                }
+            }
+
+            if (delivered) {
+                form.reset();
+                if (successModal) {
+                    successModal.classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                } else if (status) {
+                    status.textContent = '✓ Message sent successfully! Milan will get back to you soon.';
+                    status.className = 'form-status success';
+                }
+            } else {
                 if (status) {
                     status.textContent = '✗ Failed to send. Please email directly: rathodmilan216@gmail.com';
                     status.className = 'form-status error';
                 }
-            } finally {
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
-                }
+            }
+
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
             }
         });
 

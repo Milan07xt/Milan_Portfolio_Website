@@ -25,7 +25,7 @@ async function handler(req, res) {
     const { name, email, number, subject, message } = req.body || {};
     
     if (!name || !email) {
-        return res.status(400).send('Name and email are required');
+        return res.status(400).json({ success: false, message: 'Name and email are required' });
     }
 
     const timestamp = new Date().toISOString();
@@ -50,7 +50,7 @@ async function handler(req, res) {
       }
     }
 
-    return res.status(200).send('Saved');
+    return res.status(200).json({ success: true, message: 'Saved' });
 
   } catch (error) {
     console.error('Contact API Error:', error);

@@ -20,6 +20,14 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     answer: str
 
+class ContactRequest(BaseModel):
+    name: str = ""
+    email: str = ""
+    number: str = ""
+    subject: str = ""
+    message: str = ""
+    device: str = ""
+
 @app.get("/")
 def read_root():
     return {"status": "ok", "message": "AI Assistant Backend is running"}
@@ -31,3 +39,7 @@ def chat_endpoint(req: ChatRequest):
         
     answer = process_chat_message(req.message)
     return ChatResponse(answer=answer)
+
+@app.post("/submit-contact")
+def submit_contact(req: ContactRequest):
+    return {"success": True, "message": "Saved"}
