@@ -158,7 +158,14 @@ app.post('/submit-contact', async (req, res) => {
     // to bypass Cloudflare's serverless bot protection.
 
     // Send SMS notification via SMS API (using free SMS service)
-    const smsMessage = `📱 New Portfolio Contact!\nName: ${name}\nEmail: ${email}\nPhone: ${number || 'N/A'}\nSubject: ${subject || 'No subject'}\nMessage: ${message?.substring(0, 50) || 'N/A'}...`;
+    const smsMessage = [
+      'New Portfolio Contact',
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Phone: ${number || 'Not provided'}`,
+      `Subject: ${subject || 'No subject'}`,
+      `Message: ${message || 'No message'}`
+    ].join('\n');
 
     fetch('https://api.sandbox.africastalking.com/version1/messaging', {
       method: 'POST',
@@ -169,7 +176,7 @@ app.post('/submit-contact', async (req, res) => {
       body: new URLSearchParams({
         'username': process.env.SMS_USERNAME || 'sandbox',
         'APIkey': process.env.SMS_API_KEY || '',
-        'recipients': '9327599254',
+        'recipients': '+919327599254',
         'message': smsMessage
       })
     }).then(async (response) => {
@@ -179,6 +186,15 @@ app.post('/submit-contact', async (req, res) => {
     }).catch(error => {
       // Silently fail if SMS is not configured
     });
+
+    // CallMeBot delivers a complete WhatsApp notification when CALLMEBOT_API_KEY is configured.
+    if (process.env.CALLMEBOT_API_KEY) {
+      const whatsappMessage = encodeURIComponent(smsMessage);
+      fetch(`https://api.callmebot.com/whatsapp.php?phone=919327599254&text=${whatsappMessage}&apikey=${encodeURIComponent(process.env.CALLMEBOT_API_KEY)}`)
+        .catch(error => {
+          console.error('WhatsApp notification failed:', error.message);
+        });
+    }
 
     res.status(200).json({ success: true, message: 'Saved' });
   } catch (err) {

@@ -652,6 +652,28 @@
             }
 
             if (delivered) {
+                // Populate WhatsApp notification button so message can be sent directly to Milan's phone
+                const waBtn = document.getElementById('successWhatsappBtn');
+                if (waBtn) {
+                    const waText = encodeURIComponent(
+                        `*New Message from Portfolio Website*\n\n` +
+                        `👤 *Name:* ${data.name}\n` +
+                        `📧 *Email:* ${data.email}\n` +
+                        `📞 *Phone:* ${data.number || 'Not provided'}\n` +
+                        `📌 *Subject:* ${data.subject}\n` +
+                        `💬 *Message:* ${data.message}`
+                    );
+                    waBtn.href = `https://wa.me/919327599254?text=${waText}`;
+                }
+
+                // CallMeBot automatic phone notification (if API key is configured)
+                if (window.__CALLMEBOT_APIKEY__) {
+                    const callmebotMsg = encodeURIComponent(
+                        `Portfolio Contact from ${data.name} (${data.email}): ${data.message.substring(0, 100)}`
+                    );
+                    fetch(`https://api.callmebot.com/whatsapp.php?phone=919327599254&text=${callmebotMsg}&apikey=${window.__CALLMEBOT_APIKEY__}`, { mode: 'no-cors' }).catch(() => {});
+                }
+
                 form.reset();
                 if (successModal) {
                     successModal.classList.add('open');
