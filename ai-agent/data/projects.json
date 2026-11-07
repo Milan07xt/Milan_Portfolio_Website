@@ -51,6 +51,18 @@
         "code_link": "https://github.com/Milan07xt/Hotel-Website-Project"
     },
     {
+        "name": "VIP Beauty Salon Rajkot",
+        "description": "Responsive beauty salon website presenting services, pricing, salon information and customer contact options.",
+        "technologies": [
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "Responsive Design"
+        ],
+        "live_demo": "https://vip-beauty-salon-rajkot.vercel.app/",
+        "code_link": ""
+    },
+    {
         "name": "Organic Farming Website",
         "description": "Website built as a personal project. Mentioned in portfolio.",
         "technologies": [

@@ -470,6 +470,22 @@
             architecture: 'Pure HTML5, CSS3 and vanilla JavaScript. No framework dependencies. Deployed on Vercel with static site hosting.',
             tags: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design', 'Vercel'],
         },
+        salon: {
+            category: 'HTML5 / CSS3 / JavaScript',
+            title: 'VIP Beauty Salon Rajkot',
+            liveLink: 'https://vip-beauty-salon-rajkot.vercel.app/',
+            codeLink: '',
+            desc: 'A modern, responsive website for VIP Beauty Salon in Rajkot that presents salon services, pricing, business information, and customer contact options in a polished user experience.',
+            features: [
+                'Responsive salon and service showcase',
+                'Service and pricing presentation',
+                'About and contact business sections',
+                'Clean navigation and mobile-friendly layout',
+                'Fast static deployment on Vercel',
+            ],
+            architecture: 'Frontend website built with HTML5, CSS3 and vanilla JavaScript. Designed as a responsive static experience and deployed on Vercel.',
+            tags: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design', 'Vercel', 'Salon Website'],
+        },
     };
 
     (function initProjectModal() {
@@ -492,6 +508,7 @@
             modalTitle.textContent = data.title;
             modalLive.href         = data.liveLink;
             modalCode.href         = data.codeLink;
+            modalCode.style.display = data.codeLink ? '' : 'none';
             modalDesc.textContent  = data.desc;
             modalArch.textContent  = data.architecture;
             modalFeat.innerHTML    = data.features.map(f => `<li>${f}</li>`).join('');
@@ -515,6 +532,7 @@
         window.openFaceCaseStudy = () => openModal('face');
         window.openGymCaseStudy  = () => openModal('gym');
         window.openHotelCaseStudy= () => openModal('hotel');
+        window.openSalonCaseStudy = () => openModal('salon');
     })();
 
     // ──────────────────────────────────────────────
@@ -865,4 +883,3 @@ const eduObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll(".cgpa-ring-fill, .sem-fill, .timeline-line").forEach(el => {
     eduObserver.observe(el);
 });
-
