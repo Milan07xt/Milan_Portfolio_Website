@@ -1,6 +1,8 @@
 {
   "version": 2,
   "rewrites": [
-    { "source": "/submit-contact", "destination": "/api/contact" }
+    { "source": "/submit-contact", "destination": "/api/contact" },
+    { "source": "/api/admin/contacts/delete", "destination": "/api/admin/contacts?action=delete" },
+    { "source": "/api/admin/contacts/clear", "destination": "/api/admin/contacts?action=clear" }
   ]
 }

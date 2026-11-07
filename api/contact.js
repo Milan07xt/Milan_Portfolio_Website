@@ -50,6 +50,19 @@ async function handler(req, res) {
       }
     }
 
+    // Optional CallMeBot WhatsApp notification
+    if (process.env.CALLMEBOT_API_KEY) {
+      try {
+        const notifyMsg = encodeURIComponent(
+          `New Portfolio Message\nName: ${name}\nEmail: ${email}\nPhone: ${number || 'N/A'}\nSubject: ${subject || 'N/A'}\nMessage: ${message || 'N/A'}`
+        );
+        fetch(`https://api.callmebot.com/whatsapp.php?phone=919327599254&text=${notifyMsg}&apikey=${encodeURIComponent(process.env.CALLMEBOT_API_KEY)}`)
+          .catch(botErr => console.warn('CallMeBot notification notice:', botErr.message));
+      } catch (botErr) {
+        // Silently skip if network unreachable
+      }
+    }
+
     return res.status(200).json({ success: true, message: 'Saved' });
 
   } catch (error) {

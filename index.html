@@ -19,6 +19,8 @@
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
  rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+ rel="stylesheet">
 
  <!-- Font Awesome -->
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -68,6 +70,9 @@
  <button class="theme-toggle" id="themeToggleBtn" aria-label="Toggle Dark Mode">
  <i class="fa-solid fa-moon"></i>
  </button>
+ <a class="admin-login-btn" href="portfolio-editor.html" aria-label="Admin login" title="Admin login">
+ <i class="fa-solid fa-user-shield"></i>
+ </a>
  <button class="recruiter-mode-btn btn-liquid" id="recruiterModeBtn" aria-label="Toggle Recruiter Mode">
  <i class="fa-solid fa-briefcase"></i>
  <span>Recruiter Mode</span>
@@ -107,7 +112,7 @@
  class="fab fa-github"></i></a>
  <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" aria-label="LinkedIn"><i
  class="fab fa-linkedin-in"></i></a>
- <a href="https://www.instagram.com/code.withmilan/" target="_blank" aria-label="Instagram"><i
+ <a href="https://www.instagram.com/milan07xt/" target="_blank" aria-label="Instagram"><i
  class="fab fa-instagram"></i></a>
  <a href="mailto:rathodmilan216@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
  </div>
@@ -122,23 +127,22 @@
 
  <!-- LEFT: Text Content -->
  <div class="hero-content">
- <div class="hero-badge reveal-fade" style="--delay:0.1s">
+ <div class="hero-badge reveal-fade" data-profile-role style="--delay:0.1s">
  <span class="badge-dot"></span>
  PYTHON DEVELOPER
  </div>
 
  <h1 class="hero-title reveal-fade" style="--delay:0.2s">
- Hi, I'm <span class="gradient-name">Milan Rathod</span>
+ Hi, I'm <span class="gradient-name" data-profile-field="name">Milan Rathod</span>
  </h1>
 
- <p class="hero-headline reveal-fade" style="--delay:0.3s">
- Python Developer building <em>clean, scalable</em> &amp; intelligent digital solutions.
- </p>
+ <p class="hero-headline reveal-fade" data-profile-field="headline" style="--delay:0.3s">
+                Python Developer building <em>clean, scalable</em> & intelligent digital solutions.
+            </p>
 
- <p class="hero-bio reveal-fade" style="--delay:0.4s">
- I build reliable web applications, automation tools, APIs and software solutions using Python
- and modern development technologies.
- </p>
+ <p class="hero-bio reveal-fade" data-profile-field="bio" style="--delay:0.4s">
+                I build reliable web applications, automation tools, APIs and software solutions using Python and modern development technologies.
+            </p>
 
  <div class="hero-actions reveal-fade" style="--delay:0.5s">
  <a href="#projects" class="btn-primary-pill">
@@ -152,21 +156,21 @@
  </div>
 
  <div class="hero-social reveal-fade" style="--delay:0.6s">
- <a href="https://github.com/Milan07xt" target="_blank" class="social-btn" aria-label="GitHub">
+ <a href="https://github.com/Milan07xt" target="_blank" class="social-btn" data-profile-link="github" aria-label="GitHub">
  <i class="fab fa-github"></i>
  </a>
- <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" class="social-btn"
+ <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" class="social-btn" data-profile-link="linkedin"
  aria-label="LinkedIn">
  <i class="fab fa-linkedin-in"></i>
  </a>
- <a href="https://www.instagram.com/code.withmilan/" target="_blank" class="social-btn"
+ <a href="https://www.instagram.com/milan07xt/" target="_blank" class="social-btn" data-profile-link="instagram"
  aria-label="Instagram">
  <i class="fab fa-instagram"></i>
  </a>
- <a href="mailto:rathodmilan216@gmail.com" class="social-btn" aria-label="Email">
+ <a href="mailto:rathodmilan216@gmail.com" class="social-btn" data-profile-link="email" aria-label="Email">
  <i class="fa-solid fa-envelope"></i>
  </a>
- <a href="https://wa.me/919327599254" target="_blank" class="social-btn" aria-label="WhatsApp">
+ <a href="https://wa.me/919327599254" target="_blank" class="social-btn" data-profile-link="phone" aria-label="WhatsApp">
  <i class="fab fa-whatsapp"></i>
  </a>
  </div>
@@ -180,7 +184,7 @@
 
  <!-- Profile image -->
  <div class="hero-image-wrap">
- <img src="images/Profile.jpeg" alt="Milan Rathod - Python Developer" class="hero-profile-img"
+ <img src="images/Profile.jpeg" alt="Milan Rathod - Python Developer" class="hero-profile-img" data-profile-image
  loading="lazy">
  </div>
 
@@ -341,7 +345,7 @@
  <div>
  <div class="info-card-label">Education</div>
  <div class="info-card-value">B.Sc. IT</div>
- <div class="info-card-sub">Noble University, 2023"2026</div>
+ <div class="info-card-sub">Noble University, 2023–2026</div>
  </div>
  </div>
 
@@ -349,7 +353,7 @@
  <div class="info-card-icon" style="--icon-color:#FFD43B"><i class="fa-solid fa-code"></i></div>
  <div>
  <div class="info-card-label">Role</div>
- <div class="info-card-value">Python Developer</div>
+ <div class="info-card-value" data-profile-field="role">Python Developer</div>
  <div class="info-card-sub">Django · FastAPI · REST</div>
  </div>
  </div>
@@ -377,22 +381,22 @@
  <!-- Profile quick-info -->
  <div class="about-profile-card glass-card full-width">
  <ul class="profile-kv-list">
- <li><span class="kv-key"><i class="fa-solid fa-user"></i> Name</span><span class="kv-val">Milan
+ <li><span class="kv-key"><i class="fa-solid fa-user"></i> Name</span><span class="kv-val" data-profile-field="name">Milan
  Rathod</span></li>
  <li><span class="kv-key"><i class="fa-solid fa-location-dot"></i> Location</span><span
- class="kv-val">Gujarat, India</span></li>
+ class="kv-val" data-profile-field="location">Gujarat, India</span></li>
  <li><span class="kv-key"><i class="fa-solid fa-envelope"></i> Email</span><a
  href="mailto:rathodmilan216@gmail.com"
- class="kv-val kv-link">rathodmilan216@gmail.com</a></li>
+ class="kv-val kv-link" data-profile-field="email" data-profile-link="email">rathodmilan216@gmail.com</a></li>
  <li><span class="kv-key"><i class="fa-brands fa-github"></i> GitHub</span><a
  href="https://github.com/Milan07xt" target="_blank"
- class="kv-val kv-link">@Milan07xt</a></li>
+ class="kv-val kv-link" data-profile-link="github">@Milan07xt</a></li>
  <li><span class="kv-key"><i class="fa-brands fa-linkedin"></i> LinkedIn</span><a
  href="https://linkedin.com/in/milan-rathod07/" target="_blank"
- class="kv-val kv-link">milan-rathod07</a></li>
+ class="kv-val kv-link" data-profile-link="linkedin">milan-rathod07</a></li>
  <li><span class="kv-key"><i class="fa-brands fa-instagram"></i> Instagram</span><a
- href="https://www.instagram.com/code.withmilan/" target="_blank"
- class="kv-val kv-link">@code.withmilan</a></li>
+ href="https://www.instagram.com/Milan07xt/" target="_blank"
+ class="kv-val kv-link" data-profile-link="instagram">@Milan07xt</a></li>
  </ul>
  </div>
  </div>
@@ -1478,34 +1482,34 @@
  <!-- Contact Info -->
  <div class="contact-info-col reveal-up" style="--delay:0.2s">
  <div class="contact-info-card glass-card">
- <a href="mailto:rathodmilan216@gmail.com" class="contact-info-item">
+ <a href="mailto:rathodmilan216@gmail.com" class="contact-info-item" data-profile-link="email">
  <div class="contact-info-icon" style="--c:#3776AB"><i class="fa-solid fa-envelope"></i>
  </div>
  <div>
  <div class="contact-info-label">Email</div>
- <div class="contact-info-value">rathodmilan216@gmail.com</div>
+ <div class="contact-info-value" data-profile-field="email">rathodmilan216@gmail.com</div>
  </div>
  </a>
- <a href="tel:+919327599254" class="contact-info-item">
+ <a href="tel:+919327599254" class="contact-info-item" data-profile-link="phone">
  <div class="contact-info-icon" style="--c:#4CAF50"><i class="fa-solid fa-phone"></i></div>
  <div>
  <div class="contact-info-label">Phone</div>
- <div class="contact-info-value">+91 9327599254</div>
+ <div class="contact-info-value" data-profile-field="phone">+91 9327599254</div>
  </div>
  </a>
- <a href="https://www.instagram.com/code.withmilan/" target="_blank" class="contact-info-item">
+ <a href="https://www.instagram.com/milan07xt/" target="_blank" class="contact-info-item" data-profile-link="instagram">
  <div class="contact-info-icon" style="--c:#E1306C"><i class="fa-brands fa-instagram"></i></div>
  <div>
  <div class="contact-info-label">Instagram</div>
- <div class="contact-info-value">@code.withmilan</div>
+ <div class="contact-info-value" data-profile-field="instagramHandle">@milan07xt</div>
  </div>
  </a>
- <a href="https://maps.app.goo.gl/B167LYB5MMnmZZpU7" target="_blank" class="contact-info-item">
+ <a href="https://maps.app.goo.gl/B167LYB5MMnmZZpU7" target="_blank" class="contact-info-item" data-profile-link="location">
  <div class="contact-info-icon" style="--c:#FF5722"><i class="fa-solid fa-location-dot"></i>
  </div>
  <div>
  <div class="contact-info-label">Location</div>
- <div class="contact-info-value">Mandva, Junagadh, Gujarat</div>
+ <div class="contact-info-value" data-profile-field="location">Gujarat, India</div>
  </div>
  </a>
  <div class="contact-map"
@@ -1536,7 +1540,7 @@
  <footer class="site-footer">
  <div class="footer-inner">
  <div class="footer-brand">
- <span class="footer-logo">&lt;/&gt; Milan Rathod</span>
+ <span class="footer-logo">âŸ¨/âŸ© Milan Rathod</span>
  <span class="footer-tagline">Python Developer</span>
  </div>
  <div class="footer-social">
@@ -1661,19 +1665,19 @@
  <h3><i class="fa-solid fa-laptop-code"></i> Best Projects</h3>
  <ul class="recruiter-projects-list">
  <li><i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>Face
- Recognition Attendance</strong> " Python, Django, OpenCV, REST API</li>
+ Recognition Attendance</strong> — Python, Django, OpenCV, REST API</li>
  <li><i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>Gym
- Management System</strong> " Python, Django, SQLite3</li>
+ Management System</strong> — Python, Django, SQLite3</li>
  <li><i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>AI Portfolio
- Assistant</strong> " Python, FastAPI, OpenAI</li>
+ Assistant</strong> — Python, FastAPI, OpenAI</li>
  <li><i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>Hotel
- Management Website</strong> " HTML, CSS, JavaScript</li>
+ Management Website</strong> — HTML, CSS, JavaScript</li>
  </ul>
  </div>
 
  <div class="recruiter-block">
  <h3><i class="fa-solid fa-graduation-cap"></i> Education</h3>
- <p><strong>B.Sc. Information Technology</strong><br>Noble University, Junagadh (2023"2026)<br>CGPA:
+ <p><strong>B.Sc. Information Technology</strong><br>Noble University, Junagadh (2023–2026)<br>CGPA:
  6.35</p>
  </div>
 
@@ -1704,6 +1708,7 @@
  </div>
 
  <script src="script.js"></script>
+ <script src="portfolio-content.js"></script>
  <script src="ai-agent-widget.js"></script>
 </body>
 

@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 const sqlite3 = require('sqlite3').verbose();
+const { requireAdmin } = require('./lib/admin-auth');
 
 const app = express();
 
@@ -36,7 +37,7 @@ startAIAgentBackend();
 // Serve static site files so visiting http://localhost:3000 shows your portfolio
 app.use(express.static(__dirname));
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '6mb' }));
 
 // Handle invalid JSON gracefully without crashing or dumping stack trace
 app.use((err, req, res, next) => {
@@ -80,7 +81,7 @@ function initDb() {
 }
 initDb();
 
-app.post('/submit-contact', async (req, res) => {
+app.post(['/submit-contact', '/api/contact'], async (req, res) => {
   try {
     const { name, email, number, subject, message } = req.body || {};
     if (!name || !email) {
@@ -203,24 +204,20 @@ app.post('/submit-contact', async (req, res) => {
   }
 });
 
-// Admin Login (simple password verification)
-app.post('/api/admin/login', (req, res) => {
-  const { password } = req.body || {};
-  if (password === 'milan123') { // Simple secure password for local dashboard
-    return res.status(200).json({ token: 'milan_session_token_xyz' });
-  }
-  return res.status(401).send('Incorrect password');
-});
+const adminLoginHandler = require('./api/admin/login');
+const adminContentHandler = require('./api/admin/content');
+const adminUploadHandler = require('./api/admin/upload');
+const publicContentHandler = require('./api/portfolio-content');
 
-// Middleware helper to check token
+app.post('/api/admin/login', adminLoginHandler);
+app.get('/api/admin/content', adminContentHandler);
+app.put('/api/admin/content', adminContentHandler);
+app.post('/api/admin/upload', adminUploadHandler);
+app.get('/api/portfolio-content', publicContentHandler);
+
 function requireAuth(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  if (authHeader === 'Bearer milan_session_token_xyz') {
-    return next();
-  }
-  return res.status(401).send('Unauthorized');
+  return requireAdmin(req, res, next);
 }
-
 // Get all contacts from Database
 app.get('/api/admin/contacts', requireAuth, (req, res) => {
   db.all('SELECT * FROM contacts ORDER BY id ASC', [], (err, rows) => {

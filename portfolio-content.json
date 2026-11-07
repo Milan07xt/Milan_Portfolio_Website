@@ -1,0 +1,106 @@
+{
+  "font": "Plus Jakarta Sans",
+  "profile": {
+    "name": "Milan Rathod",
+    "role": "Python Developer",
+    "headline": "Python Developer building clean, scalable & intelligent digital solutions.",
+    "bio": "I build reliable web applications, automation tools, APIs and software solutions using Python and modern development technologies.",
+    "location": "Gujarat, India",
+    "email": "rathodmilan216@gmail.com",
+    "phone": "+91 9327599254",
+    "github": "https://github.com/Milan07xt",
+    "linkedin": "https://linkedin.com/in/milan-rathod07/",
+    "instagram": "https://www.instagram.com/milan07xt/",
+    "profileImage": "images/Profile.jpeg"
+  },
+  "projects": [
+    {
+      "id": "ai",
+      "title": "AI Portfolio Assistant",
+      "description": "A professional AI assistant built with FastAPI and OpenAI that understands portfolio context and answers visitor questions dynamically.",
+      "technologies": [
+        "Python",
+        "FastAPI",
+        "OpenAI",
+        "JS"
+      ],
+      "image": "",
+      "icon": "fa-robot",
+      "liveUrl": "",
+      "codeUrl": ""
+    },
+    {
+      "id": "face-attendance",
+      "title": "Face Recognition Attendance System",
+      "description": "Real-time face recognition attendance tracking system with Django REST API backend and automated log recording.",
+      "technologies": [
+        "Python",
+        "Django",
+        "OpenCV",
+        "REST API"
+      ],
+      "image": "images/face-attendance.png",
+      "icon": "",
+      "liveUrl": "https://face-detection-attendance-woad.vercel.app/home/",
+      "codeUrl": "https://github.com/Milan07xt/SEM-06"
+    },
+    {
+      "id": "gym",
+      "title": "Gym Management System",
+      "description": "Comprehensive Django-based system for managing gym memberships, subscription plans, and payment tracking with an admin dashboard.",
+      "technologies": [
+        "Python",
+        "Django",
+        "SQLite3"
+      ],
+      "image": "images/gym.jpeg",
+      "icon": "",
+      "liveUrl": "https://django-gym-management-system-websit-one.vercel.app/",
+      "codeUrl": "https://github.com/Milan07xt/Django-Gym-Management-System-Website"
+    },
+    {
+      "id": "hotel",
+      "title": "Hotel Management Website",
+      "description": "Responsive hotel booking website with modern UI design, interactive booking flow, and optimized mobile experience.",
+      "technologies": [
+        "HTML5",
+        "CSS3",
+        "JavaScript"
+      ],
+      "image": "images/hotel.jpeg",
+      "icon": "",
+      "liveUrl": "https://hotel-website-project-kappa.vercel.app/index.html",
+      "codeUrl": "https://github.com/Milan07xt/Hotel-Website-Project"
+    },
+    {
+      "id": "salon",
+      "title": "VIP Beauty Salon Rajkot",
+      "description": "A polished salon website for VIP Beauty Salon, presenting services, pricing, salon information, and customer inquiries through a responsive experience.",
+      "technologies": [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "Frontend"
+      ],
+      "image": "images/vip-beauty-salon-new.png",
+      "icon": "",
+      "liveUrl": "https://vip-beauty-salon-rajkot.vercel.app/",
+      "codeUrl": "https://github.com/Milan07xt/VIP_Beauty_Salon_Rajkot"
+    },
+    {
+      "id": "textbook-rag",
+      "title": "Textbook RAG Assistant",
+      "description": "Retrieval-Augmented Generation assistant built with Python for semantic textbook queries and intelligent Q&A responses.",
+      "technologies": [
+        "Python",
+        "RAG",
+        "LLM",
+        "NLP"
+      ],
+      "image": "",
+      "icon": "fa-book-open",
+      "liveUrl": "",
+      "codeUrl": "https://github.com/Milan07xt/Textbook-RAG-Assistant"
+    }
+  ]
+}

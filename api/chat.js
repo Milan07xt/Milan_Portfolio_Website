@@ -3,8 +3,7 @@
  * This function proxies requests to the Gemini API with portfolio context
  */
 
-const API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+const DEFAULT_GEMINI_MODEL = 'gemini-1.5-flash';
 
 const SYSTEM_PROMPT = `You are Milan Rathod's AI Portfolio Assistant, a professional, friendly, and helpful digital representative for his portfolio.
 Your job is to answer only questions about Milan's background, skills, projects, education, certificates, resume, experience, and contact info.
@@ -25,14 +24,41 @@ const PORTFOLIO_DATA = {
   profile: {
     name: "Milan Rathod",
     role: "Python / Django Developer",
-    bio: "B.ScIT graduate who builds backend systems with Python and Django — REST APIs, database-driven applications, and computer-vision tools using OpenCV. Currently looking for a fresher developer role.",
-    location: "Mandva, Junagadh, Gujarat, India",
+    bio: "B.Sc. IT graduate building backend systems with Python and Django — REST APIs, database-driven applications, and computer-vision tools using OpenCV. Experienced in both freelance project delivery and web development internships.",
+    location: "Junagadh, Gujarat, India",
     status: "Available for opportunities (open_to_work)",
     github: "https://github.com/Milan07xt",
     linkedin: "https://linkedin.com/in/milan-rathod07",
+    instagram: "https://www.instagram.com/code.withmilan/",
     email: "rathodmilan216@gmail.com",
     phone: "+91 9327599254"
   },
+  experience: [
+    {
+      role: "Python Developer Intern",
+      organization: "Nityam Webtech",
+      period: "2026 — Present",
+      type: "Internship",
+      description: "Developing backend services and web solutions using Python and Django, building robust RESTful APIs, optimizing relational databases, and collaborating on production software applications.",
+      tech: ["Python", "Django", "REST API", "MySQL", "Git"]
+    },
+    {
+      role: "Python / Django Developer",
+      organization: "Freelance & Projects",
+      period: "2024 — Present",
+      type: "Freelance",
+      description: "Developing real-world applications including Gym Management Systems, Hotel Booking Websites, and AI-powered utilities. Handling end-to-end development from database design to API deployment.",
+      tech: ["Python", "Django", "FastAPI", "REST API", "SQLite"]
+    },
+    {
+      role: "B.Sc. Information Technology",
+      organization: "Noble University, Junagadh",
+      period: "2023 — 2026",
+      type: "Academic",
+      description: "Focusing on advanced computing concepts, relational databases (SQL, SQLite3), and practical application of Computer Vision for attendance and security systems. CGPA: 6.35",
+      tech: ["Data Structures", "DBMS", "Networking", "AI/ML", "Web Dev"]
+    }
+  ],
   skills: {
     "Languages & Frameworks": ["Python 90%", "Django 85%", "Django REST Framework 80%", "JavaScript 75%", "HTML5/CSS3 85%"],
     "Databases & Vision": ["SQL/SQLite3 80%", "REST API Design 85%", "OpenCV (CV & AI) 75%"],
@@ -56,6 +82,18 @@ const PORTFOLIO_DATA = {
       description: "Responsive hotel booking website with registration",
       tech: ["HTML", "CSS", "JavaScript"],
       link: "https://github.com/Milan07xt/Hotel-Website-Project"
+    },
+    {
+      name: "VIP Beauty Salon Rajkot",
+      description: "Modern salon website with services, pricing, and inquiries",
+      tech: ["HTML5", "CSS3", "JavaScript"],
+      link: "https://vip-beauty-salon-rajkot.vercel.app/"
+    },
+    {
+      name: "Textbook RAG Assistant",
+      description: "Retrieval-Augmented Generation assistant for semantic queries",
+      tech: ["Python", "RAG", "LLM", "NLP"],
+      link: "https://github.com/Milan07xt/Textbook-RAG-Assistant"
     }
   ],
   certificates: [
@@ -92,6 +130,9 @@ const PORTFOLIO_DATA = {
 };
 
 async function handler(req, res) {
+  const apiKey = process.env.GEMINI_API_KEY;
+  const geminiModel = process.env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL;
+  const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent`;
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -116,7 +157,7 @@ async function handler(req, res) {
       return res.status(400).json({ error: 'Message is required' });
     }
 
-    if (!API_KEY) {
+    if (!apiKey) {
       return res.status(500).json({
         error: '⚠️ Configuration Error: Gemini API Key is missing. Please contact Milan or use the contact section.',
         answer: '⚠️ Configuration Error: Gemini API Key is missing. Please contact Milan or use the contact section.'
@@ -131,8 +172,12 @@ Portfolio Context:
 - Location: ${PORTFOLIO_DATA.profile.location}
 - GitHub: ${PORTFOLIO_DATA.profile.github}
 - LinkedIn: ${PORTFOLIO_DATA.profile.linkedin}
+- Instagram: ${PORTFOLIO_DATA.profile.instagram}
 - Email: ${PORTFOLIO_DATA.profile.email}
 - Phone: ${PORTFOLIO_DATA.profile.phone}
+
+Experience:
+${JSON.stringify(PORTFOLIO_DATA.experience, null, 2)}
 
 Skills:
 ${JSON.stringify(PORTFOLIO_DATA.skills, null, 2)}
@@ -152,7 +197,7 @@ ${JSON.stringify(PORTFOLIO_DATA.resume, null, 2)}
 User Question: ${message}
 `;
 
-    const response = await fetch(`${GEMINI_API_URL}?key=${API_KEY}`, {
+    const response = await fetch(`${geminiApiUrl}?key=${apiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

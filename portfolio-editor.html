@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Portfolio Admin | Milan Rathod</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="portfolio-editor.css">
+</head>
+<body>
+  <main class="editor-shell">
+    <a class="back-link" href="index.html"><i class="fa-solid fa-arrow-left"></i> Back to portfolio</a>
+
+    <section class="login-panel" id="loginScreen" aria-labelledby="loginTitle">
+      <div class="brand-mark"><i class="fa-solid fa-user-shield"></i></div>
+      <p class="eyebrow">Private area</p>
+      <h1 id="loginTitle">Admin sign in</h1>
+      <p class="intro">Only the portfolio owner can edit profile and project details.</p>
+      <form id="loginForm">
+        <label for="username">Admin username</label>
+        <input id="username" name="username" autocomplete="username" required maxlength="200">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="1024">
+        <button class="primary-button" type="submit"><i class="fa-solid fa-lock"></i> Sign in</button>
+        <p class="form-status" id="loginStatus" role="status" aria-live="polite"></p>
+      </form>
+
+      <aside class="contact-popup" id="loginContact" hidden aria-live="polite">
+        <button class="popup-close" id="closeContact" type="button" aria-label="Close contact options">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <strong>Need access?</strong>
+        <p>This area is for the portfolio admin. Contact Milan if you need help.</p>
+        <div class="contact-options">
+          <a href="mailto:rathodmilan216@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+          <a href="https://wa.me/919327599254" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+          <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="editor-panel" id="editorScreen" hidden aria-labelledby="editorTitle">
+      <header class="editor-header">
+        <div>
+          <p class="eyebrow">Portfolio control room</p>
+          <h1 id="editorTitle">Edit your portfolio</h1>
+          <p class="intro">Updates are published to the live site after saving.</p>
+        </div>
+        <button class="secondary-button" id="logoutButton" type="button"><i class="fa-solid fa-right-from-bracket"></i> Sign out</button>
+      </header>
+
+      <form id="contentForm">
+        <section class="editor-card">
+          <div class="section-heading">
+            <div><h2>Personal details</h2><p>These details appear across your profile and contact sections.</p></div>
+            <label class="font-field" for="font">Site font
+              <select id="font" name="font">
+                <option>Plus Jakarta Sans</option>
+                <option>Inter</option>
+                <option>Poppins</option>
+                <option>Roboto</option>
+                <option>Space Grotesk</option>
+              </select>
+            </label>
+          </div>
+          <div class="field-grid">
+            <label>Name<input id="profileName" required maxlength="100"></label>
+            <label>Role / title<input id="profileRole" required maxlength="120"></label>
+            <label class="wide-field">Headline<input id="profileHeadline" required maxlength="240"></label>
+            <label class="wide-field">Short bio<textarea id="profileBio" rows="3" required maxlength="1200"></textarea></label>
+            <label>Location<input id="profileLocation" required maxlength="160"></label>
+            <label>Email<input id="profileEmail" type="email" required maxlength="254"></label>
+            <label>Phone<input id="profilePhone" type="tel" required maxlength="50"></label>
+            <label>GitHub URL<input id="profileGithub" type="url" required maxlength="2048"></label>
+            <label>LinkedIn URL<input id="profileLinkedin" type="url" required maxlength="2048"></label>
+            <label>Instagram URL<input id="profileInstagram" type="url" required maxlength="2048"></label>
+            <div class="wide-field image-field">
+              <label for="profileImage">Profile image URL</label>
+              <div class="image-input-row">
+                <input id="profileImage" required maxlength="2048">
+                <button class="secondary-button upload-button" id="uploadProfileButton" type="button">Upload image</button>
+                <input id="profileImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+              </div>
+              <img class="image-preview" id="profilePreview" alt="Profile image preview" hidden>
+            </div>
+          </div>
+        </section>
+
+        <section class="editor-card">
+          <div class="section-heading">
+            <div><h2>Featured projects</h2><p>Edit project descriptions, tags, links, and images shown on the portfolio.</p></div>
+            <button class="secondary-button" id="addProjectButton" type="button"><i class="fa-solid fa-plus"></i> Add project</button>
+          </div>
+          <div id="projectList" class="project-list"></div>
+        </section>
+
+        <div class="save-row">
+          <p class="form-status" id="saveStatus" role="status" aria-live="polite"></p>
+          <button class="primary-button save-button" type="submit"><i class="fa-solid fa-cloud-arrow-up"></i> Save and publish</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="portfolio-editor.js"></script>
+</body>
+</html>

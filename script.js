@@ -302,8 +302,9 @@
  if (window.matchMedia('(hover: none)').matches) return;
  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
- document.querySelectorAll('.tilt-card').forEach(card => {
- card.addEventListener('mousemove', (e) => {
+ document.addEventListener('mousemove', (e) => {
+ const card = e.target.closest('.tilt-card');
+ if (!card) return;
  const rect = card.getBoundingClientRect();
  const cx = rect.left + rect.width / 2;
  const cy = rect.top + rect.height / 2;
@@ -313,9 +314,10 @@
  const rotY = dx * 6;
  card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
  });
- card.addEventListener('mouseleave', () => {
+ document.addEventListener('mouseout', e => {
+ const card = e.target.closest('.tilt-card');
+ if (!card || card.contains(e.relatedTarget)) return;
  card.style.transform = '';
- });
  });
  })();
 
@@ -324,7 +326,6 @@
  // ──────────────────────────────────────────────
  (function initProjectFilter() {
  const filterBtns = document.querySelectorAll('[data-filter]');
- const cards = document.querySelectorAll('.project-card');
  if (!filterBtns.length) return;
 
  filterBtns.forEach(btn => {
@@ -334,7 +335,7 @@
  filterBtns.forEach(b => b.classList.remove('active'));
  btn.classList.add('active');
 
- cards.forEach(card => {
+ document.querySelectorAll('.project-card').forEach(card => {
  const tags = (card.dataset.tags || '');
  if (filter === 'all' || tags.includes(filter)) {
  card.classList.remove('hidden');
