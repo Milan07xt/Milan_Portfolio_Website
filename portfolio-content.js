@@ -41,7 +41,6 @@
 
       if (value !== undefined && value !== null) {
         if (field === 'headline') {
-          // Preserve glowing gradient emphasis on clean, scalable
           element.innerHTML = value.replace(/(clean,\s*scalable)/gi, '<em>$1</em>');
         } else {
           element.textContent = value;
@@ -75,12 +74,80 @@
       }
     });
 
-    document.querySelectorAll('[data-profile-image]').forEach(profileImage => {
+    document.querySelectorAll('[data-profile-image]').forEach(profileImg => {
       if (profile.profileImage) {
-        profileImage.src = profile.profileImage;
-        profileImage.alt = `${profile.name} - ${profile.role}`;
+        profileImg.src = profile.profileImage;
+        profileImg.alt = `${profile.name} - ${profile.role}`;
       }
     });
+
+    // Detailed About Me Bio
+    if (profile.aboutBio) {
+      const aboutFirstP = document.querySelector('.about-bio p');
+      if (aboutFirstP) aboutFirstP.innerHTML = profile.aboutBio;
+    }
+
+    // Resume Download Links
+    if (profile.resumeUrl) {
+      document.querySelectorAll('a[href*="Resume.pdf"], a[download]').forEach(el => {
+        el.href = profile.resumeUrl;
+      });
+    }
+
+    // Recruiter Avatar
+    if (profile.avatarImage) {
+      document.querySelectorAll('.recruiter-avatar img').forEach(el => {
+        el.src = profile.avatarImage;
+      });
+    }
+
+    // Recruiter Mode Overlay Highlights
+    const r = content.recruiter;
+    if (r) {
+      const roleEl = document.querySelector('.recruiter-role');
+      if (roleEl && r.role) roleEl.textContent = r.role;
+
+      if (r.coreSkills) {
+        const chipsEl = document.querySelector('.recruiter-chips');
+        if (chipsEl) {
+          chipsEl.replaceChildren();
+          r.coreSkills.split(',').map(s => s.trim()).filter(Boolean).forEach(s => {
+            const chip = document.createElement('span');
+            chip.className = `rc-chip ${s.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+            chip.textContent = s;
+            chipsEl.appendChild(chip);
+          });
+        }
+      }
+
+      if (r.bestProjects) {
+        const projListEl = document.querySelector('.recruiter-projects-list');
+        if (projListEl) {
+          projListEl.replaceChildren();
+          r.bestProjects.split(',').map(s => s.trim()).filter(Boolean).forEach(p => {
+            const li = document.createElement('li');
+            li.innerHTML = `<i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>${p}</strong>`;
+            projListEl.appendChild(li);
+          });
+        }
+      }
+
+      if (r.educationNote) {
+        const eduBlocks = document.querySelectorAll('.recruiter-block');
+        if (eduBlocks[2]) {
+          const p = eduBlocks[2].querySelector('p');
+          if (p) p.innerHTML = r.educationNote.replace(/\n/g, '<br>');
+        }
+      }
+
+      if (r.certificationsNote) {
+        const eduBlocks = document.querySelectorAll('.recruiter-block');
+        if (eduBlocks[3]) {
+          const p = eduBlocks[3].querySelector('p');
+          if (p) p.textContent = r.certificationsNote;
+        }
+      }
+    }
 
     if (profile.name && profile.role) {
       document.title = `${profile.name} | ${profile.role}`;
@@ -104,6 +171,246 @@
     return link;
   }
 
+  /* Dynamic Experience Renderer */
+  function renderExperiences(experiences) {
+    const timeline = document.querySelector('#experience .timeline');
+    if (!timeline || !Array.isArray(experiences) || experiences.length === 0) return;
+    timeline.replaceChildren();
+
+    const track = document.createElement('div');
+    track.className = 'timeline-track';
+    timeline.appendChild(track);
+
+    const icons = {
+      'internship': 'fa-solid fa-briefcase',
+      'freelance': 'fa-solid fa-code',
+      'academic': 'fa-solid fa-graduation-cap',
+      'full-time': 'fa-solid fa-building'
+    };
+
+    experiences.forEach((exp, i) => {
+      const item = document.createElement('div');
+      item.className = 'timeline-item reveal-up revealed';
+      item.style.setProperty('--delay', `${i * 0.1}s`);
+
+      const dot = document.createElement('div');
+      dot.className = 'timeline-dot';
+      const typeKey = (exp.type || '').toLowerCase();
+      const iconClass = icons[typeKey] || 'fa-solid fa-briefcase';
+      dot.innerHTML = `<i class="${iconClass}"></i>`;
+
+      const content = document.createElement('div');
+      content.className = 'timeline-content glass-card';
+
+      const header = document.createElement('div');
+      header.className = 'timeline-header';
+      header.innerHTML = `
+        <span class="timeline-period">${exp.period || ''}</span>
+        <span class="timeline-type ${typeKey}">${exp.type || 'Experience'}</span>
+      `;
+
+      const role = document.createElement('h3');
+      role.className = 'timeline-role';
+      role.textContent = exp.role || '';
+
+      const org = document.createElement('h4');
+      org.className = 'timeline-org';
+      org.textContent = exp.company || '';
+
+      const desc = document.createElement('p');
+      desc.className = 'timeline-desc';
+      desc.textContent = exp.description || '';
+
+      const techWrap = document.createElement('div');
+      techWrap.className = 'timeline-tech';
+      (exp.technologies || []).forEach(t => {
+        const span = document.createElement('span');
+        span.textContent = t;
+        techWrap.appendChild(span);
+      });
+
+      content.append(header, role, org, desc, techWrap);
+      item.append(dot, content);
+      timeline.appendChild(item);
+    });
+  }
+
+  /* Dynamic Education Renderer */
+  function renderEducation(educationList) {
+    const container = document.querySelector('#education .timeline-container');
+    if (!container || !Array.isArray(educationList) || educationList.length === 0) return;
+    container.replaceChildren();
+
+    const line = document.createElement('div');
+    line.className = 'timeline-line';
+    container.appendChild(line);
+
+    educationList.forEach((edu, index) => {
+      const item = document.createElement('div');
+      item.className = 'timeline-item reveal-up revealed';
+      const themeColor = index % 2 === 0 ? '#8B5CF6' : '#3B82F6';
+      item.style.cssText = `--delay:${(index + 1) * 0.1}s; --theme-color: ${themeColor};`;
+
+      const node = document.createElement('div');
+      node.className = 'timeline-node';
+      node.textContent = String(index + 1).padStart(2, '0');
+
+      const card = document.createElement('div');
+      card.className = 'edu-card glass-card';
+
+      const statusClass = (edu.status || '').toLowerCase() === 'pursuing' ? 'pursuing' : 'completed';
+      const badgeColor = index % 2 === 0 ? 'purple' : 'blue';
+
+      card.innerHTML = `
+        <div class="edu-card-left">
+          <div class="edu-card-badge ${badgeColor}">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <div class="badge-time"><i class="${statusClass === 'pursuing' ? 'fa-regular fa-clock' : 'fa-solid fa-circle-check'}"></i></div>
+          </div>
+          <div class="edu-card-year">${edu.period || ''}</div>
+          <div class="edu-status-badge ${statusClass}">${(edu.status || 'COMPLETED').toUpperCase()}</div>
+          <div class="edu-label">${edu.mode || 'Degree'}</div>
+        </div>
+        <div class="edu-card-middle">
+          <div class="top-badge-row">
+            <h3 class="edu-card-degree">${edu.degree || ''}</h3>
+            ${statusClass === 'completed' ? '<div class="top-status-badge green"><i class="fa-solid fa-check"></i> Completed</div>' : ''}
+          </div>
+          <div class="edu-card-school">${edu.institution || ''}</div>
+          <p class="edu-desc">${edu.description || ''}</p>
+          ${edu.duration ? `
+            <div class="edu-details-row">
+              <div class="detail-item"><i class="fa-regular fa-calendar"></i><div><span>Details</span><strong>${edu.duration}</strong></div></div>
+              <div class="detail-item"><i class="fa-solid fa-book-open"></i><div><span>Mode</span><strong>${edu.mode || 'Regular'}</strong></div></div>
+              <div class="detail-item"><i class="fa-solid fa-graduation-cap"></i><div><span>Status</span><strong>${edu.status || 'Completed'}</strong></div></div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      item.append(node, card);
+      container.appendChild(item);
+    });
+  }
+
+  /* Dynamic Skills Galaxy Renderer */
+  function renderSkills(skillsList) {
+    const galaxy = document.getElementById('skillsGalaxy');
+    if (!galaxy || !Array.isArray(skillsList) || skillsList.length === 0) return;
+
+    const center = galaxy.querySelector('.galaxy-center');
+    galaxy.replaceChildren();
+    if (center) galaxy.appendChild(center);
+
+    skillsList.forEach((skill, index) => {
+      const node = document.createElement('div');
+      node.className = `skill-node sn-${(index % 9) + 1}`;
+      node.dataset.skill = skill.name || '';
+      node.dataset.level = skill.level || '';
+      node.dataset.desc = skill.category || '';
+
+      const inner = document.createElement('div');
+      inner.className = 'node-inner';
+
+      if (skill.icon && skill.icon.startsWith('http')) {
+        inner.innerHTML = `<img src="${skill.icon}" alt="${skill.name}" width="28" height="28"><span>${skill.name}</span>`;
+      } else if (skill.icon && skill.icon.includes('fa-')) {
+        inner.innerHTML = `<i class="${skill.icon}" style="font-size:22px"></i><span>${skill.name}</span>`;
+      } else {
+        inner.innerHTML = `<i class="fa-solid fa-code" style="font-size:22px"></i><span>${skill.name}</span>`;
+      }
+
+      const tooltip = document.createElement('div');
+      tooltip.className = 'node-tooltip';
+      tooltip.textContent = `${skill.name} • ${skill.level || 'Proficient'} · ${skill.category || 'Skill'}`;
+
+      node.append(inner, tooltip);
+      galaxy.appendChild(node);
+    });
+
+    const chipsRow = document.querySelector('.skills-chips-row');
+    if (chipsRow) {
+      chipsRow.replaceChildren();
+      skillsList.forEach(skill => {
+        const chip = document.createElement('span');
+        chip.className = 'skill-chip';
+        if (skill.icon && skill.icon.startsWith('http')) {
+          chip.innerHTML = `<img src="${skill.icon}" width="16" height="16" alt=""> ${skill.name}`;
+        } else if (skill.icon && skill.icon.includes('fa-')) {
+          chip.innerHTML = `<i class="${skill.icon}"></i> ${skill.name}`;
+        } else {
+          chip.textContent = skill.name;
+        }
+        chipsRow.appendChild(chip);
+      });
+    }
+  }
+
+  /* Dynamic Certificates Renderer */
+  function renderCertificates(certList) {
+    const grid = document.getElementById('certGrid');
+    if (!grid || !Array.isArray(certList) || certList.length === 0) return;
+    grid.replaceChildren();
+
+    certList.forEach((cert, index) => {
+      const card = document.createElement('div');
+      card.className = 'cert-card glass-card reveal-up revealed';
+      card.dataset.certTags = (cert.category || 'other').toLowerCase();
+      card.style.setProperty('--delay', `${(index * 0.05).toFixed(2)}s`);
+
+      const imgWrap = document.createElement('div');
+      imgWrap.className = 'cert-img-wrap';
+      const img = document.createElement('img');
+      img.src = cert.image || 'images/Profile.jpeg';
+      img.alt = cert.title || 'Certificate';
+      img.loading = 'lazy';
+      const overlay = document.createElement('div');
+      overlay.className = 'cert-img-overlay';
+      imgWrap.append(img, overlay);
+
+      const body = document.createElement('div');
+      body.className = 'cert-card-body';
+      const cat = (cert.category || 'Certificate').toLowerCase();
+
+      const issuerRow = document.createElement('div');
+      issuerRow.className = 'cert-issuer-row';
+      issuerRow.innerHTML = `
+        <span class="cert-org">${cert.issuer || ''}</span>
+        <span class="cert-badge ${cat}">${cert.category || 'Cert'}</span>
+      `;
+
+      const name = document.createElement('h3');
+      name.className = 'cert-name';
+      name.textContent = cert.title || '';
+
+      const tagsRow = document.createElement('div');
+      tagsRow.className = 'cert-tags-row';
+      (cert.tags || []).forEach(t => {
+        const span = document.createElement('span');
+        span.textContent = t;
+        tagsRow.appendChild(span);
+      });
+
+      const viewLink = document.createElement('a');
+      viewLink.href = cert.verifyUrl || cert.image || '#';
+      viewLink.target = '_blank';
+      viewLink.rel = 'noopener noreferrer';
+      viewLink.className = 'cert-view-btn';
+      viewLink.innerHTML = '<i class="fa-solid fa-external-link-alt"></i> View Certificate';
+
+      body.append(issuerRow, name, tagsRow, viewLink);
+      card.append(imgWrap, body);
+      grid.appendChild(card);
+    });
+
+    const certCounter = document.querySelector('.dash-stat-num[data-stat="certs"]');
+    if (certCounter) {
+      certCounter.dataset.count = certList.length;
+      certCounter.textContent = certList.length;
+    }
+  }
+
+  /* Dynamic Projects Renderer */
   function renderProjects(projects) {
     const grid = document.getElementById('projectGrid');
     if (!grid || !Array.isArray(projects)) return;
@@ -200,7 +507,6 @@
         if (liveLink) actions.appendChild(liveLink);
         if (codeLink) actions.appendChild(codeLink);
 
-        // If this project has a registered case study modal in script.js and no code link, show Details button
         const modalOpener = caseStudyHandlers[project.id];
         if (modalOpener && !codeLink) {
           const detailsButton = document.createElement('button');
@@ -278,6 +584,11 @@
 
     setProfile(content);
     renderProjects(content.projects);
+    if (Array.isArray(content.experiences)) renderExperiences(content.experiences);
+    if (Array.isArray(content.education)) renderEducation(content.education);
+    if (Array.isArray(content.skills)) renderSkills(content.skills);
+    if (Array.isArray(content.certificates)) renderCertificates(content.certificates);
+
     if (allowedFonts.has(content.font)) {
       document.documentElement.style.setProperty('--font', `'${content.font}', system-ui, sans-serif`);
     }
@@ -291,26 +602,20 @@
     const timestamp = Date.now();
     let loadedContent = null;
 
-    // 1. Try public serverless / backend API with cache-busting timestamp
     try {
       const response = await fetch(`/api/portfolio-content?_t=${timestamp}`, { cache: 'no-store' });
       if (response.ok) {
         loadedContent = await response.json();
       }
-    } catch (apiErr) {
-      // Continue to local json fallback
-    }
+    } catch (apiErr) {}
 
-    // 2. If API didn't return, fetch local portfolio-content.json
     if (!loadedContent) {
       try {
         const response = await fetch(`portfolio-content.json?_t=${timestamp}`, { cache: 'no-store' });
         if (response.ok) {
           loadedContent = await response.json();
         }
-      } catch (jsonErr) {
-        // Silently skip
-      }
+      } catch (jsonErr) {}
     }
 
     if (loadedContent) {
@@ -318,14 +623,8 @@
     }
   }
 
-  // Initial load on page ready
   loadContent(false);
 
-  // ══════════════════════════════════════════════════════════════
-  // REAL-TIME AUTO SYNC ACROSS TABS AND WINDOWS
-  // ══════════════════════════════════════════════════════════════
-
-  // 1. Instant BroadcastChannel listener
   try {
     const syncChannel = new BroadcastChannel('milan_portfolio_sync');
     syncChannel.onmessage = (event) => {
@@ -335,7 +634,6 @@
     };
   } catch (e) {}
 
-  // 2. Cross-tab storage event listener
   window.addEventListener('storage', (event) => {
     if (event.key === 'milan_portfolio_synced_content' && event.newValue) {
       try {
@@ -347,7 +645,6 @@
     }
   });
 
-  // 3. Auto-refresh whenever visitor or admin switches back to portfolio tab
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
       loadContent(true);
@@ -358,7 +655,6 @@
     loadContent(true);
   });
 
-  // 4. Background polling every 4 seconds when tab is active
   setInterval(() => {
     if (document.visibilityState === 'visible') {
       loadContent(false);
