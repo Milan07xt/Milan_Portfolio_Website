@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,13 @@
   <title>Portfolio Admin | Milan Rathod</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="portfolio-editor.css">
 </head>
+
 <body>
   <!-- Ambient Floating Gradient Orbs & Grid Background -->
   <div class="ambient-glow orb-1" aria-hidden="true"></div>
@@ -42,9 +46,11 @@
       <p class="intro">Only the portfolio owner can edit profile and project details.</p>
       <form id="loginForm">
         <label for="username">Admin username</label>
-        <input id="username" name="username" autocomplete="username" required maxlength="200" placeholder="Enter admin username">
+        <input id="username" name="username" autocomplete="username" required maxlength="200"
+          placeholder="Enter admin username">
         <label for="password">Password</label>
-        <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="1024" placeholder="Enter password">
+        <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="1024"
+          placeholder="Enter password">
         <button class="primary-button" type="submit"><i class="fa-solid fa-lock"></i> Sign in</button>
         <p class="form-status" id="loginStatus" role="status" aria-live="polite"></p>
       </form>
@@ -57,8 +63,10 @@
         <p>This area is for the portfolio admin. Contact Milan if you need help.</p>
         <div class="contact-options">
           <a href="mailto:rathodmilan216@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-          <a href="https://wa.me/919327599254" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-          <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+          <a href="https://wa.me/919327599254" target="_blank" rel="noopener noreferrer"><i
+              class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+          <a href="https://linkedin.com/in/milan-rathod07/" target="_blank" rel="noopener noreferrer"><i
+              class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
         </div>
       </aside>
     </section>
@@ -112,7 +120,8 @@
                 <span class="font-badge-live" id="fontBadgeLive"><i class="fa-solid fa-sparkles"></i> Live</span>
               </span>
               <div class="custom-font-dropdown" id="customFontDropdown">
-                <button type="button" class="custom-font-trigger" id="customFontTrigger" aria-haspopup="listbox" aria-expanded="false">
+                <button type="button" class="custom-font-trigger" id="customFontTrigger" aria-haspopup="listbox"
+                  aria-expanded="false">
                   <span class="font-trigger-text">
                     <i class="fa-solid fa-font font-trigger-icon"></i>
                     <span id="selectedFontLabel">Plus Jakarta Sans</span>
@@ -120,27 +129,32 @@
                   <i class="fa-solid fa-chevron-down font-chevron"></i>
                 </button>
                 <ul class="custom-font-menu" id="customFontMenu" role="listbox">
-                  <li class="font-option active" data-font="Plus Jakarta Sans" role="option" style="--item-i: 0; font-family: 'Plus Jakarta Sans', sans-serif;">
+                  <li class="font-option active" data-font="Plus Jakarta Sans" role="option"
+                    style="--item-i: 0; font-family: 'Plus Jakarta Sans', sans-serif;">
                     <span class="font-option-name">Plus Jakarta Sans</span>
                     <span class="font-preview-pill">Preview Aa</span>
                     <i class="fa-solid fa-check font-check"></i>
                   </li>
-                  <li class="font-option" data-font="Inter" role="option" style="--item-i: 1; font-family: 'Inter', sans-serif;">
+                  <li class="font-option" data-font="Inter" role="option"
+                    style="--item-i: 1; font-family: 'Inter', sans-serif;">
                     <span class="font-option-name">Inter</span>
                     <span class="font-preview-pill">Preview Aa</span>
                     <i class="fa-solid fa-check font-check"></i>
                   </li>
-                  <li class="font-option" data-font="Poppins" role="option" style="--item-i: 2; font-family: 'Poppins', sans-serif;">
+                  <li class="font-option" data-font="Poppins" role="option"
+                    style="--item-i: 2; font-family: 'Poppins', sans-serif;">
                     <span class="font-option-name">Poppins</span>
                     <span class="font-preview-pill">Preview Aa</span>
                     <i class="fa-solid fa-check font-check"></i>
                   </li>
-                  <li class="font-option" data-font="Roboto" role="option" style="--item-i: 3; font-family: 'Roboto', sans-serif;">
+                  <li class="font-option" data-font="Roboto" role="option"
+                    style="--item-i: 3; font-family: 'Roboto', sans-serif;">
                     <span class="font-option-name">Roboto</span>
                     <span class="font-preview-pill">Preview Aa</span>
                     <i class="fa-solid fa-check font-check"></i>
                   </li>
-                  <li class="font-option" data-font="Space Grotesk" role="option" style="--item-i: 4; font-family: 'Space Grotesk', sans-serif;">
+                  <li class="font-option" data-font="Space Grotesk" role="option"
+                    style="--item-i: 4; font-family: 'Space Grotesk', sans-serif;">
                     <span class="font-option-name">Space Grotesk</span>
                     <span class="font-preview-pill">Preview Aa</span>
                     <i class="fa-solid fa-check font-check"></i>
@@ -160,8 +174,9 @@
             <label>Name<input id="profileName" required maxlength="120" placeholder="Milan Rathod"></label>
             <label>Role / title<input id="profileRole" required maxlength="140" placeholder="Python Developer"></label>
             <label class="wide-field">Hero Headline<input id="profileHeadline" required maxlength="300" placeholder="Python Developer building clean, scalable & intelligent digital solutions."></label>
-            <label class="wide-field">Short Bio (Hero section)<textarea id="profileBio" rows="2" required maxlength="2000" placeholder="Short impactful bio for the hero section..."></textarea></label>
-            <label class="wide-field">Detailed About Me Bio (About section)<textarea id="profileAboutBio" rows="3" maxlength="3000" placeholder="I'm Milan Rathod, a B.Sc. IT graduate..."></textarea></label>
+            <label class="wide-field">Short Bio (Hero section)<textarea id="profileBio" rows="2" required maxlength="2000" placeholder="Short impactful bio for hero section..."></textarea></label>
+            <label class="wide-field">Detailed About Me Bio (About section)<textarea id="profileAboutBio" rows="3"
+                maxlength="3000" placeholder="I'm Milan Rathod, a B.Sc. IT graduate..."></textarea></label>
             <label>Location<input id="profileLocation" required maxlength="180" placeholder="Gujarat, India"></label>
             <label>Email<input id="profileEmail" type="email" required maxlength="254" placeholder="rathodmilan216@gmail.com"></label>
             <label>Phone<input id="profilePhone" type="tel" required maxlength="60" placeholder="+91 9327599254"></label>
@@ -174,7 +189,8 @@
               <label for="profileImage">Profile Image URL</label>
               <div class="image-input-row">
                 <input id="profileImage" required maxlength="2048" placeholder="images/Profile.jpeg">
-                <button class="secondary-button upload-button" id="uploadProfileButton" type="button"><i class="fa-solid fa-cloud-arrow-up"></i> Upload image</button>
+                <button class="secondary-button upload-button" id="uploadProfileButton" type="button"><i
+                    class="fa-solid fa-cloud-arrow-up"></i> Upload image</button>
                 <input id="profileImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
               </div>
               <img class="image-preview" id="profilePreview" alt="Profile preview" hidden>
@@ -185,7 +201,8 @@
               <label for="profileAvatar">Recruiter Mode Avatar Image URL</label>
               <div class="image-input-row">
                 <input id="profileAvatar" maxlength="2048" placeholder="images/profile-transparent.png">
-                <button class="secondary-button upload-button" id="uploadAvatarButton" type="button"><i class="fa-solid fa-cloud-arrow-up"></i> Upload avatar</button>
+                <button class="secondary-button upload-button" id="uploadAvatarButton" type="button"><i
+                    class="fa-solid fa-cloud-arrow-up"></i> Upload avatar</button>
                 <input id="avatarImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
               </div>
               <img class="image-preview" id="avatarPreview" alt="Avatar preview" hidden>
@@ -196,7 +213,8 @@
               <label for="profileResumeUrl">Resume PDF / Download URL</label>
               <div class="image-input-row">
                 <input id="profileResumeUrl" maxlength="2048" placeholder="resume/Milankumar_Rathod_Resume.pdf">
-                <button class="secondary-button upload-button" id="uploadResumeButton" type="button"><i class="fa-solid fa-file-pdf"></i> Upload resume PDF</button>
+                <button class="secondary-button upload-button" id="uploadResumeButton" type="button"><i
+                    class="fa-solid fa-file-pdf"></i> Upload resume PDF</button>
                 <input id="resumeFile" type="file" accept="application/pdf,image/png,image/jpeg" hidden>
               </div>
               <p class="field-hint"><i class="fa-solid fa-circle-info"></i> Used across all "Download Resume" buttons on hero, about, and recruiter mode.</p>
@@ -291,12 +309,18 @@
             </div>
           </div>
           <div class="field-grid">
-            <label class="wide-field">Recruiter Role Subtitle<input id="recruiterRole" placeholder="Python Developer · B.Sc. IT · Gujarat, India"></label>
-            <label class="wide-field">Professional Summary / Pitch<textarea id="recruiterSummary" rows="2" placeholder="Specialized in Python backend, Django, and REST APIs..."></textarea></label>
-            <label class="wide-field">Core Skills Highlight (comma-separated)<input id="recruiterCoreSkills" placeholder="Python, Django, FastAPI, REST APIs, SQL, SQLite3, Git, OpenCV"></label>
-            <label class="wide-field">Best Projects Highlight<input id="recruiterBestProjects" placeholder="Face Recognition Attendance, Gym Management System, AI Portfolio Assistant"></label>
-            <label>Education Note<input id="recruiterEducationNote" placeholder="B.Sc. IT (Noble University, Junagadh) & M.Sc. IT (BAOU, Pursuing)"></label>
-            <label>Certifications Note<input id="recruiterCertificationsNote" placeholder="9 certificates from NASSCOM, Udemy, Microsoft, Tata, Unstop"></label>
+            <label class="wide-field">Recruiter Role Subtitle<input id="recruiterRole"
+                placeholder="Python Developer · B.Sc. IT · Gujarat, India"></label>
+            <label class="wide-field">Professional Summary / Pitch<textarea id="recruiterSummary" rows="2"
+                placeholder="Specialized in Python backend, Django, and REST APIs..."></textarea></label>
+            <label class="wide-field">Core Skills Highlight (comma-separated)<input id="recruiterCoreSkills"
+                placeholder="Python, Django, FastAPI, REST APIs, SQL, SQLite3, Git, OpenCV"></label>
+            <label class="wide-field">Best Projects Highlight<input id="recruiterBestProjects"
+                placeholder="Face Recognition Attendance, Gym Management System, AI Portfolio Assistant"></label>
+            <label>Education Note<input id="recruiterEducationNote"
+                placeholder="B.Sc. IT (Noble University, Junagadh) & M.Sc. IT (BAOU, Pursuing)"></label>
+            <label>Certifications Note<input id="recruiterCertificationsNote"
+                placeholder="9 certificates from NASSCOM, Udemy, Microsoft, Tata, Unstop"></label>
           </div>
         </section>
 
@@ -307,8 +331,10 @@
             <p class="form-status" id="saveStatus" role="status" aria-live="polite">All changes will automatically sync to your live portfolio.</p>
           </div>
           <div class="save-row-actions">
-            <a href="index.html" target="_blank" class="secondary-button" style="text-decoration:none"><i class="fa-solid fa-eye"></i> View Live</a>
-            <button class="primary-button save-button" type="submit"><i class="fa-solid fa-cloud-arrow-up"></i> Save and publish</button>
+            <a href="index.html" target="_blank" class="secondary-button" style="text-decoration:none"><i
+                class="fa-solid fa-eye"></i> View Live</a>
+            <button class="primary-button save-button" type="submit"><i class="fa-solid fa-cloud-arrow-up"></i> Save and
+              publish</button>
           </div>
         </div>
       </form>
@@ -316,4 +342,5 @@
   </main>
   <script src="portfolio-editor.js"></script>
 </body>
+
 </html>

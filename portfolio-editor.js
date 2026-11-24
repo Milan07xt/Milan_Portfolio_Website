@@ -754,18 +754,48 @@
     }
   });
 
-  /* Smooth Section Pill Navigation */
-  document.querySelectorAll('.editor-nav-bar .nav-pill').forEach(pill => {
+  /* Smooth Section Pill Navigation & Active Scrollspy */
+  const navPills = Array.from(document.querySelectorAll('.editor-nav-bar .nav-pill'));
+  const sectionIds = navPills.map(p => p.getAttribute('href')).filter(Boolean);
+  const sections = sectionIds.map(id => document.querySelector(id)).filter(Boolean);
+
+  navPills.forEach(pill => {
     pill.addEventListener('click', e => {
       e.preventDefault();
-      document.querySelectorAll('.editor-nav-bar .nav-pill').forEach(p => p.classList.remove('active'));
+      navPills.forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
       const target = document.querySelector(pill.getAttribute('href'));
       if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const navBar = document.querySelector('.editor-nav-bar');
+        const offset = (navBar ? navBar.offsetHeight : 0) + 24;
+        const targetPos = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: targetPos, behavior: 'smooth' });
       }
     });
   });
+
+  // Scrollspy via IntersectionObserver
+  if ('IntersectionObserver' in window && sections.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = '#' + entry.target.id;
+          navPills.forEach(pill => {
+            if (pill.getAttribute('href') === id) {
+              pill.classList.add('active');
+              pill.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+            } else {
+              pill.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, {
+      rootMargin: '-20% 0px -65% 0px',
+      threshold: 0
+    });
+    sections.forEach(sec => observer.observe(sec));
+  }
 
   /* Content Form Submit */
   contentForm.addEventListener('submit', async event => {
