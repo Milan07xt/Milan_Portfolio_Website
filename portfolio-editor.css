@@ -1344,183 +1344,69 @@ textarea {
     padding-top: 16px;
   }
 
-  .remove-item-btn:hover {
-    background: #fee2e2;
-    border-color: #fca5a5;
-    color: #b91c1c;
-    transform: translateY(-1px);
+  .login-panel {
+    margin-top: 4vh;
+    padding: 28px 22px;
   }
 
-  .field-hint {
-    s margin: 6px 0 0;
-    color: #64748b;
-    font-size: 0.78rem;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .field-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 18px;
-  }
-
-  .field-grid label {
-    min-width: 0;
-  }
-
-  .wide-field {
-    grid-column: 1 / -1;
-  }
-
-  .field-grid textarea {
-    display: block;
-  }
-
-  .image-input-row {
-    display: flex;
-    align-items: start;
-    gap: 10px;
-  }
-
-  .image-input-row input {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .upload-button {
-    white-space: nowrap;
-    margin-top: 7px;
-  }
-
-  .image-preview {
-    max-width: 130px;
-    max-height: 100px;
-    object-fit: cover;
-    border-radius: 10px;
-    border: 1px solid #dce4ef;
-    margin: 0 0 16px;
-  }
-
-  .project-list {
-    display: grid;
+  .editor-header,
+  .section-heading {
+    align-items: stretch;
+    flex-direction: column;
     gap: 14px;
   }
 
-  .project-item {
-    padding: 18px;
-    background: #f8faff;
-    border: 1px solid #e1e8f2;
-    border-radius: 15px;
+  .header-actions {
+    width: 100%;
   }
 
-  .project-item-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
+  .header-actions .preview-btn,
+  .header-actions .logout-btn {
+    flex: 1;
   }
 
-  .project-item-header strong {
-    overflow-wrap: anywhere;
+  .editor-card {
+    padding: 20px 16px;
   }
 
-  .remove-project {
-    padding: 7px 10px;
-    border: 1px solid #f1c8c4;
-    border-radius: 9px;
-    background: #fff6f5;
-    color: #b42318;
-    font-weight: 700;
-  }
-
+  .field-grid,
   .project-fields {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 14px;
+    grid-template-columns: 1fr;
   }
 
-  .project-fields label {
-    min-width: 0;
-    font-size: .82rem;
-  }
-
+  .wide-field,
   .project-fields .wide-field {
-    grid-column: 1 / -1;
+    grid-column: auto;
   }
 
-  .project-fields input,
-  .project-fields textarea {
-    display: block;
+  .image-input-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .upload-button {
+    width: 100%;
   }
 
   .save-row {
-    position: sticky;
-    bottom: 14px;
-    z-index: 2;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
     padding: 14px 16px;
-    background: rgba(255, 255, 255, .94);
-    border: 1px solid #dce4ef;
-    border-radius: 16px;
-    box-shadow: 0 12px 35px rgba(31, 58, 105, .14);
   }
 
-  .save-row .form-status {
-    flex: 1;
-    margin: 0;
+  .save-row-actions {
+    width: 100%;
   }
 
+  .save-row-actions a,
   .save-button {
-    min-width: 190px;
+    flex: 1;
+    text-align: center;
   }
 
-  @media (max-width: 650px) {
-    .editor-shell {
-      width: min(100% - 22px, 1040px);
-      padding-top: 18px;
-    }
-
-    .login-panel {
-      margin-top: 5vh;
-      padding: 25px 20px;
-    }
-
-    .editor-header,
-    .section-heading {
-      align-items: stretch;
-      flex-direction: column;
-    }
-
-    .editor-card {
-      padding: 20px 16px;
-    }
-
-    .field-grid,
-    .project-fields {
-      grid-template-columns: 1fr;
-    }
-
-    .wide-field,
-    .project-fields .wide-field {
-      grid-column: auto;
-    }
-
-    .image-input-row {
-      flex-direction: column;
-    }
-
-    .upload-button {
-      margin-top: -6px;
-    }
-
-    .save-row {
-      align-items: stretch;
-      flex-direction: column;
-    }
-
-    .save-button {
-      width: 100%;
-    }
+  .section-actions {
+    width: 100%;
+    justify-content: flex-start;
   }
+}
