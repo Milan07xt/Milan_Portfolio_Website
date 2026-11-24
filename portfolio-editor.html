@@ -7,7 +7,7 @@
   <title>Portfolio Admin | Milan Rathod</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="portfolio-editor.css">
 </head>
@@ -57,15 +57,55 @@
         <section class="editor-card">
           <div class="section-heading">
             <div><h2>Personal details</h2><p>These details appear across your profile and contact sections.</p></div>
-            <label class="font-field" for="font">Site font
-              <select id="font" name="font">
-                <option>Plus Jakarta Sans</option>
-                <option>Inter</option>
-                <option>Poppins</option>
-                <option>Roboto</option>
-                <option>Space Grotesk</option>
+            <div class="font-field-wrapper">
+              <span class="font-field-label">
+                Site font
+                <span class="font-badge-live" id="fontBadgeLive"><i class="fa-solid fa-sparkles"></i> Live</span>
+              </span>
+              <div class="custom-font-dropdown" id="customFontDropdown">
+                <button type="button" class="custom-font-trigger" id="customFontTrigger" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="font-trigger-text">
+                    <i class="fa-solid fa-font font-trigger-icon"></i>
+                    <span id="selectedFontLabel">Plus Jakarta Sans</span>
+                  </span>
+                  <i class="fa-solid fa-chevron-down font-chevron"></i>
+                </button>
+                <ul class="custom-font-menu" id="customFontMenu" role="listbox">
+                  <li class="font-option active" data-font="Plus Jakarta Sans" role="option" style="--item-i: 0; font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <span class="font-option-name">Plus Jakarta Sans</span>
+                    <span class="font-preview-pill">Preview Aa</span>
+                    <i class="fa-solid fa-check font-check"></i>
+                  </li>
+                  <li class="font-option" data-font="Inter" role="option" style="--item-i: 1; font-family: 'Inter', sans-serif;">
+                    <span class="font-option-name">Inter</span>
+                    <span class="font-preview-pill">Preview Aa</span>
+                    <i class="fa-solid fa-check font-check"></i>
+                  </li>
+                  <li class="font-option" data-font="Poppins" role="option" style="--item-i: 2; font-family: 'Poppins', sans-serif;">
+                    <span class="font-option-name">Poppins</span>
+                    <span class="font-preview-pill">Preview Aa</span>
+                    <i class="fa-solid fa-check font-check"></i>
+                  </li>
+                  <li class="font-option" data-font="Roboto" role="option" style="--item-i: 3; font-family: 'Roboto', sans-serif;">
+                    <span class="font-option-name">Roboto</span>
+                    <span class="font-preview-pill">Preview Aa</span>
+                    <i class="fa-solid fa-check font-check"></i>
+                  </li>
+                  <li class="font-option" data-font="Space Grotesk" role="option" style="--item-i: 4; font-family: 'Space Grotesk', sans-serif;">
+                    <span class="font-option-name">Space Grotesk</span>
+                    <span class="font-preview-pill">Preview Aa</span>
+                    <i class="fa-solid fa-check font-check"></i>
+                  </li>
+                </ul>
+              </div>
+              <select id="font" name="font" class="hidden-font-select" aria-hidden="true" tabindex="-1">
+                <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
+                <option value="Inter">Inter</option>
+                <option value="Poppins">Poppins</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Space Grotesk">Space Grotesk</option>
               </select>
-            </label>
+            </div>
           </div>
           <div class="field-grid">
             <label>Name<input id="profileName" required maxlength="100"></label>
