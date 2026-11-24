@@ -96,27 +96,54 @@ body {
 }
 
 @keyframes floatOrb1 {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(60px, 40px) scale(1.1); }
-  100% { transform: translate(20px, 80px) scale(0.95); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(60px, 40px) scale(1.1);
+  }
+
+  100% {
+    transform: translate(20px, 80px) scale(0.95);
+  }
 }
 
 @keyframes floatOrb2 {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-70px, 50px) scale(1.08); }
-  100% { transform: translate(-30px, 90px) scale(0.92); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-70px, 50px) scale(1.08);
+  }
+
+  100% {
+    transform: translate(-30px, 90px) scale(0.92);
+  }
 }
 
 @keyframes floatOrb3 {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(50px, -40px) scale(1.05); }
-  100% { transform: translate(-40px, -30px) scale(0.95); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(50px, -40px) scale(1.05);
+  }
+
+  100% {
+    transform: translate(-40px, -30px) scale(0.95);
+  }
 }
 
 /* ══════════════════════════════════════════════════════════════════
    2. CORE SHELL & TOP NAVIGATION BAR
    ══════════════════════════════════════════════════════════════════ */
-button, input, textarea, select {
+button,
+input,
+textarea,
+select {
   font: inherit;
 }
 
@@ -204,9 +231,17 @@ button {
 }
 
 @keyframes pulseDot {
-  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
-  70% { box-shadow: 0 0 0 7px rgba(16, 185, 129, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+  }
+
+  70% {
+    box-shadow: 0 0 0 7px rgba(16, 185, 129, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -227,8 +262,15 @@ button {
 }
 
 @keyframes slideUpFade {
-  0% { opacity: 0; transform: translateY(20px) scale(0.97); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .brand-mark-wrap {
@@ -262,8 +304,17 @@ button {
 }
 
 @keyframes ringPulse {
-  0%, 100% { transform: scale(0.95); opacity: 0.5; }
-  50% { transform: scale(1.12); opacity: 0.9; }
+
+  0%,
+  100% {
+    transform: scale(0.95);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.12);
+    opacity: 0.9;
+  }
 }
 
 .eyebrow {
@@ -275,7 +326,9 @@ button {
   text-transform: uppercase;
 }
 
-h1, h2, p {
+h1,
+h2,
+p {
   margin-top: 0;
 }
 
@@ -293,7 +346,8 @@ h1 {
   -webkit-text-fill-color: transparent;
 }
 
-.intro, .section-heading p {
+.intro,
+.section-heading p {
   color: #64748b;
   line-height: 1.6;
   font-size: 0.92rem;
@@ -335,11 +389,15 @@ form label {
   color: #94a3b8;
 }
 
-input:hover, textarea:hover, select:hover {
+input:hover,
+textarea:hover,
+select:hover {
   border-color: #cbd5e1;
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   border-color: var(--primary);
   background: #ffffff;
   box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.16), 0 2px 8px rgba(37, 99, 235, 0.08);
@@ -354,7 +412,8 @@ textarea {
 /* ══════════════════════════════════════════════════════════════════
    4. BUTTONS & INTERACTIVE CONTROLS
    ══════════════════════════════════════════════════════════════════ */
-.primary-button, .secondary-button {
+.primary-button,
+.secondary-button {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
@@ -711,8 +770,15 @@ textarea {
 }
 
 @keyframes cardItemSlide {
-  0% { opacity: 0; transform: translateY(12px) scale(0.98); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .card-item:hover {
@@ -787,9 +853,19 @@ textarea {
 }
 
 @keyframes shakeTrash {
-  0%, 100% { transform: rotate(0); }
-  25% { transform: rotate(-10deg); }
-  75% { transform: rotate(10deg); }
+
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  25% {
+    transform: rotate(-10deg);
+  }
+
+  75% {
+    transform: rotate(10deg);
+  }
 }
 
 .field-hint {
@@ -974,8 +1050,8 @@ textarea {
   transform: translateY(-10px) scale(0.96);
   transform-origin: top center;
   transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              visibility 0.22s;
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.22s;
 }
 
 .custom-font-dropdown.is-open .custom-font-menu {
@@ -1066,8 +1142,15 @@ textarea {
 
 /* Floating Animated Toast */
 @keyframes fontToastSlide {
-  0% { opacity: 0; transform: translate(-50%, 15px) scale(0.92); }
-  100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 15px) scale(0.92);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
 }
 
 .font-toast {
@@ -1152,9 +1235,17 @@ textarea {
 }
 
 @keyframes liquidGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .save-button:hover i {
@@ -1162,8 +1253,13 @@ textarea {
 }
 
 @keyframes bounceCloud {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-3px); }
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-3px);
+  }
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -1235,76 +1331,196 @@ textarea {
 /* ══════════════════════════════════════════════════════════════════
    11. RESPONSIVENESS (MOBILE / TABLET ADAPTATION)
    ══════════════════════════════════════════════════════════════════ */
-@media (max-width: 768px) {
-  .editor-shell {
-    width: min(100% - 24px, 1060px);
-    padding-top: 16px;
-  }
-
-  .login-panel {
-    margin-top: 4vh;
-    padding: 28px 22px;
-  }
-
-  .editor-header, .section-heading {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .header-actions {
-    width: 100%;
-  }
-
-  .header-actions .preview-btn,
-  .header-actions .logout-btn {
-    flex: 1;
-  }
-
-  .editor-card {
-    padding: 20px 16px;
-  }
-
-  .field-grid, .project-fields {
-    grid-template-columns: 1fr;
-  }
-
-  .wide-field, .project-fields .wide-field {
-    grid-column: auto;
-  }
-
-  .image-input-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .upload-button {
-    width: 100%;
-  }
-
-  .save-row {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 12px;
-    padding: 14px 16px;
-  }
-
-  .save-row-actions {
-    width: 100%;
-  }
-
-  .save-row-actions a,
-  .save-button {
-    flex: 1;
-    text-align: center;
-  }
-}
-
-
-/* Section Heading Actions (e.g. Recruiter Mode Auto-Fill & Clear) */
 .section-actions {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
 }
+
+@media (max-width: 768px) {
+  .editor-shell {
+    width: min(100% - 24px, 1060px);
+    padding-top: 16px;
+  }
+
+  .remove-item-btn:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+    color: #b91c1c;
+    transform: translateY(-1px);
+  }
+
+  .field-hint {
+    s margin: 6px 0 0;
+    color: #64748b;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 18px;
+  }
+
+  .field-grid label {
+    min-width: 0;
+  }
+
+  .wide-field {
+    grid-column: 1 / -1;
+  }
+
+  .field-grid textarea {
+    display: block;
+  }
+
+  .image-input-row {
+    display: flex;
+    align-items: start;
+    gap: 10px;
+  }
+
+  .image-input-row input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .upload-button {
+    white-space: nowrap;
+    margin-top: 7px;
+  }
+
+  .image-preview {
+    max-width: 130px;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #dce4ef;
+    margin: 0 0 16px;
+  }
+
+  .project-list {
+    display: grid;
+    gap: 14px;
+  }
+
+  .project-item {
+    padding: 18px;
+    background: #f8faff;
+    border: 1px solid #e1e8f2;
+    border-radius: 15px;
+  }
+
+  .project-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .project-item-header strong {
+    overflow-wrap: anywhere;
+  }
+
+  .remove-project {
+    padding: 7px 10px;
+    border: 1px solid #f1c8c4;
+    border-radius: 9px;
+    background: #fff6f5;
+    color: #b42318;
+    font-weight: 700;
+  }
+
+  .project-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 14px;
+  }
+
+  .project-fields label {
+    min-width: 0;
+    font-size: .82rem;
+  }
+
+  .project-fields .wide-field {
+    grid-column: 1 / -1;
+  }
+
+  .project-fields input,
+  .project-fields textarea {
+    display: block;
+  }
+
+  .save-row {
+    position: sticky;
+    bottom: 14px;
+    z-index: 2;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, .94);
+    border: 1px solid #dce4ef;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(31, 58, 105, .14);
+  }
+
+  .save-row .form-status {
+    flex: 1;
+    margin: 0;
+  }
+
+  .save-button {
+    min-width: 190px;
+  }
+
+  @media (max-width: 650px) {
+    .editor-shell {
+      width: min(100% - 22px, 1040px);
+      padding-top: 18px;
+    }
+
+    .login-panel {
+      margin-top: 5vh;
+      padding: 25px 20px;
+    }
+
+    .editor-header,
+    .section-heading {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .editor-card {
+      padding: 20px 16px;
+    }
+
+    .field-grid,
+    .project-fields {
+      grid-template-columns: 1fr;
+    }
+
+    .wide-field,
+    .project-fields .wide-field {
+      grid-column: auto;
+    }
+
+    .image-input-row {
+      flex-direction: column;
+    }
+
+    .upload-button {
+      margin-top: -6px;
+    }
+
+    .save-row {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .save-button {
+      width: 100%;
+    }
+  }
