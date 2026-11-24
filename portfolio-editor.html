@@ -48,15 +48,30 @@
         <div>
           <p class="eyebrow">Portfolio control room</p>
           <h1 id="editorTitle">Edit your portfolio</h1>
-          <p class="intro">Updates are published to the live site after saving.</p>
+          <p class="intro">Manage profile, experiences, education, skills, certificates, and projects.</p>
         </div>
         <button class="secondary-button" id="logoutButton" type="button"><i class="fa-solid fa-right-from-bracket"></i> Sign out</button>
       </header>
 
+      <!-- Quick Jump Navigation Pills -->
+      <nav class="editor-nav-bar" aria-label="Editor sections">
+        <a href="#sec-profile" class="nav-pill active"><i class="fa-solid fa-user"></i> Personal &amp; About</a>
+        <a href="#sec-experience" class="nav-pill"><i class="fa-solid fa-briefcase"></i> Experience <span class="pill-count" id="countExp">0</span></a>
+        <a href="#sec-education" class="nav-pill"><i class="fa-solid fa-graduation-cap"></i> Education <span class="pill-count" id="countEdu">0</span></a>
+        <a href="#sec-skills" class="nav-pill"><i class="fa-solid fa-atom"></i> Skills <span class="pill-count" id="countSkills">0</span></a>
+        <a href="#sec-certificates" class="nav-pill"><i class="fa-solid fa-award"></i> Certificates <span class="pill-count" id="countCerts">0</span></a>
+        <a href="#sec-projects" class="nav-pill"><i class="fa-solid fa-laptop-code"></i> Projects <span class="pill-count" id="countProjects">0</span></a>
+        <a href="#sec-recruiter" class="nav-pill"><i class="fa-solid fa-id-badge"></i> Recruiter Mode</a>
+      </nav>
+
       <form id="contentForm">
-        <section class="editor-card">
+        <!-- 1. Personal Details & About -->
+        <section class="editor-card" id="sec-profile">
           <div class="section-heading">
-            <div><h2>Personal details</h2><p>These details appear across your profile and contact sections.</p></div>
+            <div>
+              <h2><i class="fa-solid fa-user-pen" style="color:#2563eb;margin-right:8px"></i>Personal Details &amp; About</h2>
+              <p>Core identity, contact links, about narrative, and resume download.</p>
+            </div>
             <div class="font-field-wrapper">
               <span class="font-field-label">
                 Site font
@@ -108,36 +123,132 @@
             </div>
           </div>
           <div class="field-grid">
-            <label>Name<input id="profileName" required maxlength="100"></label>
-            <label>Role / title<input id="profileRole" required maxlength="120"></label>
-            <label class="wide-field">Headline<input id="profileHeadline" required maxlength="240"></label>
-            <label class="wide-field">Short bio<textarea id="profileBio" rows="3" required maxlength="1200"></textarea></label>
-            <label>Location<input id="profileLocation" required maxlength="160"></label>
+            <label>Name<input id="profileName" required maxlength="120"></label>
+            <label>Role / title<input id="profileRole" required maxlength="140"></label>
+            <label class="wide-field">Hero Headline<input id="profileHeadline" required maxlength="300"></label>
+            <label class="wide-field">Short Bio (Hero section)<textarea id="profileBio" rows="2" required maxlength="2000"></textarea></label>
+            <label class="wide-field">Detailed About Me Bio (About section)<textarea id="profileAboutBio" rows="3" maxlength="3000" placeholder="I'm Milan Rathod, a B.Sc. IT graduate..."></textarea></label>
+            <label>Location<input id="profileLocation" required maxlength="180"></label>
             <label>Email<input id="profileEmail" type="email" required maxlength="254"></label>
-            <label>Phone<input id="profilePhone" type="tel" required maxlength="50"></label>
+            <label>Phone<input id="profilePhone" type="tel" required maxlength="60"></label>
             <label>GitHub URL<input id="profileGithub" type="url" required maxlength="2048"></label>
             <label>LinkedIn URL<input id="profileLinkedin" type="url" required maxlength="2048"></label>
             <label>Instagram URL<input id="profileInstagram" type="url" required maxlength="2048"></label>
+
+            <!-- Profile Image Uploader -->
             <div class="wide-field image-field">
-              <label for="profileImage">Profile image URL</label>
+              <label for="profileImage">Profile Image URL</label>
               <div class="image-input-row">
                 <input id="profileImage" required maxlength="2048">
-                <button class="secondary-button upload-button" id="uploadProfileButton" type="button">Upload image</button>
+                <button class="secondary-button upload-button" id="uploadProfileButton" type="button"><i class="fa-solid fa-upload"></i> Upload image</button>
                 <input id="profileImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
               </div>
-              <img class="image-preview" id="profilePreview" alt="Profile image preview" hidden>
+              <img class="image-preview" id="profilePreview" alt="Profile preview" hidden>
+            </div>
+
+            <!-- Recruiter Avatar Image Uploader -->
+            <div class="wide-field image-field">
+              <label for="profileAvatar">Recruiter Mode Avatar Image URL</label>
+              <div class="image-input-row">
+                <input id="profileAvatar" maxlength="2048" placeholder="images/profile-transparent.png">
+                <button class="secondary-button upload-button" id="uploadAvatarButton" type="button"><i class="fa-solid fa-upload"></i> Upload avatar</button>
+                <input id="avatarImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+              </div>
+              <img class="image-preview" id="avatarPreview" alt="Avatar preview" hidden>
+            </div>
+
+            <!-- Resume Download Link / File Uploader -->
+            <div class="wide-field image-field">
+              <label for="profileResumeUrl">Resume PDF / Download URL</label>
+              <div class="image-input-row">
+                <input id="profileResumeUrl" maxlength="2048" placeholder="resume/Milankumar_Rathod_Resume.pdf">
+                <button class="secondary-button upload-button" id="uploadResumeButton" type="button"><i class="fa-solid fa-file-pdf"></i> Upload resume PDF</button>
+                <input id="resumeFile" type="file" accept="application/pdf,image/png,image/jpeg" hidden>
+              </div>
+              <p class="field-hint"><i class="fa-solid fa-circle-info"></i> Used by the "Download Resume" buttons on hero, about, and recruiter mode.</p>
             </div>
           </div>
         </section>
 
-        <section class="editor-card">
+        <!-- 2. Professional Experience -->
+        <section class="editor-card" id="sec-experience">
           <div class="section-heading">
-            <div><h2>Featured projects</h2><p>Edit project descriptions, tags, links, and images shown on the portfolio.</p></div>
-            <button class="secondary-button" id="addProjectButton" type="button"><i class="fa-solid fa-plus"></i> Add project</button>
+            <div>
+              <h2><i class="fa-solid fa-briefcase" style="color:#2563eb;margin-right:8px"></i>Professional Experience</h2>
+              <p>Add, edit, reorder, or delete work experience and internship timeline cards.</p>
+            </div>
+            <button class="secondary-button" id="addExpButton" type="button"><i class="fa-solid fa-plus"></i> Add experience</button>
           </div>
-          <div id="projectList" class="project-list"></div>
+          <div id="experienceList" class="item-list"></div>
         </section>
 
+        <!-- 3. Education & Qualifications -->
+        <section class="editor-card" id="sec-education">
+          <div class="section-heading">
+            <div>
+              <h2><i class="fa-solid fa-graduation-cap" style="color:#2563eb;margin-right:8px"></i>Education &amp; Qualifications</h2>
+              <p>Add, edit, or delete degree entries, institutions, periods, and CGPA/status.</p>
+            </div>
+            <button class="secondary-button" id="addEduButton" type="button"><i class="fa-solid fa-plus"></i> Add education</button>
+          </div>
+          <div id="educationList" class="item-list"></div>
+        </section>
+
+        <!-- 4. Python Skills Galaxy -->
+        <section class="editor-card" id="sec-skills">
+          <div class="section-heading">
+            <div>
+              <h2><i class="fa-solid fa-atom" style="color:#2563eb;margin-right:8px"></i>Python Skills Galaxy</h2>
+              <p>Add, edit, or delete technologies, proficiency percentages, and orbit nodes.</p>
+            </div>
+            <button class="secondary-button" id="addSkillButton" type="button"><i class="fa-solid fa-plus"></i> Add skill</button>
+          </div>
+          <div id="skillsList" class="item-list grid-2col"></div>
+        </section>
+
+        <!-- 5. Certifications & Achievements -->
+        <section class="editor-card" id="sec-certificates">
+          <div class="section-heading">
+            <div>
+              <h2><i class="fa-solid fa-award" style="color:#2563eb;margin-right:8px"></i>Certifications &amp; Achievements</h2>
+              <p>Manage certificates, upload certificate images, set issuer, categories, and tags.</p>
+            </div>
+            <button class="secondary-button" id="addCertButton" type="button"><i class="fa-solid fa-plus"></i> Add certificate</button>
+          </div>
+          <div id="certificateList" class="item-list"></div>
+        </section>
+
+        <!-- 6. Featured Projects -->
+        <section class="editor-card" id="sec-projects">
+          <div class="section-heading">
+            <div>
+              <h2><i class="fa-solid fa-laptop-code" style="color:#2563eb;margin-right:8px"></i>Featured Projects</h2>
+              <p>Edit project descriptions, tags, demo URLs, source code, and project images.</p>
+            </div>
+            <button class="secondary-button" id="addProjectButton" type="button"><i class="fa-solid fa-plus"></i> Add project</button>
+          </div>
+          <div id="projectList" class="item-list"></div>
+        </section>
+
+        <!-- 7. Recruiter Mode -->
+        <section class="editor-card" id="sec-recruiter">
+          <div class="section-heading">
+            <div>
+              <h2><i class="fa-solid fa-id-badge" style="color:#2563eb;margin-right:8px"></i>Recruiter Mode Details</h2>
+              <p>Configure quick highlights shown in the one-click Recruiter Mode modal.</p>
+            </div>
+          </div>
+          <div class="field-grid">
+            <label class="wide-field">Recruiter Role Subtitle<input id="recruiterRole" placeholder="Python Developer · B.Sc. IT · Gujarat, India"></label>
+            <label class="wide-field">Professional Summary / Pitch<textarea id="recruiterSummary" rows="2" placeholder="Specialized in Python backend, Django, and REST APIs..."></textarea></label>
+            <label class="wide-field">Core Skills Highlight (comma-separated)<input id="recruiterCoreSkills" placeholder="Python, Django, FastAPI, REST APIs, SQL, SQLite3, Git, OpenCV"></label>
+            <label class="wide-field">Best Projects Highlight<input id="recruiterBestProjects" placeholder="Face Recognition Attendance, Gym Management System, AI Portfolio Assistant"></label>
+            <label>Education Note<input id="recruiterEducationNote" placeholder="B.Sc. IT (Noble University, Junagadh) & M.Sc. IT (BAOU, Pursuing)"></label>
+            <label>Certifications Note<input id="recruiterCertificationsNote" placeholder="9 certificates from NASSCOM, Udemy, Microsoft, Tata, Unstop"></label>
+          </div>
+        </section>
+
+        <!-- Sticky Save Bar -->
         <div class="save-row">
           <p class="form-status" id="saveStatus" role="status" aria-live="polite"></p>
           <button class="primary-button save-button" type="submit"><i class="fa-solid fa-cloud-arrow-up"></i> Save and publish</button>
