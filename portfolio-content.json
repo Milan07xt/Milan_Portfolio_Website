@@ -11,8 +11,267 @@
     "github": "https://github.com/Milan07xt",
     "linkedin": "https://linkedin.com/in/milan-rathod07/",
     "instagram": "https://www.instagram.com/milan07xt/",
-    "profileImage": "images/Profile.jpeg"
+    "profileImage": "images/Profile.jpeg",
+    "avatarImage": "images/profile-transparent.png",
+    "resumeUrl": "resume/Milankumar_Rathod_Resume.pdf",
+    "aboutBio": "I'm Milan Rathod, a B.Sc. IT graduate from Noble University, Junagadh. I specialize in Python backend development with a strong focus on Django, REST APIs, and backend architecture."
   },
+  "recruiter": {
+    "role": "Python Developer · B.Sc. IT · Gujarat, India",
+    "summary": "Specialized in Python backend, Django, and REST APIs. Building production-ready software solutions with clean architecture.",
+    "coreSkills": "Python, Django, FastAPI, REST APIs, SQL, SQLite3, Git, OpenCV",
+    "bestProjects": "Face Recognition Attendance, Gym Management System, AI Portfolio Assistant, VIP Beauty Salon",
+    "educationNote": "B.Sc. IT (Noble University, Junagadh) & M.Sc. IT (BAOU, Pursuing)",
+    "certificationsNote": "9 certificates from NASSCOM, Udemy, Microsoft, Tata, Unstop"
+  },
+  "experiences": [
+    {
+      "id": "exp-nityam",
+      "period": "2026 – Present",
+      "type": "Internship",
+      "role": "Python Developer Intern",
+      "company": "Nityam Webtech",
+      "description": "Developing backend services and web solutions using Python and Django, building robust RESTful APIs, optimizing relational databases, and collaborating on production software applications.",
+      "technologies": [
+        "Python",
+        "Django",
+        "REST API",
+        "MySQL",
+        "Git"
+      ]
+    },
+    {
+      "id": "exp-freelance",
+      "period": "2024 – Present",
+      "type": "Freelance",
+      "role": "Python / Django Developer",
+      "company": "Freelance & Projects",
+      "description": "Developing real-world applications including Gym Management Systems, Hotel Booking Websites, and AI-powered utilities. Handling end-to-end development from database design to API deployment.",
+      "technologies": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "SQLite"
+      ]
+    },
+    {
+      "id": "exp-academic",
+      "period": "2023 – 2026",
+      "type": "Academic",
+      "role": "B.Sc. Information Technology",
+      "company": "Noble University, Junagadh",
+      "description": "Focusing on advanced computing concepts, relational databases (SQL, SQLite3), and practical application of Computer Vision for attendance and security systems. CGPA: 6.35",
+      "technologies": [
+        "Data Structures",
+        "DBMS",
+        "Networking",
+        "AI/ML",
+        "Web Dev"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": "edu-msc",
+      "degree": "Master of Science in Information Technology",
+      "institution": "Dr. Babasaheb Ambedkar Open University (BAOU) - Ahmedabad",
+      "period": "2026 – Present",
+      "status": "PURSUING",
+      "mode": "External Mode",
+      "duration": "Duration: 2 Years",
+      "description": "Advanced study in computer science, software engineering, and information technology."
+    },
+    {
+      "id": "edu-bsc",
+      "degree": "Bachelor of Science in Information Technology",
+      "institution": "Noble University, Junagadh",
+      "period": "2023 – 2026",
+      "status": "COMPLETED",
+      "mode": "Regular Mode",
+      "duration": "CGPA: 6.35",
+      "description": "Focused on software development, programming, data structures, database systems, and emerging technologies."
+    }
+  ],
+  "skills": [
+    {
+      "id": "skill-django",
+      "name": "Django",
+      "level": "85%",
+      "category": "Web Framework",
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg"
+    },
+    {
+      "id": "skill-sql",
+      "name": "SQL",
+      "level": "80%",
+      "category": "Databases",
+      "icon": "fa-solid fa-database"
+    },
+    {
+      "id": "skill-git",
+      "name": "Git",
+      "level": "85%",
+      "category": "Version Control",
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+    },
+    {
+      "id": "skill-opencv",
+      "name": "OpenCV",
+      "level": "75%",
+      "category": "Computer Vision",
+      "icon": "fa-solid fa-eye"
+    },
+    {
+      "id": "skill-js",
+      "name": "JavaScript",
+      "level": "75%",
+      "category": "Frontend Logic",
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+    },
+    {
+      "id": "skill-htmlcss",
+      "name": "HTML/CSS",
+      "level": "85%",
+      "category": "Web Markup",
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+    },
+    {
+      "id": "skill-pandas",
+      "name": "Pandas",
+      "level": "70%",
+      "category": "Data Analysis",
+      "icon": "fa-solid fa-chart-bar"
+    },
+    {
+      "id": "skill-sqlite",
+      "name": "SQLite3",
+      "level": "72%",
+      "category": "Database",
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg"
+    },
+    {
+      "id": "skill-automation",
+      "name": "Automation",
+      "level": "80%",
+      "category": "Scripting",
+      "icon": "fa-solid fa-robot"
+    }
+  ],
+  "certificates": [
+    {
+      "id": "cert-quizoff",
+      "title": "QuizOff 2026: India's Biggest AI Quiz",
+      "issuer": "Unstop · CampusCrew",
+      "category": "unstop",
+      "image": "images/certificates/quizoff-2026.png",
+      "verifyUrl": "images/certificates/quizoff-2026.png",
+      "tags": [
+        "AI Quiz",
+        "CampusCrew"
+      ]
+    },
+    {
+      "id": "cert-chatgpt",
+      "title": "AI For Brand Storytelling Using ChatGPT",
+      "issuer": "Udemy",
+      "category": "udemy",
+      "image": "images/certificates/udemy-chatgpt.jpg",
+      "verifyUrl": "images/certificates/udemy-chatgpt.jpg",
+      "tags": [
+        "AI",
+        "ChatGPT",
+        "Marketing"
+      ]
+    },
+    {
+      "id": "cert-copilot",
+      "title": "Microsoft Copilot – AI Tools",
+      "issuer": "Microsoft · Forage",
+      "category": "forage",
+      "image": "images/certificates/copilot.jpg",
+      "verifyUrl": "images/certificates/copilot.jpg",
+      "tags": [
+        "Microsoft",
+        "AI Copilot"
+      ]
+    },
+    {
+      "id": "cert-tata",
+      "title": "Cyber Security Analyst – Tata",
+      "issuer": "Tata · Forage",
+      "category": "forage",
+      "image": "images/certificates/tata-cybersecurity.jpg",
+      "verifyUrl": "images/certificates/tata-cybersecurity.jpg",
+      "tags": [
+        "Cybersecurity",
+        "Tata"
+      ]
+    },
+    {
+      "id": "cert-windows",
+      "title": "Windows Command Mastery",
+      "issuer": "Skill India · NASSCOM",
+      "category": "nasscom",
+      "image": "images/certificates/Windows Command Mastery.jpg",
+      "verifyUrl": "images/certificates/Windows Command Mastery.jpg",
+      "tags": [
+        "Windows",
+        "CLI",
+        "NASSCOM"
+      ]
+    },
+    {
+      "id": "cert-infosec",
+      "title": "Information Security Analyst",
+      "issuer": "Skill India · NASSCOM",
+      "category": "nasscom",
+      "image": "images/certificates/Information Security Analyst.jpg",
+      "verifyUrl": "images/certificates/Information Security Analyst.jpg",
+      "tags": [
+        "Cyber Security",
+        "NASSCOM"
+      ]
+    },
+    {
+      "id": "cert-network",
+      "title": "Network Security Engineer",
+      "issuer": "Skill India · NASSCOM",
+      "category": "nasscom",
+      "image": "images/certificates/Network Security Engineer.jpg",
+      "verifyUrl": "images/certificates/Network Security Engineer.jpg",
+      "tags": [
+        "Networking",
+        "Cybersecurity"
+      ]
+    },
+    {
+      "id": "cert-iot",
+      "title": "IoT Security Analyst",
+      "issuer": "Skill India · NASSCOM",
+      "category": "nasscom",
+      "image": "images/certificates/IoT Security Analyst.jpg",
+      "verifyUrl": "images/certificates/IoT Security Analyst.jpg",
+      "tags": [
+        "IoT",
+        "Security",
+        "NASSCOM"
+      ]
+    },
+    {
+      "id": "cert-aidevops",
+      "title": "AI DevOps Analyst",
+      "issuer": "Skill India · NASSCOM",
+      "category": "nasscom",
+      "image": "images/certificates/AI Devops Analyst.jpg",
+      "verifyUrl": "images/certificates/AI Devops Analyst.jpg",
+      "tags": [
+        "AI",
+        "DevOps",
+        "NASSCOM"
+      ]
+    }
+  ],
   "projects": [
     {
       "id": "ai",
@@ -98,9 +357,9 @@
         "NLP"
       ],
       "image": "",
-      "icon": "fa-book-open",
+      "icon": "fa-brain",
       "liveUrl": "",
-      "codeUrl": "https://github.com/Milan07xt/Textbook-RAG-Assistant"
+      "codeUrl": ""
     }
   ]
 }

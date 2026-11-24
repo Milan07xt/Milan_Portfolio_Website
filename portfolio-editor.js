@@ -41,6 +41,9 @@
 
   function fillProfile(data) {
     document.getElementById('font').value = data.font;
+    if (window.syncCustomFontDropdown) {
+      window.syncCustomFontDropdown(data.font);
+    }
     document.getElementById('profileName').value = data.profile.name;
     document.getElementById('profileRole').value = data.profile.role;
     document.getElementById('profileHeadline').value = data.profile.headline;
@@ -311,6 +314,98 @@
       setStatus(saveStatus, error.message, 'error');
     }
   });
+
+  function setupCustomFontDropdown() {
+    const dropdown = document.getElementById('customFontDropdown');
+    const trigger = document.getElementById('customFontTrigger');
+    const menu = document.getElementById('customFontMenu');
+    const nativeSelect = document.getElementById('font');
+    const label = document.getElementById('selectedFontLabel');
+    if (!dropdown || !trigger || !menu || !nativeSelect) return;
+
+    function showFontToast(fontName) {
+      const existing = document.querySelector('.font-toast');
+      if (existing) existing.remove();
+
+      const toast = document.createElement('div');
+      toast.className = 'font-toast';
+      toast.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> Font switched to <strong>${fontName}</strong>`;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translate(-50%, -10px)';
+        setTimeout(() => toast.remove(), 320);
+      }, 2200);
+    }
+
+    function selectFont(fontName, isUserAction = true) {
+      nativeSelect.value = fontName;
+      if (label) {
+        label.textContent = fontName;
+        label.style.fontFamily = `'${fontName}', sans-serif`;
+      }
+      trigger.style.fontFamily = `'${fontName}', sans-serif`;
+
+      menu.querySelectorAll('.font-option').forEach(opt => {
+        const isActive = opt.dataset.font === fontName;
+        opt.classList.toggle('active', isActive);
+        opt.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      // Morph editor typography smoothly to preview the chosen font
+      document.documentElement.style.setProperty('--font', `'${fontName}', system-ui, sans-serif`);
+      document.body.style.fontFamily = `'${fontName}', system-ui, sans-serif`;
+
+      // Dispatch change event on native select for any listening handlers
+      nativeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+
+      if (isUserAction) {
+        showFontToast(fontName);
+      }
+    }
+
+    window.syncCustomFontDropdown = function(fontName) {
+      if (fontName) selectFont(fontName, false);
+    };
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = dropdown.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    menu.addEventListener('click', (e) => {
+      const option = e.target.closest('.font-option');
+      if (!option) return;
+      const font = option.dataset.font;
+      selectFont(font, true);
+      dropdown.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && dropdown.classList.contains('is-open')) {
+        dropdown.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.focus();
+      }
+    });
+
+    if (nativeSelect.value) {
+      selectFont(nativeSelect.value, false);
+    }
+  }
+
+  setupCustomFontDropdown();
 
   const savedToken = localStorage.getItem(tokenKey);
   if (savedToken) {

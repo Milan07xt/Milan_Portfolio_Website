@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  Milan Rathod Premium White-Theme Python Developer Portfolio
  style.css
  ============================================================ */
@@ -71,6 +71,7 @@ html {
 
 body {
  font-family: var(--font);
+ transition: font-family 0.35s ease;
  background: var(--white);
  color: var(--text-primary);
  line-height: 1.6;
