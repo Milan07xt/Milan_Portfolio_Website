@@ -101,55 +101,98 @@
       });
     }
 
-    // Recruiter Mode Overlay Highlights
-    const r = content.recruiter;
-    if (r) {
-      const roleEl = document.querySelector('.recruiter-role');
-      if (roleEl && r.role) roleEl.textContent = r.role;
+    // Recruiter Mode Overlay Highlights (Auto Edit, Update & Delete)
+    const r = content.recruiter || {};
 
-      if (r.coreSkills) {
-        const chipsEl = document.querySelector('.recruiter-chips');
-        if (chipsEl) {
-          chipsEl.replaceChildren();
-          r.coreSkills.split(',').map(s => s.trim()).filter(Boolean).forEach(s => {
-            const chip = document.createElement('span');
-            chip.className = `rc-chip ${s.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
-            chip.textContent = s;
-            chipsEl.appendChild(chip);
-          });
-        }
-      }
-
-      if (r.bestProjects) {
-        const projListEl = document.querySelector('.recruiter-projects-list');
-        if (projListEl) {
-          projListEl.replaceChildren();
-          r.bestProjects.split(',').map(s => s.trim()).filter(Boolean).forEach(p => {
-            const li = document.createElement('li');
-            li.innerHTML = `<i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>${p}</strong>`;
-            projListEl.appendChild(li);
-          });
-        }
-      }
-
-      if (r.educationNote) {
-        const eduBlocks = document.querySelectorAll('.recruiter-block');
-        if (eduBlocks[2]) {
-          const p = eduBlocks[2].querySelector('p');
-          if (p) p.innerHTML = r.educationNote.replace(/\n/g, '<br>');
-        }
-      }
-
-      if (r.certificationsNote) {
-        const eduBlocks = document.querySelectorAll('.recruiter-block');
-        if (eduBlocks[3]) {
-          const p = eduBlocks[3].querySelector('p');
-          if (p) p.textContent = r.certificationsNote;
-        }
+    // 1. Recruiter Role Subtitle
+    const roleEl = document.querySelector('.recruiter-role');
+    if (roleEl) {
+      if (r.role && r.role.trim()) {
+        roleEl.textContent = r.role.trim();
+        roleEl.hidden = false;
+      } else {
+        roleEl.textContent = '';
+        roleEl.hidden = true;
       }
     }
 
-    if (profile.name && profile.role) {
+    // 2. Professional Summary / Pitch
+    const summaryCard = document.getElementById('recruiterSummaryCard');
+    const summaryText = document.getElementById('recruiterSummaryText');
+    if (summaryCard && summaryText) {
+      if (r.summary && r.summary.trim()) {
+        summaryText.textContent = r.summary.trim();
+        summaryCard.hidden = false;
+      } else {
+        summaryText.textContent = '';
+        summaryCard.hidden = true;
+      }
+    }
+
+    // 3. Core Skills Highlight
+    const chipsEl = document.getElementById('recruiterChips') || document.querySelector('.recruiter-chips');
+    const skillsBlock = document.getElementById('recruiterBlockSkills');
+    if (chipsEl) {
+      chipsEl.replaceChildren();
+      const rawSkills = r.coreSkills ? r.coreSkills.split(',').map(s => s.trim()).filter(Boolean) : [];
+      if (rawSkills.length > 0) {
+        rawSkills.forEach(s => {
+          const chip = document.createElement('span');
+          const slug = s.toLowerCase().replace(/[^a-z0-9]/g, '');
+          chip.className = `rc-chip ${slug}`;
+          chip.textContent = s;
+          chipsEl.appendChild(chip);
+        });
+        if (skillsBlock) skillsBlock.hidden = false;
+      } else {
+        if (skillsBlock) skillsBlock.hidden = true;
+      }
+    }
+
+    // 4. Best Projects Highlight
+    const projListEl = document.getElementById('recruiterProjectsList') || document.querySelector('.recruiter-projects-list');
+    const projBlock = document.getElementById('recruiterBlockProjects');
+    if (projListEl) {
+      projListEl.replaceChildren();
+      const rawProjects = r.bestProjects ? r.bestProjects.split(',').map(p => p.trim()).filter(Boolean) : [];
+      if (rawProjects.length > 0) {
+        rawProjects.forEach(p => {
+          const li = document.createElement('li');
+          li.innerHTML = `<i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>${p}</strong>`;
+          projListEl.appendChild(li);
+        });
+        if (projBlock) projBlock.hidden = false;
+      } else {
+        if (projBlock) projBlock.hidden = true;
+      }
+    }
+
+    // 5. Education Note
+    const eduText = document.getElementById('recruiterEducationText');
+    const eduBlock = document.getElementById('recruiterBlockEducation');
+    if (eduText) {
+      if (r.educationNote && r.educationNote.trim()) {
+        eduText.innerHTML = r.educationNote.trim().replace(/\n/g, '<br>');
+        if (eduBlock) eduBlock.hidden = false;
+      } else {
+        eduText.textContent = '';
+        if (eduBlock) eduBlock.hidden = true;
+      }
+    }
+
+    // 6. Certifications Note
+    const certText = document.getElementById('recruiterCertificationsText');
+    const certBlock = document.getElementById('recruiterBlockCertifications');
+    if (certText) {
+      if (r.certificationsNote && r.certificationsNote.trim()) {
+        certText.innerHTML = r.certificationsNote.trim().replace(/\n/g, '<br>');
+        if (certBlock) certBlock.hidden = false;
+      } else {
+        certText.textContent = '';
+        if (certBlock) certBlock.hidden = true;
+      }
+    }
+  if (profile.name && profile.role) {
       document.title = `${profile.name} | ${profile.role}`;
     }
     const description = document.querySelector('meta[name="description"]');

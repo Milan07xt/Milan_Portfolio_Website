@@ -4662,6 +4662,42 @@ body.dark-mode .recruiter-close:hover {
  font-weight: 500;
 }
 
+.recruiter-summary-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  background: var(--bg-sec);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--py-blue);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+body.dark-mode .recruiter-summary-card {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: var(--border);
+  border-left-color: var(--py-blue);
+}
+
+.recruiter-summary-card .quote-icon {
+  font-size: 1.1rem;
+  color: var(--py-blue);
+  opacity: 0.85;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.recruiter-summary-text {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  font-weight: 500;
+  margin: 0;
+}
+
 .recruiter-grid {
  display: grid;
  grid-template-columns: 1fr 1fr;

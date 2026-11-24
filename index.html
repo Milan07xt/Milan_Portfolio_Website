@@ -1631,63 +1631,63 @@
  <div id="recruiterOverlay" class="recruiter-overlay" role="dialog" aria-modal="true" aria-label="Recruiter Mode"
  hidden>
  <div class="recruiter-panel">
- <button class="recruiter-close" id="recruiterClose" aria-label="Close Recruiter Mode">
- <i class="fa-solid fa-xmark"></i>
- </button>
- <div class="recruiter-header">
- <div class="recruiter-avatar">
- <img src="images/profile-transparent.png" alt="Milan Rathod">
- </div>
- <div>
- <div class="recruiter-badge"><i class="fa-solid fa-briefcase"></i> Recruiter Mode</div>
- <h2>Milan Rathod</h2>
- <p class="recruiter-role">Python Developer · B.Sc. IT · Gujarat, India</p>
- </div>
- </div>
+    <button class="recruiter-close" id="recruiterClose" aria-label="Close Recruiter Mode">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="recruiter-header">
+      <div class="recruiter-avatar">
+        <img src="images/profile-transparent.png" alt="Milan Rathod">
+      </div>
+      <div>
+        <div class="recruiter-badge"><i class="fa-solid fa-briefcase"></i> Recruiter Mode</div>
+        <h2 data-profile-field="name">Milan Rathod</h2>
+        <p class="recruiter-role">Python Developer · B.Sc. IT · Gujarat, India</p>
+      </div>
+    </div>
 
- <div class="recruiter-grid">
- <div class="recruiter-block">
- <h3><i class="fa-solid fa-code"></i> Core Skills</h3>
- <div class="recruiter-chips">
- <span class="rc-chip python">Python</span>
- <span class="rc-chip django">Django</span>
- <span class="rc-chip">FastAPI</span>
- <span class="rc-chip">REST API</span>
- <span class="rc-chip">SQLite3</span>
- <span class="rc-chip">OpenCV</span>
- <span class="rc-chip">Git / GitHub</span>
- <span class="rc-chip">JavaScript</span>
- <span class="rc-chip">HTML / CSS</span>
- </div>
- </div>
+    <!-- Recruiter Professional Summary / Pitch Card -->
+    <div class="recruiter-summary-card" id="recruiterSummaryCard">
+      <i class="fa-solid fa-quote-left quote-icon"></i>
+      <p class="recruiter-summary-text" id="recruiterSummaryText">Specialized in Python backend, Django, and REST APIs. Building production-ready software solutions with clean architecture.</p>
+    </div>
 
- <div class="recruiter-block">
- <h3><i class="fa-solid fa-laptop-code"></i> Best Projects</h3>
- <ul class="recruiter-projects-list">
- <li><i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>Face
- Recognition Attendance</strong> — Python, Django, OpenCV, REST API</li>
- <li><i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>Gym
- Management System</strong> — Python, Django, SQLite3</li>
- <li><i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>AI Portfolio
- Assistant</strong> — Python, FastAPI, OpenAI</li>
- <li><i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>Hotel
- Management Website</strong> — HTML, CSS, JavaScript</li>
- </ul>
- </div>
+    <div class="recruiter-grid">
+      <div class="recruiter-block" id="recruiterBlockSkills">
+        <h3><i class="fa-solid fa-code"></i> Core Skills</h3>
+        <div class="recruiter-chips" id="recruiterChips">
+          <span class="rc-chip python">Python</span>
+          <span class="rc-chip django">Django</span>
+          <span class="rc-chip">FastAPI</span>
+          <span class="rc-chip">REST APIs</span>
+          <span class="rc-chip">SQL</span>
+          <span class="rc-chip">SQLite3</span>
+          <span class="rc-chip">Git</span>
+          <span class="rc-chip">OpenCV</span>
+        </div>
+      </div>
 
- <div class="recruiter-block">
- <h3><i class="fa-solid fa-graduation-cap"></i> Education</h3>
- <p><strong>B.Sc. Information Technology</strong><br>Noble University, Junagadh (2023–2026)<br>CGPA:
- 6.35</p>
- </div>
+      <div class="recruiter-block" id="recruiterBlockProjects">
+        <h3><i class="fa-solid fa-laptop-code"></i> Best Projects</h3>
+        <ul class="recruiter-projects-list" id="recruiterProjectsList">
+          <li><i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>Face Recognition Attendance</strong></li>
+          <li><i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>Gym Management System</strong></li>
+          <li><i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>AI Portfolio Assistant</strong></li>
+          <li><i class="fa-solid fa-circle" style="color:#3776AB;font-size:8px"></i> <strong>VIP Beauty Salon</strong></li>
+        </ul>
+      </div>
 
- <div class="recruiter-block">
- <h3><i class="fa-solid fa-award"></i> Certifications</h3>
- <p>9 certificates from NASSCOM, Udemy, Microsoft, Tata, Unstop</p>
- </div>
- </div>
+      <div class="recruiter-block" id="recruiterBlockEducation">
+        <h3><i class="fa-solid fa-graduation-cap"></i> Education</h3>
+        <p id="recruiterEducationText">B.Sc. IT (Noble University, Junagadh) &amp; M.Sc. IT (BAOU, Pursuing)</p>
+      </div>
 
- <div class="recruiter-contact">
+      <div class="recruiter-block" id="recruiterBlockCertifications">
+        <h3><i class="fa-solid fa-award"></i> Certifications</h3>
+        <p id="recruiterCertificationsText">9 certificates from NASSCOM, Udemy, Microsoft, Tata, Unstop</p>
+      </div>
+    </div>
+
+    <div class="recruiter-contact">
  <a href="resume/Milankumar_Rathod_Resume.pdf" class="btn-primary-pill" download>
  <i class="fa-solid fa-download"></i> Download Resume
  </a>

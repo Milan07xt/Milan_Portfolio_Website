@@ -514,6 +514,66 @@
   });
   profileImage.addEventListener('input', () => showPreview('profilePreview', profileImage.value.trim()));
 
+  /* Recruiter Mode Auto-Fill & Clear Handlers */
+  const autoFillBtn = document.getElementById('autoFillRecruiterBtn');
+  if (autoFillBtn) {
+    autoFillBtn.addEventListener('click', () => {
+      // 1. Role subtitle
+      const pRole = (document.getElementById('profileRole').value || '').trim();
+      const pLoc = (document.getElementById('profileLocation').value || '').trim();
+      document.getElementById('recruiterRole').value = [pRole, 'B.Sc. IT', pLoc].filter(Boolean).join(' · ');
+
+      // 2. Professional Summary / Pitch
+      const pBio = (document.getElementById('profileBio').value || '').trim();
+      const pHead = (document.getElementById('profileHeadline').value || '').trim();
+      document.getElementById('recruiterSummary').value = pBio || pHead || 'Specialized in Python backend, Django, and REST APIs. Building production-ready software solutions with clean architecture.';
+
+      // 3. Core Skills Highlight
+      const skillCards = Array.from(document.querySelectorAll('#skillsList .card-item [data-field="name"]'));
+      const skillNames = skillCards.map(input => input.value.trim()).filter(Boolean);
+      if (skillNames.length > 0) {
+        document.getElementById('recruiterCoreSkills').value = skillNames.join(', ');
+      }
+
+      // 4. Best Projects Highlight
+      const projectCards = Array.from(document.querySelectorAll('#projectList .card-item [data-field="title"]'));
+      const projectTitles = projectCards.map(input => input.value.trim()).filter(Boolean);
+      if (projectTitles.length > 0) {
+        document.getElementById('recruiterBestProjects').value = projectTitles.join(', ');
+      }
+
+      // 5. Education Note
+      const eduCards = Array.from(document.querySelectorAll('#educationList .card-item'));
+      if (eduCards.length > 0) {
+        const eduSummaries = eduCards.map(c => {
+          const degree = (c.querySelector('[data-field="degree"]')?.value || '').trim();
+          const inst = (c.querySelector('[data-field="institution"]')?.value || '').trim();
+          return [degree, inst].filter(Boolean).join(' (');
+        }).filter(Boolean).map(s => s + ')');
+        document.getElementById('recruiterEducationNote').value = eduSummaries.join(' & ');
+      }
+
+      // 6. Certifications Note
+      const certCount = document.querySelectorAll('#certificateList .card-item').length;
+      document.getElementById('recruiterCertificationsNote').value = `${certCount || 9} certificates from NASSCOM, Udemy, Microsoft, Tata, Unstop`;
+
+      setStatus(saveStatus, '✓ Recruiter Mode details auto-filled from your portfolio! Click "Save and publish" to apply.', 'success');
+    });
+  }
+
+  const clearRecruiterBtn = document.getElementById('clearRecruiterBtn');
+  if (clearRecruiterBtn) {
+    clearRecruiterBtn.addEventListener('click', () => {
+      document.getElementById('recruiterRole').value = '';
+      document.getElementById('recruiterSummary').value = '';
+      document.getElementById('recruiterCoreSkills').value = '';
+      document.getElementById('recruiterBestProjects').value = '';
+      document.getElementById('recruiterEducationNote').value = '';
+      document.getElementById('recruiterCertificationsNote').value = '';
+      setStatus(saveStatus, 'Recruiter Mode details cleared. Click "Save and publish" to remove them from your portfolio.', 'success');
+    });
+  }
+
   /* Recruiter Avatar Upload */
   document.getElementById('uploadAvatarButton').addEventListener('click', () => {
     document.getElementById('avatarImageFile').click();
@@ -754,18 +814,48 @@
     }
   });
 
-  /* Smooth Section Pill Navigation */
-  document.querySelectorAll('.editor-nav-bar .nav-pill').forEach(pill => {
+  /* Smooth Section Pill Navigation & Active Scrollspy */
+  const navPills = Array.from(document.querySelectorAll('.editor-nav-bar .nav-pill'));
+  const sectionIds = navPills.map(p => p.getAttribute('href')).filter(Boolean);
+  const sections = sectionIds.map(id => document.querySelector(id)).filter(Boolean);
+
+  navPills.forEach(pill => {
     pill.addEventListener('click', e => {
       e.preventDefault();
-      document.querySelectorAll('.editor-nav-bar .nav-pill').forEach(p => p.classList.remove('active'));
+      navPills.forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
       const target = document.querySelector(pill.getAttribute('href'));
       if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const navBar = document.querySelector('.editor-nav-bar');
+        const offset = (navBar ? navBar.offsetHeight : 0) + 24;
+        const targetPos = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: targetPos, behavior: 'smooth' });
       }
     });
   });
+
+  // Scrollspy via IntersectionObserver
+  if ('IntersectionObserver' in window && sections.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = '#' + entry.target.id;
+          navPills.forEach(pill => {
+            if (pill.getAttribute('href') === id) {
+              pill.classList.add('active');
+              pill.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+            } else {
+              pill.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, {
+      rootMargin: '-20% 0px -65% 0px',
+      threshold: 0
+    });
+    sections.forEach(sec => observer.observe(sec));
+  }
 
   /* Content Form Submit */
   contentForm.addEventListener('submit', async event => {
