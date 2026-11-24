@@ -1235,6 +1235,13 @@ textarea {
 /* ══════════════════════════════════════════════════════════════════
    11. RESPONSIVENESS (MOBILE / TABLET ADAPTATION)
    ══════════════════════════════════════════════════════════════════ */
+.section-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 768px) {
   .editor-shell {
     width: min(100% - 24px, 1060px);
@@ -1298,13 +1305,4 @@ textarea {
     flex: 1;
     text-align: center;
   }
-}
-
-
-/* Section Heading Actions (e.g. Recruiter Mode Auto-Fill & Clear) */
-.section-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
 }
