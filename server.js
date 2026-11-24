@@ -278,7 +278,21 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Contact server listening on http://localhost:${port}`);
-});
+const DEFAULT_PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+
+function startServer(port) {
+  const server = app.listen(port, () => {
+    console.log(`Contact server listening on http://localhost:${port}`);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.warn(`⚠️ Port ${port} is already in use. Trying port ${port + 1}...`);
+      startServer(port + 1);
+    } else {
+      console.error('Server error:', err);
+    }
+  });
+}
+
+startServer(DEFAULT_PORT);
