@@ -29,7 +29,7 @@ const PORTFOLIO_DATA = {
     status: "Available for opportunities (open_to_work)",
     github: "https://github.com/Milan07xt",
     linkedin: "https://linkedin.com/in/milan-rathod07",
-    instagram: "https://www.instagram.com/code.withmilan/",
+    instagram: "https://www.instagram.com/milan._.07xt/",
     email: "rathodmilan216@gmail.com",
     phone: "+91 9327599254"
   },

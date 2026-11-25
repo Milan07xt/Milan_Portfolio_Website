@@ -182,8 +182,8 @@ function initAIAgent() {
         "Gujarat": "I am based in Gujarat, India, and I am highly interested in contributing to the growing tech ecosystem here, whether on-site or hybrid.",
         "Show Projects": "Navigating to Projects! Please check the main portfolio page.",
         "Gujarat Opportunities": "I'm open to opportunities in Gujarat! Feel free to reach out via the contact form.",
-        "Instagram": "Milan's Instagram account is [@code.withmilan](https://www.instagram.com/code.withmilan/). Follow him for Python tips, project walkthroughs, and developer content!",
-        "Contact": "You can connect with Milan directly through:\n- **Instagram**: [@code.withmilan](https://www.instagram.com/code.withmilan/)\n- **LinkedIn**: [milan-rathod07](https://linkedin.com/in/milan-rathod07/)\n- **GitHub**: [Milan07xt](https://github.com/Milan07xt)\n- **Email**: [rathodmilan216@gmail.com](mailto:rathodmilan216@gmail.com)\n- **WhatsApp**: [+91 9327599254](https://wa.me/919327599254)"
+        "Instagram": "Milan's Instagram account is [@milan._.07xt](https://www.instagram.com/milan._.07xt/).",
+        "Contact": "You can connect with Milan directly through:\n- **Instagram**: [@milan._.07xt](https://www.instagram.com/milan._.07xt/)\n- **LinkedIn**: [milan-rathod07](https://linkedin.com/in/milan-rathod07/)\n- **GitHub**: [Milan07xt](https://github.com/Milan07xt)\n- **Email**: [rathodmilan216@gmail.com](mailto:rathodmilan216@gmail.com)\n- **WhatsApp**: [+91 9327599254](https://wa.me/919327599254)"
     };
 
     // Send Message
