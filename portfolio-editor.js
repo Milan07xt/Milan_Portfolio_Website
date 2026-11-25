@@ -292,7 +292,7 @@
         createField('Issuer / Organization', item.issuer, 'issuer', 'text', false, 'Unstop · CampusCrew'),
         createField('Category Filter (unstop / udemy / forage / nasscom / other)', item.category, 'category', 'text', false, 'nasscom'),
         createField('Tags (comma-separated)', (item.tags || []).join(', '), 'tags', 'text', false, 'AI Quiz, CampusCrew'),
-        createField('View / Verify URL (optional)', item.verifyUrl, 'verifyUrl', 'url', true, 'images/certificates/...'),
+        createField('View / Verify URL (optional)', item.verifyUrl, 'verifyUrl', 'text', true, 'images/certificates/... or https://...'),
         createField('Certificate Image URL', item.image, 'image', 'text', true, 'images/certificates/...')
       );
 
@@ -338,8 +338,8 @@
         createField('Project Title', project.title, 'title', 'text', false, 'Face Recognition Attendance'),
         createField('Technologies (comma-separated)', (project.technologies || []).join(', '), 'technologies', 'text', false, 'Python, Django, OpenCV, REST API'),
         createField('Description', project.description, 'description', 'textarea', true, 'Key technical highlights and implementation details...'),
-        createField('Live Demo URL (optional)', project.liveUrl, 'liveUrl', 'url', false, 'https://...'),
-        createField('Code URL (optional)', project.codeUrl, 'codeUrl', 'url', false, 'https://github.com/...'),
+        createField('Live Demo URL (optional)', project.liveUrl, 'liveUrl', 'text', false, 'https://...'),
+        createField('Code URL (optional)', project.codeUrl, 'codeUrl', 'text', false, 'https://github.com/...'),
         createField('Project Image URL (optional)', project.image, 'image', 'text', true, 'images/...')
       );
 
@@ -360,6 +360,19 @@
     updateCounts();
   }
 
+  function normalizeUrl(value) {
+    if (!value || typeof value !== 'string') return '';
+    const trimmed = value.trim();
+    if (!trimmed) return '';
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('/') || trimmed.startsWith('images/') || trimmed.startsWith('resume/') || trimmed.startsWith('data:')) {
+      return trimmed;
+    }
+    if (/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/.test(trimmed)) {
+      return `https://${trimmed}`;
+    }
+    return trimmed;
+  }
+
   /* Form Data Collection with smart pruning of empty cards */
   function collectContent() {
     const profile = {
@@ -371,9 +384,9 @@
       location: (document.getElementById('profileLocation').value || '').trim(),
       email: (document.getElementById('profileEmail').value || '').trim(),
       phone: (document.getElementById('profilePhone').value || '').trim(),
-      github: (document.getElementById('profileGithub').value || '').trim(),
-      linkedin: (document.getElementById('profileLinkedin').value || '').trim(),
-      instagram: (document.getElementById('profileInstagram').value || '').trim(),
+      github: normalizeUrl(document.getElementById('profileGithub').value),
+      linkedin: normalizeUrl(document.getElementById('profileLinkedin').value),
+      instagram: normalizeUrl(document.getElementById('profileInstagram').value),
       profileImage: (profileImage.value || '').trim(),
       avatarImage: (profileAvatar.value || '').trim(),
       resumeUrl: (profileResumeUrl.value || '').trim()
@@ -462,8 +475,8 @@
         technologies: val('technologies') ? val('technologies').split(',').map(s => s.trim()).filter(Boolean) : [],
         image: val('image') || '',
         icon: card.dataset.projectIcon || '',
-        liveUrl: val('liveUrl') || '',
-        codeUrl: val('codeUrl') || ''
+        liveUrl: normalizeUrl(val('liveUrl')),
+        codeUrl: normalizeUrl(val('codeUrl'))
       };
     }).filter(Boolean);
 
