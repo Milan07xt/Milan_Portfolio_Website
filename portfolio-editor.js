@@ -47,15 +47,45 @@
   }
 
   async function loadContent() {
-    const response = await fetch('/api/admin/content', {
-      headers: authHeaders()
-    });
-    if (response.status === 401) {
-      localStorage.removeItem(tokenKey);
-      throw new Error('Your admin session expired. Please sign in again.');
+    let result = null;
+    try {
+      const response = await fetch('/api/admin/content', {
+        headers: authHeaders()
+      });
+      if (response.status === 401) {
+        localStorage.removeItem(tokenKey);
+        loginScreen.hidden = false;
+        editorScreen.hidden = true;
+        throw new Error('Your admin session expired. Please sign in again.');
+      }
+      if (response.ok) {
+        result = await response.json();
+      } else {
+        const errJson = await response.json().catch(() => ({}));
+        throw new Error(errJson.error || 'Could not load portfolio content.');
+      }
+    } catch (netErr) {
+      if (netErr.message && netErr.message.includes('expired')) throw netErr;
+      console.warn('API content fetch failed, checking local sync cache:', netErr.message);
     }
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.error || 'Could not load portfolio content.');
+
+    // Merge or restore with localStorage cache if available
+    try {
+      const cached = localStorage.getItem('milan_portfolio_synced_content');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && parsed.content) {
+          if (!result || !result.content) {
+            result = { content: parsed.content };
+          }
+        }
+      }
+    } catch (e) {}
+
+    if (!result || !result.content) {
+      throw new Error('Could not load portfolio content. Please check network connection.');
+    }
+
     content = result.content;
 
     fillProfile(content);
@@ -69,6 +99,10 @@
     updateCounts();
     loginScreen.hidden = true;
     editorScreen.hidden = false;
+
+    if (window.syncCustomFontDropdown && content.font) {
+      window.syncCustomFontDropdown(content.font);
+    }
   }
 
   function fillProfile(data) {
@@ -326,101 +360,115 @@
     updateCounts();
   }
 
-  /* Form Data Collection */
+  /* Form Data Collection with smart pruning of empty cards */
   function collectContent() {
     const profile = {
-      name: document.getElementById('profileName').value.trim(),
-      role: document.getElementById('profileRole').value.trim(),
-      headline: document.getElementById('profileHeadline').value.trim(),
-      bio: document.getElementById('profileBio').value.trim(),
-      aboutBio: document.getElementById('profileAboutBio').value.trim(),
-      location: document.getElementById('profileLocation').value.trim(),
-      email: document.getElementById('profileEmail').value.trim(),
-      phone: document.getElementById('profilePhone').value.trim(),
-      github: document.getElementById('profileGithub').value.trim(),
-      linkedin: document.getElementById('profileLinkedin').value.trim(),
-      instagram: document.getElementById('profileInstagram').value.trim(),
-      profileImage: profileImage.value.trim(),
-      avatarImage: profileAvatar.value.trim(),
-      resumeUrl: profileResumeUrl.value.trim()
+      name: (document.getElementById('profileName').value || '').trim(),
+      role: (document.getElementById('profileRole').value || '').trim(),
+      headline: (document.getElementById('profileHeadline').value || '').trim(),
+      bio: (document.getElementById('profileBio').value || '').trim(),
+      aboutBio: (document.getElementById('profileAboutBio').value || '').trim(),
+      location: (document.getElementById('profileLocation').value || '').trim(),
+      email: (document.getElementById('profileEmail').value || '').trim(),
+      phone: (document.getElementById('profilePhone').value || '').trim(),
+      github: (document.getElementById('profileGithub').value || '').trim(),
+      linkedin: (document.getElementById('profileLinkedin').value || '').trim(),
+      instagram: (document.getElementById('profileInstagram').value || '').trim(),
+      profileImage: (profileImage.value || '').trim(),
+      avatarImage: (profileAvatar.value || '').trim(),
+      resumeUrl: (profileResumeUrl.value || '').trim()
     };
 
     const recruiter = {
-      role: document.getElementById('recruiterRole').value.trim(),
-      summary: document.getElementById('recruiterSummary').value.trim(),
-      coreSkills: document.getElementById('recruiterCoreSkills').value.trim(),
-      bestProjects: document.getElementById('recruiterBestProjects').value.trim(),
-      educationNote: document.getElementById('recruiterEducationNote').value.trim(),
-      certificationsNote: document.getElementById('recruiterCertificationsNote').value.trim()
+      role: (document.getElementById('recruiterRole').value || '').trim(),
+      summary: (document.getElementById('recruiterSummary').value || '').trim(),
+      coreSkills: (document.getElementById('recruiterCoreSkills').value || '').trim(),
+      bestProjects: (document.getElementById('recruiterBestProjects').value || '').trim(),
+      educationNote: (document.getElementById('recruiterEducationNote').value || '').trim(),
+      certificationsNote: (document.getElementById('recruiterCertificationsNote').value || '').trim()
     };
 
-    const experiences = Array.from(experienceList.querySelectorAll('.card-item')).map(card => {
+    const experiences = Array.from(experienceList.querySelectorAll('.card-item')).map((card, idx) => {
       const val = k => (card.querySelector(`[data-field="${k}"]`) ? card.querySelector(`[data-field="${k}"]`).value.trim() : '');
+      const role = val('role');
+      const company = val('company');
+      if (!role && !company) return null; // skip completely empty cards
       return {
-        id: card.dataset.itemId || `exp-${Date.now()}`,
-        role: val('role'),
-        company: val('company'),
-        period: val('period'),
+        id: card.dataset.itemId || `exp-${Date.now()}-${idx}`,
+        role: role || 'Developer Role',
+        company: company || 'Company / Organization',
+        period: val('period') || 'Present',
         type: val('type') || 'Experience',
-        technologies: val('technologies').split(',').map(s => s.trim()).filter(Boolean),
-        description: val('description')
+        technologies: val('technologies') ? val('technologies').split(',').map(s => s.trim()).filter(Boolean) : [],
+        description: val('description') || ''
       };
-    });
+    }).filter(Boolean);
 
-    const education = Array.from(educationList.querySelectorAll('.card-item')).map(card => {
+    const education = Array.from(educationList.querySelectorAll('.card-item')).map((card, idx) => {
       const val = k => (card.querySelector(`[data-field="${k}"]`) ? card.querySelector(`[data-field="${k}"]`).value.trim() : '');
+      const degree = val('degree');
+      const institution = val('institution');
+      if (!degree && !institution) return null; // skip empty
       return {
-        id: card.dataset.itemId || `edu-${Date.now()}`,
-        degree: val('degree'),
-        institution: val('institution'),
-        period: val('period'),
+        id: card.dataset.itemId || `edu-${Date.now()}-${idx}`,
+        degree: degree || 'Degree / Qualification',
+        institution: institution || 'Institution / University',
+        period: val('period') || 'Present',
         status: val('status') || 'COMPLETED',
         mode: val('mode') || 'Regular Mode',
-        duration: val('duration'),
-        description: val('description')
+        duration: val('duration') || '',
+        description: val('description') || ''
       };
-    });
+    }).filter(Boolean);
 
-    const skills = Array.from(skillsList.querySelectorAll('.card-item')).map(card => {
+    const skills = Array.from(skillsList.querySelectorAll('.card-item')).map((card, idx) => {
       const val = k => (card.querySelector(`[data-field="${k}"]`) ? card.querySelector(`[data-field="${k}"]`).value.trim() : '');
+      const name = val('name');
+      if (!name) return null; // skip empty
       return {
-        id: card.dataset.itemId || `skill-${Date.now()}`,
-        name: val('name'),
+        id: card.dataset.itemId || `skill-${Date.now()}-${idx}`,
+        name,
         level: val('level') || '80%',
         category: val('category') || 'Technology',
-        icon: val('icon')
+        icon: val('icon') || ''
       };
-    });
+    }).filter(Boolean);
 
-    const certificates = Array.from(certificateList.querySelectorAll('.card-item')).map(card => {
+    const certificates = Array.from(certificateList.querySelectorAll('.card-item')).map((card, idx) => {
       const val = k => (card.querySelector(`[data-field="${k}"]`) ? card.querySelector(`[data-field="${k}"]`).value.trim() : '');
+      const title = val('title');
+      if (!title) return null; // skip empty
       return {
-        id: card.dataset.itemId || `cert-${Date.now()}`,
-        title: val('title'),
-        issuer: val('issuer'),
-        category: val('category').toLowerCase() || 'other',
-        tags: val('tags').split(',').map(s => s.trim()).filter(Boolean),
-        verifyUrl: val('verifyUrl'),
-        image: val('image')
+        id: card.dataset.itemId || `cert-${Date.now()}-${idx}`,
+        title,
+        issuer: val('issuer') || 'Issuer Platform',
+        category: (val('category') || 'other').toLowerCase(),
+        tags: val('tags') ? val('tags').split(',').map(s => s.trim()).filter(Boolean) : [],
+        verifyUrl: val('verifyUrl') || '',
+        image: val('image') || ''
       };
-    });
+    }).filter(Boolean);
 
-    const projects = Array.from(projectList.querySelectorAll('.card-item')).map(card => {
+    const projects = Array.from(projectList.querySelectorAll('.card-item')).map((card, idx) => {
       const val = k => (card.querySelector(`[data-field="${k}"]`) ? card.querySelector(`[data-field="${k}"]`).value.trim() : '');
+      const title = val('title');
+      if (!title) return null; // skip empty
+      let projId = (card.dataset.projectId || `project-${Date.now().toString(36)}-${idx}`).toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 50);
+      if (!projId || projId === '-') projId = `project-${idx + 1}`;
       return {
-        id: card.dataset.projectId || `proj-${Date.now()}`,
-        title: val('title'),
-        description: val('description'),
-        technologies: val('technologies').split(',').map(s => s.trim()).filter(Boolean),
-        image: val('image'),
+        id: projId,
+        title,
+        description: val('description') || 'Key technical highlights and implementation details.',
+        technologies: val('technologies') ? val('technologies').split(',').map(s => s.trim()).filter(Boolean) : [],
+        image: val('image') || '',
         icon: card.dataset.projectIcon || '',
-        liveUrl: val('liveUrl'),
-        codeUrl: val('codeUrl')
+        liveUrl: val('liveUrl') || '',
+        codeUrl: val('codeUrl') || ''
       };
-    });
+    }).filter(Boolean);
 
     return {
-      font: document.getElementById('font').value,
+      font: document.getElementById('font').value || 'Plus Jakarta Sans',
       profile,
       recruiter,
       experiences,
@@ -612,6 +660,15 @@
     }
   });
 
+  function focusNewCard(container, isLast) {
+    const card = isLast ? container.lastElementChild : container.firstElementChild;
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const firstInput = card.querySelector('input, textarea');
+      if (firstInput) setTimeout(() => firstInput.focus(), 250);
+    }
+  }
+
   /* Add Item Buttons */
   document.getElementById('addExpButton').addEventListener('click', () => {
     const experiences = Array.from(experienceList.querySelectorAll('.card-item')).map(card => {
@@ -636,6 +693,8 @@
       description: ''
     });
     renderExperiences(experiences);
+    focusNewCard(experienceList, false);
+    setStatus(saveStatus, 'New experience entry added. Fill in details and click "Save and publish".', 'success');
   });
 
   document.getElementById('addEduButton').addEventListener('click', () => {
@@ -663,6 +722,8 @@
       description: ''
     });
     renderEducation(education);
+    focusNewCard(educationList, false);
+    setStatus(saveStatus, 'New education entry added. Fill in details and click "Save and publish".', 'success');
   });
 
   document.getElementById('addSkillButton').addEventListener('click', () => {
@@ -684,6 +745,8 @@
       icon: ''
     });
     renderSkills(skills);
+    focusNewCard(skillsList, true);
+    setStatus(saveStatus, 'New skill added. Enter name and proficiency and click "Save and publish".', 'success');
   });
 
   document.getElementById('addCertButton').addEventListener('click', () => {
@@ -709,6 +772,8 @@
       image: ''
     });
     renderCertificates(certificates);
+    focusNewCard(certificateList, false);
+    setStatus(saveStatus, 'New certificate entry added. Upload image and click "Save and publish".', 'success');
   });
 
   document.getElementById('addProjectButton').addEventListener('click', () => {
@@ -738,16 +803,60 @@
       codeUrl: ''
     });
     renderProjects(projects);
+    focusNewCard(projectList, true);
+    setStatus(saveStatus, 'New project entry added. Enter project details and click "Save and publish".', 'success');
   });
 
   /* Delete Actions across all item lists */
   document.addEventListener('click', event => {
     const btn = event.target.closest('.remove-item-btn');
-    if (!btn) return;
+    if (!btn || btn.id === 'clearRecruiterBtn') return;
     const card = btn.closest('.card-item');
     if (card) {
-      card.remove();
-      updateCounts();
+      card.style.transition = 'all 0.25s ease';
+      card.style.opacity = '0';
+      card.style.transform = 'scale(0.96)';
+      setTimeout(() => {
+        card.remove();
+        updateCounts();
+        setStatus(saveStatus, '✓ Item removed. Click "Save and publish" to apply updates live.', 'success');
+      }, 200);
+    }
+  });
+
+  /* Live Card Header & Badge Sync */
+  document.addEventListener('input', event => {
+    const input = event.target;
+    const card = input.closest('.card-item');
+    if (!card) return;
+
+    const titleEl = card.querySelector('.card-item-title');
+    const badgeEl = card.querySelector('.card-item-badge');
+
+    if (card.closest('#experienceList')) {
+      const role = (card.querySelector('[data-field="role"]')?.value || '').trim();
+      const company = (card.querySelector('[data-field="company"]')?.value || '').trim();
+      const type = (card.querySelector('[data-field="type"]')?.value || '').trim();
+      if (titleEl) titleEl.textContent = `${role || 'New Role'} @ ${company || 'Company'}`;
+      if (badgeEl && type) badgeEl.textContent = type;
+    } else if (card.closest('#educationList')) {
+      const degree = (card.querySelector('[data-field="degree"]')?.value || '').trim();
+      const status = (card.querySelector('[data-field="status"]')?.value || '').trim();
+      if (titleEl) titleEl.textContent = degree || 'Degree';
+      if (badgeEl && status) badgeEl.textContent = status;
+    } else if (card.closest('#skillsList')) {
+      const name = (card.querySelector('[data-field="name"]')?.value || '').trim();
+      const level = (card.querySelector('[data-field="level"]')?.value || '').trim();
+      if (titleEl) titleEl.textContent = name || 'New Skill';
+      if (badgeEl && level) badgeEl.textContent = level;
+    } else if (card.closest('#certificateList')) {
+      const title = (card.querySelector('[data-field="title"]')?.value || '').trim();
+      const cat = (card.querySelector('[data-field="category"]')?.value || '').trim();
+      if (titleEl) titleEl.textContent = title || 'Certificate Title';
+      if (badgeEl && cat) badgeEl.textContent = cat;
+    } else if (card.closest('#projectList')) {
+      const title = (card.querySelector('[data-field="title"]')?.value || '').trim();
+      if (titleEl) titleEl.textContent = title || 'Project Title';
     }
   });
 
@@ -863,6 +972,21 @@
     setStatus(saveStatus, 'Saving portfolio changes…');
     try {
       const updatedContent = collectContent();
+
+      // Client-side required fields check
+      if (!updatedContent.profile.name || !updatedContent.profile.name.trim()) {
+        const nameInput = document.getElementById('profileName');
+        nameInput.focus();
+        nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        throw new Error('Please enter your name in Personal Details.');
+      }
+      if (!updatedContent.profile.role || !updatedContent.profile.role.trim()) {
+        const roleInput = document.getElementById('profileRole');
+        roleInput.focus();
+        roleInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        throw new Error('Please enter your role / title in Personal Details.');
+      }
+
       const response = await fetch('/api/admin/content', {
         method: 'PUT',
         headers: authHeaders({ 'Content-Type': 'application/json' }),

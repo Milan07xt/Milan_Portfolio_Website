@@ -661,6 +661,16 @@
       } catch (jsonErr) {}
     }
 
+    try {
+      const localSynced = localStorage.getItem('milan_portfolio_synced_content');
+      if (localSynced) {
+        const parsed = JSON.parse(localSynced);
+        if (parsed && parsed.content) {
+          loadedContent = Object.assign({}, loadedContent || {}, parsed.content);
+        }
+      }
+    } catch (lsErr) {}
+
     if (loadedContent) {
       applyContent(loadedContent, isLiveUpdate);
     }
