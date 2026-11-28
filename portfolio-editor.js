@@ -89,6 +89,7 @@
     content = result.content;
 
     fillProfile(content);
+    fillStats(content);
     fillRecruiter(content);
     renderExperiences(content.experiences || []);
     renderEducation(content.education || []);
@@ -130,6 +131,22 @@
     showPreview('avatarPreview', p.avatarImage);
 
     profileResumeUrl.value = p.resumeUrl || '';
+  }
+
+  function fillStats(data) {
+    const s = data.stats || {};
+    const projCount = (data.projects && data.projects.length) ? `${data.projects.length}+` : '6+';
+    const certCount = (data.certificates && data.certificates.length) ? `${data.certificates.length}+` : '9+';
+    const techCount = (data.skills && data.skills.length) ? `${Math.max(data.skills.length, 10)}+` : '10+';
+    const statProjects = document.getElementById('statProjects');
+    const statCertificates = document.getElementById('statCertificates');
+    const statTechnologies = document.getElementById('statTechnologies');
+    const statCgpa = document.getElementById('statCgpa');
+
+    if (statProjects) statProjects.value = (s.projects !== undefined && s.projects !== '') ? s.projects : projCount;
+    if (statCertificates) statCertificates.value = (s.certificates !== undefined && s.certificates !== '') ? s.certificates : certCount;
+    if (statTechnologies) statTechnologies.value = (s.technologies !== undefined && s.technologies !== '') ? s.technologies : techCount;
+    if (statCgpa) statCgpa.value = (s.cgpa !== undefined && s.cgpa !== '') ? s.cgpa : '6.35';
   }
 
   function fillRecruiter(data) {
@@ -480,9 +497,21 @@
       };
     }).filter(Boolean);
 
+    const statProjEl = document.getElementById('statProjects');
+    const statCertEl = document.getElementById('statCertificates');
+    const statTechEl = document.getElementById('statTechnologies');
+    const statCgpaEl = document.getElementById('statCgpa');
+    const stats = {
+      projects: statProjEl ? statProjEl.value.trim() || '6+' : '6+',
+      certificates: statCertEl ? statCertEl.value.trim() || '9+' : '9+',
+      technologies: statTechEl ? statTechEl.value.trim() || '10+' : '10+',
+      cgpa: statCgpaEl ? statCgpaEl.value.trim() || '6.35' : '6.35'
+    };
+
     return {
       font: document.getElementById('font').value || 'Plus Jakarta Sans',
       profile,
+      stats,
       recruiter,
       experiences,
       education,
@@ -632,6 +661,39 @@
       document.getElementById('recruiterEducationNote').value = '';
       document.getElementById('recruiterCertificationsNote').value = '';
       setStatus(saveStatus, 'Recruiter Mode details cleared. Click "Save and publish" to remove them from your portfolio.', 'success');
+    });
+  }
+
+  /* Auto-calculate Quick Stats */
+  const autoCalcStatsBtn = document.getElementById('autoCalcStatsBtn');
+  if (autoCalcStatsBtn) {
+    autoCalcStatsBtn.addEventListener('click', () => {
+      const projCount = projectList.querySelectorAll('.card-item').length || 6;
+      const certCount = certificateList.querySelectorAll('.card-item').length || 9;
+      const skillCount = skillsList.querySelectorAll('.card-item').length || 10;
+
+      let foundCgpa = '6.35';
+      const eduCards = educationList.querySelectorAll('.card-item');
+      for (const card of eduCards) {
+        const desc = (card.querySelector('[data-field="description"]') ? card.querySelector('[data-field="description"]').value : '');
+        const cgpaMatch = desc.match(/(?:CGPA|GPA)[:\s]+([0-9.]+)/i);
+        if (cgpaMatch) {
+          foundCgpa = cgpaMatch[1];
+          break;
+        }
+      }
+
+      const statProjects = document.getElementById('statProjects');
+      const statCertificates = document.getElementById('statCertificates');
+      const statTechnologies = document.getElementById('statTechnologies');
+      const statCgpa = document.getElementById('statCgpa');
+
+      if (statProjects) statProjects.value = `${projCount}+`;
+      if (statCertificates) statCertificates.value = `${certCount}+`;
+      if (statTechnologies) statTechnologies.value = `${Math.max(skillCount, 10)}+`;
+      if (statCgpa) statCgpa.value = foundCgpa;
+
+      setStatus(saveStatus, 'Stats calculated from your portfolio! Click "Save and publish" to update live.', 'success');
     });
   }
 

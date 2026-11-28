@@ -219,6 +219,38 @@
               </div>
               <p class="field-hint"><i class="fa-solid fa-circle-info"></i> Used across all "Download Resume" buttons on hero, about, and recruiter mode.</p>
             </div>
+
+            <!-- Hero Quick Stats Strip (Projects, Certificates, Technologies, CGPA) -->
+            <div class="wide-field stats-editor-wrapper" style="margin-top:24px;padding-top:20px;border-top:1.5px dashed #e1e8f2">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+                <div>
+                  <h3 style="font-size:1.02rem;font-weight:700;color:var(--text-primary);margin:0;display:flex;align-items:center;gap:8px">
+                    <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:rgba(37,99,235,0.1);color:#2563eb;font-size:0.85rem">
+                      <i class="fa-solid fa-chart-simple"></i>
+                    </span>
+                    Hero Quick Stats Strip
+                  </h3>
+                  <p style="font-size:0.82rem;color:var(--text-sec);margin:4px 0 0">Live highlight numbers shown under your hero banner (Projects, Certificates, Technologies, CGPA).</p>
+                </div>
+                <button type="button" class="secondary-button" id="autoCalcStatsBtn" style="font-size:0.8rem;padding:7px 14px;gap:6px">
+                  <i class="fa-solid fa-calculator"></i> Auto-calculate from portfolio
+                </button>
+              </div>
+              <div class="field-grid" style="grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:12px">
+                <label>Projects Stat
+                  <input id="statProjects" placeholder="6+" maxlength="20">
+                </label>
+                <label>Certificates Stat
+                  <input id="statCertificates" placeholder="9+" maxlength="20">
+                </label>
+                <label>Technologies Stat
+                  <input id="statTechnologies" placeholder="10+" maxlength="20">
+                </label>
+                <label>CGPA Stat
+                  <input id="statCgpa" placeholder="6.35" maxlength="20">
+                </label>
+              </div>
+            </div>
           </div>
         </section>
 

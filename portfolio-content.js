@@ -619,6 +619,79 @@
     });
   }
 
+  function updateStats(content) {
+    const s = content.stats || {};
+    const rawProj = s.projects !== undefined && s.projects !== '' ? s.projects : `${(content.projects || []).length || 6}+`;
+    const rawCert = s.certificates !== undefined && s.certificates !== '' ? s.certificates : `${(content.certificates || []).length || 9}+`;
+    const rawTech = s.technologies !== undefined && s.technologies !== '' ? s.technologies : `${Math.max((content.skills || []).length, 10)}+`;
+    const rawCgpa = s.cgpa !== undefined && s.cgpa !== '' ? s.cgpa : '6.35';
+
+    function parseStat(val) {
+      const match = String(val).match(/^([\d.]+)(.*)$/);
+      if (match) return { num: match[1], suffix: match[2] || '' };
+      return { num: String(val), suffix: '' };
+    }
+
+    const p = parseStat(rawProj);
+    const c = parseStat(rawCert);
+    const t = parseStat(rawTech);
+    const cg = parseStat(rawCgpa);
+
+    // 1. Hero Stats Strip
+    const statP = document.querySelector('[data-stat="projects"]');
+    if (statP) {
+      statP.dataset.count = p.num;
+      statP.textContent = p.num;
+      const plus = statP.parentElement ? statP.parentElement.querySelector('.hero-stat-plus') : null;
+      if (plus) plus.textContent = p.suffix || '+';
+    }
+
+    const statC = document.querySelector('[data-stat="certificates"]');
+    if (statC) {
+      statC.dataset.count = c.num;
+      statC.textContent = c.num;
+      const plus = statC.parentElement ? statC.parentElement.querySelector('.hero-stat-plus') : null;
+      if (plus) plus.textContent = c.suffix || '+';
+    }
+
+    const statT = document.querySelector('[data-stat="technologies"]');
+    if (statT) {
+      statT.dataset.count = t.num;
+      statT.textContent = t.num;
+      const plus = statT.parentElement ? statT.parentElement.querySelector('.hero-stat-plus') : null;
+      if (plus) plus.textContent = t.suffix || '+';
+    }
+
+    const statCgpa = document.querySelector('[data-stat="cgpa"]');
+    if (statCgpa) {
+      statCgpa.dataset.count = cg.num;
+      statCgpa.textContent = cg.num;
+    }
+
+    // 2. Dashboard Stats
+    const dashP = document.querySelector('[data-dash-stat="projects"]');
+    if (dashP) {
+      dashP.dataset.count = p.num;
+      dashP.textContent = p.num;
+    }
+    const dashT = document.querySelector('[data-dash-stat="technologies"]');
+    if (dashT) {
+      dashT.dataset.count = t.num;
+      dashT.textContent = t.num;
+    }
+    const dashC = document.querySelector('[data-dash-stat="certificates"]');
+    if (dashC) {
+      dashC.dataset.count = c.num;
+      dashC.textContent = c.num;
+    }
+    const dashDeg = document.querySelector('[data-dash-stat="degree"]');
+    if (dashDeg) {
+      const topEdu = (content.education && content.education[0]) ? content.education[0].degree : 'B.Sc. IT';
+      const parts = topEdu.split(' ');
+      dashDeg.textContent = (parts[0] || 'B.Sc.') + ' ' + (parts[1] || 'IT');
+    }
+  }
+
   function applyContent(content, isLiveUpdate = false) {
     if (!content || !content.profile || !Array.isArray(content.projects)) return;
     const contentHash = JSON.stringify(content);
@@ -626,6 +699,7 @@
     lastAppliedContentHash = contentHash;
 
     setProfile(content);
+    updateStats(content);
     renderProjects(content.projects);
     if (Array.isArray(content.experiences)) renderExperiences(content.experiences);
     if (Array.isArray(content.education)) renderEducation(content.education);

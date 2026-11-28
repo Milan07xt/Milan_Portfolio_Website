@@ -24,6 +24,12 @@
     "educationNote": "B.Sc. IT (Noble University, Junagadh) & M.Sc. IT (BAOU, Pursuing)",
     "certificationsNote": "9 certificates from NASSCOM, Udemy, Microsoft, Tata, Unstop"
   },
+  "stats": {
+    "projects": "6+",
+    "certificates": "9+",
+    "technologies": "10+",
+    "cgpa": "6.35"
+  },
   "experiences": [
     {
       "id": "exp-nityam",
